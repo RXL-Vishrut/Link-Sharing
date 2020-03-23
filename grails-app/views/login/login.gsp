@@ -74,17 +74,17 @@
                     <g:form action="log">
 
                         <div class="row " style="margin-top: 20px; ">
-                            <label for="inputEmail" class="col-sm-5 col-form-label"><b><g:message
+                            <label for="txtemail" class="col-sm-5 col-form-label"><b><g:message
                                     code="login.email"></g:message></b></label>
 
-                            <div class="col-sm-7"><input type="email" name="email"
+                            <div class="col-sm-7"><input type="email" name="email" id="txtemail"
                                                          class="form-control shadow p-3 mb-5 bg-white rounded"
                                                          placeholder="Enter Email" required>
                             </div>
                         </div>
 
                         <div class="row">
-                            <label for="inputPassword" class="col-sm-5 col-form-label"><b><g:message
+                            <label for="txtPassword1" class="col-sm-5 col-form-label"><b><g:message
                                     code="login.password"></g:message></b></label>
 
                             <div class="col-sm-7"><input type="password" name="password"
@@ -128,7 +128,7 @@
                                     code="register.firstname"></g:message></b></label>
 
                             <div class="col-sm-7">
-                                <input type="text" placeholder="Firstname" name="firstName"
+                                <input type="text" placeholder="Firstname" name="firstName" id="firstName"
                                        class="form-control shadow p-3 mb-5 bg-white rounded" required>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                                     code="register.lastname"></g:message></b></label>
 
                             <div class="col-sm-7">
-                                <input type="text" placeholder="Lastname" name="lastName"
+                                <input type="text" placeholder="Lastname" name="lastName" id="lastName"
                                        class="form-control shadow p-3 mb-5 bg-white rounded" required>
                             </div>
                         </div>
@@ -148,9 +148,14 @@
                                     code="register.email"></g:message></b></label>
 
                             <div class="col-sm-7">
-                                <input type="email" placeholder="Email" name="email"
+                                <input type="email" placeholder="Email" name="email" id="email"
                                        class="form-control shadow p-3 mb-5 bg-white rounded" required>
                             </div>
+                            <g:if test="${flash.error1}">
+                                <div class="message leftcolumn" style="color: red" role="alert">
+                                    ${flash.error1}
+                                </div>
+                            </g:if>
                         </div>
 
                         <div class="row">
@@ -158,14 +163,14 @@
                                     code="register.username"></g:message></b></label>
 
                             <div class="col-sm-7">
-                                <input type="text" placeholder="Username" name="userName"
+                                <input type="text" placeholder="Username" name="userName" id="username"
                                        class="form-control shadow p-3 mb-5 bg-white rounded" required>
                             </div>
                         </div>
 
 
                         <div class="row">
-                            <label for="password" class="col-sm-5 col-form-label"><b><g:message
+                            <label for="txtpassword" class="col-sm-5 col-form-label"><b><g:message
                                     code="register.password"></g:message></b></label>
 
                             <div class="col-sm-7">
@@ -189,7 +194,7 @@
                         </div>
 
                         <div class="row">
-                            <label for="confirmpassword" class="col-sm-5 col-form-label"><b><g:message
+                            <label for="txtConfirmPassword" class="col-sm-5 col-form-label"><b><g:message
                                     code="register.confrimpassword"></g:message></b></label>
 
                             <div class="col-sm-7" style="text-align: right">
@@ -202,7 +207,7 @@
                         </div>
 
                         <div class="row">
-                            <label for="photo" class="col-sm-5 col-form-label"><b><g:message
+                            <label for="customFile" class="col-sm-5 col-form-label"><b><g:message
                                     code="register.photo"></g:message></b></label>
 
                             <div class="custom-file mb-3 col-sm-7">

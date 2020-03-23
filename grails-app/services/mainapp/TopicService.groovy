@@ -1,18 +1,11 @@
 package mainapp
 
-import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
-@Service(Topic)
-interface TopicService {
+@Transactional
+class TopicService {
 
-    Topic get(Serializable id)
+    def serviceMethod() {
 
-    List<Topic> list(Map args)
-
-    Long count()
-
-    void delete(Serializable id)
-
-    Topic save(Topic topic)
-
+    }
 }

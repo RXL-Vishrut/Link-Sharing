@@ -1,18 +1,11 @@
 package mainapp
 
-import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
-@Service(Subscription)
-interface SubscriptionService {
+@Transactional
+class SubscriptionService {
 
-    Subscription get(Serializable id)
+    def serviceMethod() {
 
-    List<Subscription> list(Map args)
-
-    Long count()
-
-    void delete(Serializable id)
-
-    Subscription save(Subscription subscription)
-
+    }
 }
