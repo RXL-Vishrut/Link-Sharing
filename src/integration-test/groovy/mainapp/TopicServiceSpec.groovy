@@ -14,11 +14,11 @@ class TopicServiceSpec extends Specification {
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new Topic(...).save(flush: true, failOnError: true)
-        //new Topic(...).save(flush: true, failOnError: true)
-        //Topic topic = new Topic(...).save(flush: true, failOnError: true)
-        //new Topic(...).save(flush: true, failOnError: true)
-        //new Topic(...).save(flush: true, failOnError: true)
+        //new MainApp.Topic(...).save(flush: true, failOnError: true)
+        //new MainApp.Topic(...).save(flush: true, failOnError: true)
+        //MainApp.Topic topic = new MainApp.Topic(...).save(flush: true, failOnError: true)
+        //new MainApp.Topic(...).save(flush: true, failOnError: true)
+        //new MainApp.Topic(...).save(flush: true, failOnError: true)
         assert false, "TODO: Provide a setupData() implementation for this generated test suite"
         //topic.id
     }

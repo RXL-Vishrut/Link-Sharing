@@ -1,3 +1,5 @@
+package MainApp
+
 import enums.Seriousness
 
 class Subscription {

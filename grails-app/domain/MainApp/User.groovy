@@ -1,3 +1,5 @@
+package MainApp
+
 class User {
 
     String email
@@ -17,6 +19,7 @@ class User {
 
     static constraints = {
         email email: true
+        email unique: true
         userName blank: false
         firstName blank: false
         email blank: false
@@ -29,7 +32,6 @@ class User {
     }
     static mapping = {
         table "Users"
-
     }
 
 }
