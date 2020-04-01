@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <div id="passwordMessage">
+            <div id="passwordMessage" style="bottom: 30px">
 
                 <p id="letter" class="invalid" style="margin: 0px">A <b>lowercase</b> letter</p>
 
@@ -92,7 +92,7 @@
                 <label for="customFile" class="col-sm-5 col-form-label"><b><g:message
                         code="register.photo"></g:message></b></label>
 
-                <div class="custom-file mb-3 col-sm-7">
+                <div class="custom-file mb-3 col-sm-7" style="overflow: hidden">
                     <input type="file" name="photo" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>

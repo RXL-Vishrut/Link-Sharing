@@ -1,22 +1,22 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark" style="height: 87px">
     <div class="container-fluid">
 
         <div class="col-lg-3">
-            <a href="#" class="navbar-brand"><b>Link Sharing</b></a>
 
+            <a class="navbar-brand"
+               href="${createLink(controller: "dashboard", action: "subscribedTopics")}"><b>Link Sharing</b></a>
         </div>
 
         <div class="col-lg-5" style="max-width: fit-content;display: inline-flex">
 
-
-        %{--            <------------------------------NAVBAR Doc----------------------------->--}%
+            %{--            <------------------------------NAVBAR Doc----------------------------->--}%
 
             <button class="btn" data-toggle="modal" data-target="#exampleModalCenter3" style="line-height: 1"><i
                     class="fa fa-file"
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SHARE DOCUMENT</b>
             </button>
-            <g:uploadForm enctype="multipart/form-data" url='[controller:"resource",action:"shareDoc"]'>
+            <g:uploadForm enctype="multipart/form-data" url='[controller: "showTopic", action: "shareDoc"]'>
                 <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -40,10 +40,10 @@
                                 </div>
 
                                 <div class="row">
-                                    <label for="inputDescription" class="col-sm-5 col-form-label"><b><g:message
+                                    <label for="docDescription" class="col-sm-5 col-form-label"><b><g:message
                                             code="dashboard.description"></g:message></b></label>
 
-                                    <div class="col-sm-7"><textarea id="inputDescription" name="docdescription"
+                                    <div class="col-sm-7"><textarea id="docDescription" name="docdescription"
                                                                     class="form-control shadow p-3 mb-5 bg-white rounded"
                                                                     placeholder="Description" required></textarea>
                                     </div>
@@ -54,9 +54,8 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select from="${MainApp.Topic.list()}"
-                                              name="doctopic"
-                                              optionKey="id" optionValue="name"></g:select>
+                                    <g:select name="docTopic" from="${list4.topic.name}"
+                                              id="inputTopic"/>
                                 </div>
                             </div>
 
@@ -78,7 +77,7 @@
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SHARE LINK</b>
             </button>
-            <g:uploadForm url='[controller:"resource",action:"shareLink"]'>
+            <g:uploadForm url='[controller: "showTopic", action: "shareLink"]'>
                 <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -111,14 +110,13 @@
                                     </div>
                                 </div>
 
-                                <label for="inputTopic" class="col-sm-5 col-form-label"
+                                <label for="linkTopic" class="col-sm-5 col-form-label"
                                        style="padding-left: initial"><b><g:message
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select from="${MainApp.Topic.list()}"
-                                              name="linkTopic"
-                                              optionKey="id" optionValue="name"></g:select>
+                                    <g:select from="${list4.topic.name}"
+                                              name="linkTopic"></g:select>
                                 </div>
                             </div>
 
@@ -148,7 +146,8 @@
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#"><b>PROFILE</b></a>
-                    <a class="dropdown-item" href="#"><b>LOG OUT</b></a>
+                    <a class="dropdown-item" href="${createLink(controller: "logout", action: "logout")}"><b>LOGOUT</b>
+                    </a>
                 </div>
             </div>
 
@@ -156,7 +155,7 @@
 
 
         %{--        <------------------------------------NAVBAR SEARCH------------------------------->--}%
-        <div class="col-lg-4">
+        <div class="col-lg-4" style="top: 8px">
             <form class="form-inline" style="justify-content: flex-end">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="button">Search</button>

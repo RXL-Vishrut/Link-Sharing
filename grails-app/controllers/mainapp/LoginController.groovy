@@ -1,9 +1,10 @@
 package mainapp
 
-
+import enums.Visibility
 import MainApp.Resource
 import MainApp.User
 import MainApp.Topic
+import enums.Visibility
 import javax.servlet.http.HttpSession
 
 class LoginController {
@@ -11,16 +12,30 @@ class LoginController {
     static defaultAction = "home"
 
     def home() {
-        List PublicTopics = Topic.findAllByVisibility("Public")
-        List LatestUpdatedPublicTopics = Resource.createCriteria().list(max: 5) {
-            and {
+            def PublicTopics = Topic.findAllByVisibility("Public")
+            List<Resource> recentShares = Resource.createCriteria().list(sort:"lastUpdated",order:"desc") {
                 inList("topic", PublicTopics)
-                order("lastUpdated", "desc")
             }
+            render(view: "/login/homePage" , model:[recent : recentShares])
         }
-        render(view: "/login/homePage", model: [list: LatestUpdatedPublicTopics])
-        //render loginService.serviceMethod()
+    def error(){
+        def PublicTopics = Topic.findAllByVisibility("Public")
+        List<Resource> recentShares = Resource.createCriteria().list(sort:"lastUpdated",order:"desc") {
+            inList("topic", PublicTopics)
+        }
+
+        flash.message = "You must login first"
+        render(view: "/login/homePage" , model:[recent : recentShares])
     }
+
+    def viewImage(){
+        def user = User.get(params.userId)
+        byte[] imageInByte = user.photo
+        response.contentType = 'image/jpg' // or the appropriate image content type
+        response.outputStream << imageInByte
+        response.outputStream.flush()
+    }
+
 
 
 //  <----------------------------------------REGISTER------------------------------------->
@@ -55,12 +70,12 @@ class LoginController {
                 session.setAttribute("userUserName", val.userName)
                 session.setAttribute("userUserName", val.userName)
                 session.setAttribute("userEmail", val.email)
+                session.setAttribute("userId", val.id)
                 session.setAttribute("userIsAdmin", val.admin)
                 String encoded = Base64.getEncoder().encodeToString(val.photo)
                 session.setAttribute("userPhoto", encoded)
                 redirect(controller: "dashboard", action: "subscribedTopics")
-            }
-            else{
+            } else {
                 flash.message = "User has been deactivated"
                 redirect(action: "home")
             }
@@ -69,16 +84,5 @@ class LoginController {
             redirect(action: "home")
         }
     }
-
-//    def send() {
-//        sendMail {
-//            to params.address
-//            subject params.subject
-//            text params.body
-//        }
-//
-//        flash.message = "Message sent to " + params.address + " at " + new Date()
-//        redirect action: "dashboard"
-//    }
 
 }

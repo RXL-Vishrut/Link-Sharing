@@ -11,8 +11,7 @@ class LogoutController {
 //        }else{
 //            flash.message = "Please login again"
 //            redirect(controller: "login", view:"homePage" )
-//        }
-
+//
 
     }
     def logout(){

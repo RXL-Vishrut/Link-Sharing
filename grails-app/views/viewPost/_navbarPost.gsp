@@ -1,72 +1,22 @@
-<%@ page import="MainApp.Topic; java.beans.Visibility" %>
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark" style="height: 87px">
     <div class="container-fluid">
 
         <div class="col-lg-3">
-            <a class="navbar-brand"><b>Link Sharing</b></a>
 
+            <a class="navbar-brand"
+               href="${createLink(controller: "dashboard", action: "subscribedTopics")}"><b>Link Sharing</b></a>
         </div>
 
         <div class="col-lg-5" style="max-width: fit-content;display: inline-flex">
 
-            %{--            <---------------------------------NAVBAR TOPIC---------------------------->--}%
-            <button class="btn" data-toggle="modal" data-target="#exampleModalCenter" style="line-height: 1"><i
-                    class="fa fa-comment"
-                    style="color: white; font-size: 25px;display: block"></i>
-                <b style="color: white; font-size: 15px">CREATE TOPIC</b>
-            </button>
-            <form>
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle"><b>CREATE TOPIC</b></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="row " style="margin-top: 20px; ">
-                                    <label for="inputTopicName" class="col-sm-5 col-form-label"><b><g:message
-                                            code="dashboard.topic.name"></g:message></b></label>
-
-                                    <div class="col-sm-7"><input type="text" id="inputTopicName" name="name"
-                                                                 class="form-control shadow p-3 mb-5 bg-white rounded"
-                                                                 placeholder="Name" required>
-                                    </div>
-                                </div>
-
-
-                                <label for="visibility" class="col-sm-5 col-form-label"
-                                       style="padding-left: initial"><b><g:message
-                                        code="dashboard.topic.visibility"></g:message></b></label>
-
-                                <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select name="visibility" from="${enums.Visibility?.values()}" value="${vis}"
-                                              id="visibility"/>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="saveTopic">Create</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-
-        %{--            <------------------------------NAVBAR Doc----------------------------->--}%
+            %{--            <------------------------------NAVBAR Doc----------------------------->--}%
 
             <button class="btn" data-toggle="modal" data-target="#exampleModalCenter3" style="line-height: 1"><i
                     class="fa fa-file"
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SHARE DOCUMENT</b>
             </button>
-            <g:uploadForm enctype="multipart/form-data" url='[controller: "dashboard", action: "shareDoc"]'>
+            <g:uploadForm enctype="multipart/form-data" url='[controller: "showTopic", action: "shareDoc"]'>
                 <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -104,8 +54,8 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select name="docTopic" from="${navList.topic.name}"
-                                              id="inputTopic"/>
+%{--                                    <g:select name="docTopic" from="${list4.topic.name}"--}%
+%{--                                              id="inputTopic"/>--}%
                                 </div>
                             </div>
 
@@ -127,7 +77,7 @@
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SHARE LINK</b>
             </button>
-            <g:uploadForm url='[controller: "dashboard", action: "shareLink"]'>
+            <g:uploadForm url='[controller: "showTopic", action: "shareLink"]'>
                 <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,27 +96,27 @@
 
                                     <div class="col-sm-7"><input type="url" id="inputLink" name="link"
                                                                  class="form-control shadow p-3 mb-5 bg-white rounded"
-                                                                 placeholder="Link" required>
+                                                                 placeholder="Link" required></input>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <label for="linkDescription" class="col-sm-5 col-form-label"><b><g:message
+                                    <label for="inputDescription" class="col-sm-5 col-form-label"><b><g:message
                                             code="dashboard.description"></g:message></b></label>
 
-                                    <div class="col-sm-7"><textarea id="linkDescription" name="linkdescription"
+                                    <div class="col-sm-7"><textarea id="inputDescription" name="linkdescription"
                                                                     class="form-control shadow p-3 mb-5 bg-white rounded"
                                                                     placeholder="Description" required></textarea>
                                     </div>
                                 </div>
 
-                                <label for="inputTopic" class="col-sm-5 col-form-label"
+                                <label for="linkTopic" class="col-sm-5 col-form-label"
                                        style="padding-left: initial"><b><g:message
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select name="linkTopic" from="${navList.topic.name}"
-                                              id="inputTopic"/>
+%{--                                    <g:select from="${list4.topic.name}"--}%
+%{--                                              name="linkTopic"></g:select>--}%
                                 </div>
                             </div>
 
@@ -177,51 +127,6 @@
                         </div>
                     </div>
                 </div>
-            </g:uploadForm>
-
-
-
-        %{--            <--------------------------NAVBAR INVITE------------------------------>--}%
-            <button class="btn" data-toggle="modal" data-target="#exampleModalCenter2" style="line-height: 1"><i
-                    class="fa fa-envelope"
-                    style="color: white; font-size: 25px;display: block"></i>
-                <b style="color: white; font-size: 15px">SEND INVITE</b>
-            </button>
-            <g:uploadForm url='[controller: "dashboard", action: "send"]'>
-                <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle2"><b>SEND INVITE</b></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="fieldcontain" style="margin-bottom: 3px">
-                                    <g:textField name="address" placeholder="email@gmal.com" required="" />
-                                </div>
-                                <div class="fieldcontain" style="margin-bottom: 3px">
-                                    <g:textField name="subject" placeholder="Subject" required="" />
-                                </div>
-                                <div class="fieldcontain" style="margin-bottom: 3px">
-                                    <g:textArea name="body" rows="5" cols="50" placeholder="Your message" required="" />
-                                </div>
-                                <div>
-                                    <input type="file" name="attachment" />
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Invite</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </g:uploadForm>
 
         %{--            <-----------------------------NAVBAR USER---------------------------->--}%
@@ -240,14 +145,9 @@
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>PROFILE</b></a>
-                    <g:if test="${session.getAttribute("userIsAdmin")}">
-                        <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>TOPICS</b></a>
-                        <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>POSTS</b></a>
-                        <a class="dropdown-item"  href="${createLink(controller: "allUsers",action: "userDetails")}"><b>USERS</b></a>
-
-                    </g:if>
-                    <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>LOGOUT</b></a>
+                    <a class="dropdown-item" href="#"><b>PROFILE</b></a>
+                    <a class="dropdown-item" href="${createLink(controller: "logout", action: "logout")}"><b>LOGOUT</b>
+                    </a>
                 </div>
             </div>
 
@@ -255,7 +155,7 @@
 
 
         %{--        <------------------------------------NAVBAR SEARCH------------------------------->--}%
-        <div class="col-lg-4" >
+        <div class="col-lg-4" style="top: 8px">
             <form class="form-inline" style="justify-content: flex-end">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="button">Search</button>

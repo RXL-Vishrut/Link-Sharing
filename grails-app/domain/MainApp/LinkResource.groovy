@@ -1,7 +1,6 @@
 package MainApp
 
-class LinkResource{
+class LinkResource extends Resource{
     String url
-    String description
-    static belongsTo = [resource:Resource]
+
 }

@@ -1,7 +1,6 @@
 package MainApp
 
-class DocumentResource {
+class DocumentResource extends Resource{
     String filePath
-    String description
-    static belongsTo = [resource:Resource]
+
 }
