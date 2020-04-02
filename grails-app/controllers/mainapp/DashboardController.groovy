@@ -98,25 +98,6 @@ class DashboardController {
     }
 
 
-    def createTopic() {
-        Topic topic = Topic.findByName(params.name)
-        User user = User.findByEmail(session.getAttribute("userEmail"))
-        if (topic != null && topic.createdBy == user) {
-//                flash.message = "Already created topic by this name"
-//                redirect(controller: "dashboard" , action: "subscribedTopics")
-            render([success: false] as JSON)
-        } else {
-            Topic t = new Topic()
-            bindData(t, params, [exclude: ['createdBy']])
-            Subscription sub = new Subscription(user: user, topic: t, seriousness: Seriousness.Very_Serious.name())
-            t.createdBy = user
-                    .addToSubscriptions(sub)
-            t.save(flush: true, failOnError: true)
-            //flash.message = "Topic created"
-            //redirect(controller: "dashboard", action: "subscribedTopics")
-            render([success: true] as JSON)
-        }
-    }
 
     def unsubscribe() {
         User user = User.findById(params.userId)

@@ -1,5 +1,5 @@
 <div class="card border-dark mb-6 " style="max-width: 32rem;max-height: 4000px;left: 40px">
-    <div class="card-header" style="background-color: #343a40;color: white"><b><g:message code="register.header.register"></g:message></b></div>
+    <div class="card-header" style="background-color: #343a40;color: white"><b><g:message code="update.info"></g:message></b></div>
 
     <div class="card-body text-dark">
 

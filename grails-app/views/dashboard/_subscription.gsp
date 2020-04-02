@@ -21,8 +21,8 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="col-lg-12" style="font-size: 15px">
-                                            <b>Topic Name :</b><g:link controller="showTopic"
-                                                    action="showtopic" params="[userId:p.topic.createdBy.id,topicId:p.topic.id]"><b><u>${p.topic.name}</u>
+                                            <b>Topic Name :</b><g:link controller="topic"
+                                                                       action="show" params="[userId:p.topic.createdBy.id, topicId:p.topic.id]"><b><u>${p.topic.name}</u>
                                             </b></g:link>
                                         </div>
                                     </div>
@@ -84,8 +84,8 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <g:link controller="showTopic"
-                                                    action="showtopic" params="[topicId:p.topic.id]"><b><u>${p.topic.name}</u>
+                                            <g:link controller="topic"
+                                                    action="show" params="[topicId:p.topic.id]"><b><u>${p.topic.name}</u>
                                             </b></g:link>
                                         </div>
                                     </div>

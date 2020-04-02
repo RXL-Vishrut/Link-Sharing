@@ -5,7 +5,7 @@ import grails.converters.JSON
 class PostController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-   def showPost(){
+   def show(){
         User user = User.findById(params.userId)
         Topic topic = Topic.findById(params.topicId)
        Resource resource = Resource.findById(params.resourceId)
@@ -48,6 +48,30 @@ class PostController {
             render([success:true] as JSON)
         }
 
+    }
+
+    def shareLink() {
+        User user = User.findByUserName(session.userUserName)
+        Topic topic = Topic.findByName(params.linkTopic)
+        LinkResource lr = new LinkResource(url: params.link,description: params.linkdescription,createdBy: user ,topic :topic)
+        lr.save(flush:true , failOnError:true)
+        flash.message = "Link has been added successfully"
+        redirect(controller:"topic",action: 'show')
+    }
+
+
+    def shareDoc() {
+        User user = User.findByUserName(session.userUserName)
+        Topic topic = Topic.findByName(params.docTopic)
+        def file1 = request.getFile("document")
+        String dir1 = new Date()
+        String dir2 = dir1.split(" ").join("")
+        String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
+        file1.transferTo(new File(dir))
+        DocumentResource dr = new DocumentResource(filePath: dir,description:params.docdescription,createdBy:user,topic:topic)
+        dr.save(flush:true , failOnError:true)
+        flash.message = "Document has been added successfully"
+        redirect(controller:"topic",action: 'show')
     }
 
 }

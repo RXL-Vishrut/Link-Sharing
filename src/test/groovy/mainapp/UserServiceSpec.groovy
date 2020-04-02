@@ -1,9 +1,9 @@
 package mainapp
 
-import grails.testing.web.controllers.ControllerUnitTest
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class ShowTopicControllerSpec extends Specification implements ControllerUnitTest<ShowTopicController> {
+class UserServiceSpec extends Specification implements ServiceUnitTest<UserService>{
 
     def setup() {
     }

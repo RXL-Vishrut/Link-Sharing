@@ -1,7 +1,7 @@
 
 
 <div class="card border-dark mb-6 " style="max-width: 32rem;margin-top: 50px;left: 40px">
-    <div class="card-header" style="background-color: #343a40;color: white"><b><g:message code="login.header.login"></g:message></b></div>
+    <div class="card-header" style="background-color: #343a40;color: white"><b><g:message code="change.password"></g:message></b></div>
 
     <div class="card-body text-dark" style="padding-bottom: 0px;">
 

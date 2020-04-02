@@ -1,9 +1,9 @@
 package mainapp
 
-import grails.testing.web.controllers.ControllerUnitTest
+import grails.testing.web.taglib.TagLibUnitTest
 import spock.lang.Specification
 
-class TopicControllerSpec extends Specification implements ControllerUnitTest<TopicController> {
+class LinkSharingTagLibSpec extends Specification implements TagLibUnitTest<LinkSharingTagLib> {
 
     def setup() {
     }

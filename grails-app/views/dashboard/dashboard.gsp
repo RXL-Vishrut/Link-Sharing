@@ -113,7 +113,7 @@
                                             <div class="col-lg-9" style="font-size: 15px">
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <g:link controller="showTopic"
+                                                        <g:link controller="topic"
                                                                 action="topic" params="[userId:p[1].createdBy.id,topicId: p[1].id]"><b><u>${p[1].name}</u>
                                                         </b></g:link>
                                                     </div>
@@ -185,7 +185,7 @@
                                             <div class="col-lg-9">
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <g:link controller="showTopic"
+                                                        <g:link controller="topic"
                                                                 action="topic" params="[userId:p[1].createdBy.id,topicId: p[1].id]"><b><u>${p[1].name}</u>
                                                         </b></g:link>
                                                     </div>
@@ -285,7 +285,7 @@
                                     </div>
 
                                     <div class="row" style="font-size: 15px">
-                                        <b>Topic Name :</b><g:link controller="showTopic" action="showtopic"
+                                        <b>Topic Name :</b><g:link controller="topic" action="show"
                                                                    params="[userId: p.createdBy.id, topicId: p.id]"><b><u>${p.name}</u>
                                         </b></g:link>
                                     </div>
@@ -315,7 +315,7 @@
                                                         style="margin-right:22px;">Download</u></g:link>
                                                 <g:link controller="dashboard" action="isRead" params="[userId: p.createdBy.id,resourceId:p.resources[0].id]"><u
                                                         style="margin-right:22px;">Mark as read</u></g:link>
-                                                <g:link controller="post" action="showPost"
+                                                <g:link controller="post" action="show"
                                                         params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
                                             </g:if>
                                             <g:if test="${p.resources[0].class != mainapp.DocumentResource}">
@@ -323,7 +323,7 @@
                                                         style="margin-right:22px;">View Full Site</u></g:link>
                                                 <g:link action="#" controller="#" id="read"><u
                                                         style="margin-right:22px;">Mark as read</u></g:link>
-                                                <g:link controller="post" action="showPost"
+                                                <g:link controller="post" action="show"
                                                         params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
                                             </g:if>
                                         </div>

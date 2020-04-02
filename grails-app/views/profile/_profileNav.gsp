@@ -77,7 +77,7 @@
                     <a class="dropdown-item"  href="${createLink(controller: "profile",action: "showProfile")}"><b>PROFILE</b></a>
                     <g:if test="${session.getAttribute("userIsAdmin")}">
                         <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>TOPICS</b></a>
-                        <a class="dropdown-item"  href="${createLink(controller: "post",action: "showPost")}"><b>POSTS</b></a>
+                        <a class="dropdown-item"  href="${createLink(controller: "post",action: "show")}"><b>POSTS</b></a>
                         <a class="dropdown-item"  href="${createLink(controller: "allUsers",action: "userDetails")}"><b>USERS</b></a>
 
                     </g:if>

@@ -217,7 +217,7 @@
                                         <div class="col-lg-9">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <g:link controller="showTopic"
+                                                    <g:link controller="topic"
                                                             action="topic"><b><u>${p[1].name}</u>
                                                     </b></g:link>
                                                 </div>
