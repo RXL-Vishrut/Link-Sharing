@@ -2,7 +2,8 @@
 <html>
 <head>
     <head>
-        <asset:stylesheet src="/allUsers/allUsers.css"/>
+        <meta name="layout" content="main"/>
+        <asset:stylesheet src="allUsers.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -33,7 +34,7 @@
 </head>
 
 <body>
-<g:render template="navbar"></g:render>
+
 <div class="container">
     <div class="row" style="padding: 10px">
         <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="margin: 10px">

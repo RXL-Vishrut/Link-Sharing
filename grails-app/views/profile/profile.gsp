@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-
+    <meta name="layout" content="main"/>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
@@ -17,7 +17,7 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/a81c0d9f01.js"></script>
-    <asset:stylesheet src="/profileNav/profileNav.css"/>
+    <asset:stylesheet src="profileNav.css"/>
     <asset:javascript src="updatePassword.js"/>
 </head>
 
@@ -28,8 +28,6 @@
          style="display: block;text-align: center;margin-bottom: 38px">${flash.message}</div>
 </g:if>
 
-
-<g:render template="profileNav"></g:render>
 <div class="container" style="background-color: #f1f1f1">
     <div class="row">
         <div class="col-lg-5">

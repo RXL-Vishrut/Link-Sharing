@@ -22,7 +22,7 @@ class PostController {
                order("dateCreated","desc")
            }
        }
-       render(view: "/viewPost/post",model:[user:user,topic:topic,resource:resource,list1:trendingTopics,list:userSubscriptions] )
+       render(view: "/viewPost/show",model:[user:user, topic:topic, resource:resource, list1:trendingTopics, list:userSubscriptions] )
    }
     def viewImage(){
         def user = User.get(params.userId)
