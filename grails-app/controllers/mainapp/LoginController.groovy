@@ -1,10 +1,6 @@
 package mainapp
 
-import enums.Visibility
-import MainApp.Resource
-import MainApp.User
-import MainApp.Topic
-import enums.Visibility
+
 import javax.servlet.http.HttpSession
 
 class LoginController {
@@ -12,30 +8,34 @@ class LoginController {
     static defaultAction = "home"
 
     def home() {
-            def PublicTopics = Topic.findAllByVisibility("Public")
-            List<Resource> recentShares = Resource.createCriteria().list(sort:"lastUpdated",order:"desc") {
-                inList("topic", PublicTopics)
-            }
-            render(view: "/login/homePage" , model:[recent : recentShares])
-        }
-    def error(){
         def PublicTopics = Topic.findAllByVisibility("Public")
-        List<Resource> recentShares = Resource.createCriteria().list(sort:"lastUpdated",order:"desc") {
+        List<Resource> recentShares = Resource.createCriteria().list(sort: "lastUpdated", order: "desc") {
+            inList("topic", PublicTopics)
+        }
+        List<ResourceRating> topPosts = ResourceRating.createCriteria().list(max: 5) {
+            order "score", "desc"
+        }
+        render(view: "/login/homePage", model: [recent: recentShares, list: topPosts])
+    }
+
+
+    def error() {
+        def PublicTopics = Topic.findAllByVisibility("Public")
+        List<Resource> recentShares = Resource.createCriteria().list(sort: "lastUpdated", order: "desc") {
             inList("topic", PublicTopics)
         }
 
         flash.message = "You must login first"
-        render(view: "/login/homePage" , model:[recent : recentShares])
+        redirect(controller: "login", action: "home", model: [recent: recentShares])
     }
 
-    def viewImage(){
+    def viewImage() {
         def user = User.get(params.userId)
         byte[] imageInByte = user.photo
         response.contentType = 'image/jpg' // or the appropriate image content type
         response.outputStream << imageInByte
         response.outputStream.flush()
     }
-
 
 
 //  <----------------------------------------REGISTER------------------------------------->
@@ -60,7 +60,6 @@ class LoginController {
     }
 
     def login() {
-//        MainApp.User val2 = MainApp.User.findByUserNameAndPassword("${params.userid}","${params.password}")
         User val = User.findByEmailAndPassword(params.email, params.password)
         if (val != null) {
             if (val.active == true) {
@@ -68,13 +67,12 @@ class LoginController {
                 session.setAttribute("userFirstName", val.firstName)
                 session.setAttribute("userLastName", val.lastName)
                 session.setAttribute("userUserName", val.userName)
-                session.setAttribute("userUserName", val.userName)
                 session.setAttribute("userEmail", val.email)
                 session.setAttribute("userId", val.id)
                 session.setAttribute("userIsAdmin", val.admin)
                 String encoded = Base64.getEncoder().encodeToString(val.photo)
                 session.setAttribute("userPhoto", encoded)
-                redirect(controller: "dashboard", action: "subscribedTopics")
+                redirect(controller: "dashboard", action: "show")
             } else {
                 flash.message = "User has been deactivated"
                 redirect(action: "home")
@@ -84,5 +82,6 @@ class LoginController {
             redirect(action: "home")
         }
     }
+
 
 }

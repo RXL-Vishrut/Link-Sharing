@@ -1,10 +1,10 @@
-<nav class="navbar navbar-dark bg-dark" style="height: 87px">
+<nav class="navbar navbar-dark bg-dark" style="height: 87px;margin-right: 55px;margin-right: 55px;border-radius: 8px">
     <div class="container-fluid">
 
         <div class="col-lg-3">
 
             <a class="navbar-brand"
-               href="${createLink(controller: "dashboard", action: "subscribedTopics")}"><b>Link Sharing</b></a>
+               href="${createLink(controller: "dashboard", action: "show")}"><b>Link Sharing</b></a>
         </div>
 
         <div class="col-lg-5" style="max-width: fit-content;display: inline-flex">
@@ -54,7 +54,7 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select name="docTopic" from="${list4.topic.name}"
+                                    <g:select name="docTopic" from="${navList.topic.name}"
                                               id="inputTopic"/>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select from="${list4.topic.name}"
+                                    <g:select from="${navList.topic.name}"
                                               name="linkTopic"></g:select>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#"><b>PROFILE</b></a>
+                    <a class="dropdown-item"  href="${createLink(controller: "profile",action: "showProfile")}"><b>PROFILE</b></a>
                     <a class="dropdown-item" href="${createLink(controller: "logout", action: "logout")}"><b>LOGOUT</b>
                     </a>
                 </div>

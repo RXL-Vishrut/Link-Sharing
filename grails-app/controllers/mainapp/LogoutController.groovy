@@ -4,16 +4,8 @@ import javax.servlet.http.HttpSession
 
 class LogoutController {
 
-    def index() {
-        //HttpSession session = request.getSession(false)
-//        if(session!=null){
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-//        }else{
-//            flash.message = "Please login again"
-//            redirect(controller: "login", view:"homePage" )
-//
-
-    }
     def logout(){
         session.invalidate()
         flash.message = "Logout Successfully"

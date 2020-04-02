@@ -55,7 +55,7 @@ dependencies {
     //compile "org.grails.plugins:grails-datatables:0.15"
     //compile "org.grails.plugins:jquery-datatables:1.7.5"
     //compile files('libs/ojdbc7.jar')
-    console "org.grails:grails-console"
+//    console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"

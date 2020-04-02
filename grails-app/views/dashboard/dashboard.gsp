@@ -1,8 +1,8 @@
-<%@ page import="MainApp.Topic; java.beans.Visibility" %>
+<%@ page import="mainapp.Topic; java.beans.Visibility" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    %{--        <meta name="layout" content="main"/>--}%
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
@@ -45,8 +45,9 @@
                 <div class="card-body text-dark " style="padding: 12px;margin-right: 15px">
                     <div class="row" style="background-color: #f1f1f1;margin-left: 1px">
                         <div class="col-lg-4">
-                            <img style="width: 100px;height: 110px"
-                                 src="data:image/jpg;base64,${session.getAttribute("userPhoto")}"/>
+                            <a href="${createLink(controller: "profile", action: "showProfile")}">
+                                <img style="width: 100px;height: 110px;border-radius: 8px"
+                                     src="data:image/jpg;base64,${session.getAttribute("userPhoto")}"/></a>
                         </div>
 
                         <div class="col-lg-8">
@@ -105,15 +106,16 @@
                                     <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
                                         <div class="row">
                                             <div class="col-lg-3">
-                                                <img height="90" width="90"
+                                                <img height="90" width="90" style="border-radius: 8px"
                                                      src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
                                             </div>
 
                                             <div class="col-lg-9" style="font-size: 15px">
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <g:link controller="#" action="#"><u><b>${p[1].name}</b>
-                                                        </u></g:link>
+                                                        <g:link controller="showTopic"
+                                                                action="topic" params="[userId:p[1].createdBy.id,topicId: p[1].id]"><b><u>${p[1].name}</u>
+                                                        </b></g:link>
                                                     </div>
                                                 </div>
 
@@ -130,8 +132,8 @@
                                                     <div class="w-100"></div>
 
                                                     <div class="col-lg-5">
-                                                        <g:link controller="dashboard" action="unsubscribe"
-                                                                params="[userId: p[1].createdBy.id, topicId: p[1].id]"><b><u>Unsubscribe</u>
+                                                        <g:link controller="dashboard"
+                                                                action="unsubscribe"><b><u>Unsubscribe</u>
                                                         </b></g:link></div>
 
                                                     <div class="col-lg-4" style="text-align: center">50</div>
@@ -176,7 +178,7 @@
                                     <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
                                         <div class="row">
                                             <div class="col-lg-3">
-                                                <img height="90" width="90"
+                                                <img height="90" width="90" style="border-radius: 15px"
                                                      src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
                                             </div>
 
@@ -184,7 +186,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <g:link controller="showTopic"
-                                                                action="topic"><b><u>${p[1].name}</u>
+                                                                action="topic" params="[userId:p[1].createdBy.id,topicId: p[1].id]"><b><u>${p[1].name}</u>
                                                         </b></g:link>
                                                     </div>
                                                 </div>
@@ -260,36 +262,38 @@
                         <g:if test="${p.resources.description[0] != null}">
                             <div class="row"
                                  style="background-color: #f1f1f1;margin-bottom: 10px;margin-right: 5px;margin-left: 5px">
-                                <div class="col-lg-3" style="margin-top: 15px">
-                                    <img height="90" width="90"
+                                <div class="col-lg-3" style="margin-top: 10px">
+                                    <img height="110" width="90" style="border-radius: 15px"
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p.createdBy.id])}"/>
                                 </div>
 
                                 <div class="col-lg-9">
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
-                                        <div class="col" style="padding: 0px">
+                                        <div class="col" style="padding: 0px;position:relative;top: 3px">
                                             <b>${p.createdBy.firstName + " "}${p.createdBy.lastName + " "}</b>
                                         </div>
 
-                                        <div class="col" style="padding: 0px">
+                                        <div class="col" style="padding: 0px;top: 2px">
                                             <b style="color: dimgrey; font-size: 15px">@${p.createdBy.userName}</b>
                                         </div>
 
-                                        <div class="col-auto" style="font-size: 15px;padding:0px;color: dimgrey">
+                                        <div class="col-auto"
+                                             style="font-size: 15px;padding:0px;color: dimgrey;top: 4px">
                                             <g:formatDate format=" hh:mm dd MMMM yyyy"
                                                           date="${p.lastUpdated}"/>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <g:link controller="showTopic" action="showtopic"><b><u>${p.name}</u>
+                                    <div class="row" style="font-size: 15px">
+                                        <b>Topic Name :</b><g:link controller="showTopic" action="showtopic"
+                                                                   params="[userId: p.createdBy.id, topicId: p.id]"><b><u>${p.name}</u>
                                         </b></g:link>
                                     </div>
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
 
                                         ${p.resources.description[0]}
-
+                                        ${p.resources.id[0]}
                                     </div>
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
@@ -305,20 +309,22 @@
 
 
                                         <div class="col-lg-9" style="font-size: 13px;padding: 0px">
-                                            <g:if test="${p.resources[0].class != MainApp.LinkResource}">
-                                                <g:link action="#" controller="#"><u
+                                            <g:if test="${p.resources[0].class != mainapp.LinkResource}">
+                                                <g:link controller="dashboard" action="download"
+                                                        params="[postId: p.resources[0].id]"><u
                                                         style="margin-right:22px;">Download</u></g:link>
-                                                <g:link action="#" controller="#"><u
+                                                <g:link controller="dashboard" action="isRead" params="[userId: p.createdBy.id,resourceId:p.resources[0].id]"><u
                                                         style="margin-right:22px;">Mark as read</u></g:link>
-
-                                                <g:link  controller="post" action="showPost" params="[userId: p.createdBy.id,topicId:p.id]"><u>View Post</u></g:link>
+                                                <g:link controller="post" action="showPost"
+                                                        params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
                                             </g:if>
-                                            <g:if test="${p.resources[0].class != MainApp.DocumentResource}">
+                                            <g:if test="${p.resources[0].class != mainapp.DocumentResource}">
                                                 <g:link action="#" controller="#"><u
                                                         style="margin-right:22px;">View Full Site</u></g:link>
-                                                <g:link action="#" controller="#"><u
+                                                <g:link action="#" controller="#" id="read"><u
                                                         style="margin-right:22px;">Mark as read</u></g:link>
-                                                <g:link controller="post"  action="showPost" params="[userId: p.createdBy.id,topicId:p.id]"><u>View Post</u></g:link>
+                                                <g:link controller="post" action="showPost"
+                                                        params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
                                             </g:if>
                                         </div>
                                     </div>

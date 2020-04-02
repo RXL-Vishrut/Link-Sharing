@@ -1,4 +1,4 @@
-package MainApp
+package mainapp
 
 class ResourceRating {
     Integer score

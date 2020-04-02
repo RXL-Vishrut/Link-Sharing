@@ -27,12 +27,13 @@
 
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark" style="margin-right: 55px;margin-right: 55px;border-radius: 8px">
     <a class="navbar-brand"><b>Link Sharing</b></a>
 
     <form class="form-inline" style="margin-bottom: initial">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        <button style="position:relative;bottom: 5px" class="btn btn-secondary my-2 my-sm-0"
+                type="submit">Search</button>
     </form>
 </nav>
 
@@ -41,7 +42,7 @@
          style="display: block;text-align: center;margin-bottom: 38px">${flash.message}</div>
 </g:if>
 
-
+%{--<---------------------------------------Recent Shares----------------------------------->--}%
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
@@ -55,7 +56,7 @@
                              style="background-color: #f1f1f1;margin-left: -1px;margin-right: -1px;margin-bottom: 20px">
                             <div class="row">
                                 <div class="col-lg-3">
-                                    <img height="101" width="110" style="padding-top: 7px;padding-left: 10px"
+                                    <img height="110" width="110" style="padding-top: 7px;padding-left: 10px;border-radius: 20px"
                                          src="${createLink(controller: 'login', action: 'viewImage', params: ['userId': p.createdBy.id])}"/>
                                 </div>
 
@@ -65,9 +66,13 @@
                                             <div class="row" style="padding: 4px">
                                                 <div class="col-lg-9" style="color: black">
                                                     <b>${p.createdBy.firstName + " "}${p.createdBy.lastName + "  "}</b>
-                                                    <a href="${createLink(controller: "login",action: "error")}" style="font-size: 15px;position:relative;left: 150px"><b><u>${p.topic.name}</u></b></a>
-
+                                                    <span style="font-size: 15px;position: relative;left: 120px">
+                                                        <b>Topic :</b> <a
+                                                            href="${createLink(controller: "login", action: "error")}"><b><u>${p.topic.name}</u>
+                                                        </b></a>
+                                                    </span>
                                                 </div>
+
                                                 <div style="font-size: 13px;font-weight: bold;display: inline;color: dimgrey;margin-left: 12px">
                                                     -<g:formatDate format=" hh:mm dd MMMM yyyy"
                                                                    date="${p.lastUpdated}"/>
@@ -83,43 +88,50 @@
                                             <div class="row">
                                                 <p>${p.description}</p>
                                             </div>
+                                        </div>
 
+                                        <div class="w-100"></div>
+
+                                        <div class="col-lg-12">
+                                            <span style="margin-top: 4px;font-size: 17px">
+                                                <a href="#"><i class="fa fa-facebook-f"
+                                                               style="color: white;background-color:  #3b5998;margin-right: 10px;padding: 1px"></i>
+                                                </a>
+                                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"
+                                                               style="margin-right: 10px"></i>
+                                                </a>
+                                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"
+                                                               style="color: red"></i></a>
+                                            </span>
+                                            <span style="font-size: 12px;position:relative;left: 110px">
+                                                <g:if test="${p.getClass() == mainapp.LinkResource}"><g:link
+                                                        controller="login" action="error"><b><u>View Full Site</u>
+                                                    </b></g:link>
+                                                </g:if>
+                                                <g:else><u><g:link controller="login"
+                                                                   action="error"><b>Download</b></g:link></u>
+                                                </g:else>
+                                            </span>
+                                            <span style="position:relative;left: 120px">
+                                                <a href="${createLink(controller: "login", action: "error")}"
+                                                   style="font-size:12px"><u><b>View Post</b></u></a>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" style="margin-right: 25px;margin-top: 10px;word-break: break-all;margin-left:25px ">
-                                <div>
-                                    <g:if test="${p.getClass() == MainApp.LinkResource}"><p>Link:<u><g:link controller="login" action="home">${p.url}</g:link></u>
-                                    </p>
-                                    </g:if>
-                                    <g:else><p>Download:<u><g:link controller="login" action="error">${p.filePath}</g:link></u>
-                                    </p></g:else>
-                                </div>
-                            </div>
 
-                            <div class="row" style="padding: 4px;display: contents;margin-bottom: 2px">
-                                <div class="col-lg-8" style="margin-bottom: 8px;font-size: 25px">
-                                    <a href="#"><i class="fa fa-facebook-f"
-                                                   style="color: white;background-color:  #3b5998;margin-right: 10px;padding: 1px"></i>
-                                    </a>
-                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"
-                                                   style="margin-right: 10px"></i>
-                                    </a>
-                                    <a href="#"><i class="fa fa-google-plus" aria-hidden="true"
-                                                   style="color: red"></i></a>
-                                </div>
-
-                                <div class="col-lg-4" style="display: inline;left:40px;top: 5px">
-                                    <a  href="${createLink(controller: "login",action: "error")}" style="font-size:15px"><u><b>View Post</b></u></a>
-
-                                </div>
-                            </div>
                         </div>
                     </g:each>
                 </div>
             </div>
 
+
+
+
+
+
+            %{--            <-----------------------------_TOP POSTS------------------------->--}%
 
             <div class="card border-dark mb-6 " style="max-width: 35rem;max-height: 4000px;margin-top: 50px;">
                 <div class="card-header" style="background-color: #343a40;color: white">
@@ -136,10 +148,79 @@
                     </span>
                 </div>
 
-                <div class="card-body text-dark">
-                    <h5 class="card-title">Dark card title</h5>
+                <div class="card-body text-dark" style="padding-bottom: 0px">
+                    <g:each in="${list}" var="${p}">
+                        <div class="row"
+                             style="background-color: #f1f1f1;margin-left: -1px;margin-right: -1px;margin-bottom: 20px">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <img height="110" width="110" style="padding-top: 7px;padding-left: 10px;border-radius: 20px"
+                                         src="${createLink(controller: 'login', action: 'viewImage', params: ['userId': p.resource.createdBy.id])}"/>
+                                </div>
 
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="row" style="padding: 4px">
+                                                <div class="col-lg-9" style="color: black">
+                                                    <b>${p.resource.createdBy.firstName + " "}${p.resource.createdBy.lastName + "  "}</b>
+                                                    <span style="font-size: 15px;position: relative;left: 120px">
+                                                        <b>Topic :</b> <a
+                                                            href="${createLink(controller: "login", action: "error")}"><b><u>${p.resource.topic.name}</u>
+                                                        </b></a>
+                                                    </span>
+                                                </div>
+
+                                                <div style="font-size: 13px;font-weight: bold;display: inline;color: dimgrey;margin-left: 12px">
+                                                    -<g:formatDate format=" hh:mm dd MMMM yyyy"
+                                                                   date="${p.resource.lastUpdated}"/>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="w-100"></div>
+
+                                        <div class="col-lg-12" style="margin-left: 19px;word-break: break-all;">
+                                            <div class="row">
+                                                <p>${p.resource.description}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-100"></div>
+
+                                        <div class="col-lg-12">
+                                            <span style="margin-top: 4px;font-size: 17px">
+                                                <a href="#"><i class="fa fa-facebook-f"
+                                                               style="color: white;background-color:  #3b5998;margin-right: 10px;padding: 1px"></i>
+                                                </a>
+                                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"
+                                                               style="margin-right: 10px"></i>
+                                                </a>
+                                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"
+                                                               style="color: red"></i></a>
+                                            </span>
+                                            <span style="font-size: 12px;position:relative;left: 110px">
+                                                <g:if test="${p.resource.getClass() == mainapp.LinkResource}"><g:link
+                                                        controller="login" action="error"><b><u>View Full Site</u>
+                                                    </b></g:link>
+                                                </g:if>
+                                                <g:else><u><g:link controller="login"
+                                                                   action="error"><b>Download</b></g:link></u>
+                                                </g:else>
+                                            </span>
+                                            <span style="position:relative;left: 120px">
+                                                <a href="${createLink(controller: "login", action: "error")}"
+                                                   style="font-size:12px"><u><b>View Post</b></u></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </g:each>
                 </div>
             </div>
         </div>

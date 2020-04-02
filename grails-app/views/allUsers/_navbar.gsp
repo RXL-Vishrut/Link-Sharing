@@ -1,11 +1,11 @@
-<%@ page import="MainApp.Topic; java.beans.Visibility" %>
-<nav class="navbar navbar-dark bg-dark">
+<%@ page import="mainapp.Topic; java.beans.Visibility" %>
+<nav class="navbar navbar-dark bg-dark" style="margin-right: 55px;margin-right: 55px;border-radius: 8px">
     <div class="container-fluid">
 
         <div class="col-lg-3">
 %{--            <a class="navbar-brand"><b>Link Sharing</b></a>--}%
 
-            <g:link class="navbar-brand" controller="dashboard" action="subscribedTopics"><b>Link Sharing</b></g:link>
+            <g:link class="navbar-brand" controller="dashboard" action="show"><b>Link Sharing</b></g:link>
         </div>
 
         <div class="col-lg-5" style="max-width: fit-content;display: inline-flex">

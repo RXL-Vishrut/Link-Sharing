@@ -14,14 +14,14 @@
                             %{--                    <g:if test="${p.topic.createdBy}"--}%
                             <div class="row">
                                 <div class="col-lg-3">
-                                    <img height="90" width="90"
+                                    <img height="90" width="90" style="border-radius: 15px"
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p.topic.createdBy.id])}"/>
                                 </div>
 
                                 <div class="col-lg-9">
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <g:link controller="showTopic"
+                                        <div class="col-lg-12" style="font-size: 15px">
+                                            <b>Topic Name :</b><g:link controller="showTopic"
                                                     action="showtopic" params="[userId:p.topic.createdBy.id,topicId:p.topic.id]"><b><u>${p.topic.name}</u>
                                             </b></g:link>
                                         </div>
@@ -31,26 +31,26 @@
                                         <div class="col-lg-5"><b style="color: dimgrey">@${p.topic.createdBy.userName}</b>
                                         </div>
 
-                                        <div class="col" style="display: contents"><b>Subscriptions</b></div>
+                                        <div class="col" style="display: contents;font-size: 15px"><b>Subscriptions</b></div>
 
-                                        <div class="col"><b>Posts</b></div>
+                                        <div class="col" style="font-size: 15px"><b>Posts</b></div>
 
                                         <div class="w-100"></div>
 
                                         <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe" params="[userId:p.user.id, topicId:p.topic.id]"><b><u>Unsubscribe</u></b></g:link></div>
 
-                                        <div class="col-lg-4" style="text-align: center">50</div>
+                                        <div class="col-lg-4" style="position:relative;left: 20px">50</div>
 
                                         <div class="col-lg-3" >40</div>
                                     </div>
 
                                     <div class="row" style="margin-top: 4px">
                                         <div class="col">
-                                            <g:select name="visibility" from="${enums.Visibility.values()}"></g:select>
+                                            <g:select name="visibility" id="visibility" from="${enums.Visibility.values()}"></g:select>
                                         </div>
 
                                         <div class="col">
-                                            <g:select name="seriousness" from="${enums.Seriousness.values()}"></g:select>
+                                            <g:select name="seriousness" id="seriousness" from="${enums.Seriousness.values()}"></g:select>
                                         </div>
 
                                         <div class="col">

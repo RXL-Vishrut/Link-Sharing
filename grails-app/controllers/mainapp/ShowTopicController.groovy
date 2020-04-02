@@ -1,11 +1,5 @@
 package mainapp
 
-import MainApp.DocumentResource
-import MainApp.LinkResource
-import MainApp.Resource
-import MainApp.Subscription
-import MainApp.Topic
-import MainApp.User
 
 class ShowTopicController {
     static defaultAction = "showtopic"
@@ -36,12 +30,10 @@ class ShowTopicController {
             inList("topic",t)
         }
         List<User> u =User.findAllById(params.userId)
-        println(u)
         List l=[]
         l.add(subscriptionsOfUser[0])
         l.add(topicsCreatedByUser[0])
 
-        println(users)
         render(view: "/showTopic/topic", model: [list:users,list1:l,list2:postOfTopic,list3:u,list4:userSubscriptions])
     }
 

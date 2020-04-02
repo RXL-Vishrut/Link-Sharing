@@ -1,10 +1,11 @@
 package mainapp
 
-import MainApp.User
+
 
 class AllUsersController {
 
     static defaultAction = "userDetails"
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def userDetails(){
         def users = User.list()

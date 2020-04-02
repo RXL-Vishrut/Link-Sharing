@@ -1,0 +1,30 @@
+
+.navbar{
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+
+a.navbar-brand{
+    max-width: 100px;
+    padding-left: 30px;
+    font-weight: bold;
+    font-size: 30px;
+    font-family:cursive Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.container {
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+@media screen and (max-width: 600px) {
+    .topnav a {
+        float: none;
+        width: 100%;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}

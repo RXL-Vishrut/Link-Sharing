@@ -1,9 +1,9 @@
-<%@ page import="MainApp.Topic; java.beans.Visibility" %>
-<nav class="navbar navbar-dark bg-dark">
+<%@ page import="mainapp.Topic; java.beans.Visibility" %>
+<nav class="navbar navbar-dark bg-dark" style="margin-right: 55px;margin-right: 55px;border-radius: 8px">
     <div class="container-fluid">
 
         <div class="col-lg-3">
-            <a class="navbar-brand"><b>Link Sharing</b></a>
+            <a class="navbar-brand"><b>Dashboard</b></a>
 
         </div>
 
@@ -240,10 +240,10 @@
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>PROFILE</b></a>
+                    <a class="dropdown-item"  href="${createLink(controller: "profile",action: "showProfile")}"><b>PROFILE</b></a>
                     <g:if test="${session.getAttribute("userIsAdmin")}">
                         <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>TOPICS</b></a>
-                        <a class="dropdown-item"  href="${createLink(controller: "logout",action: "logout")}"><b>POSTS</b></a>
+                        <a class="dropdown-item"  href="${createLink(controller: "post",action: "showPost")}"><b>POSTS</b></a>
                         <a class="dropdown-item"  href="${createLink(controller: "allUsers",action: "userDetails")}"><b>USERS</b></a>
 
                     </g:if>
