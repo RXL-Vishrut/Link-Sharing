@@ -6,8 +6,8 @@ class ProfileController {
     static defaultAction = "show"
 
     def show(){
-        User user = User.findByEmail(session.userEmail)
 
+        User user = User.findByEmail(session.userEmail)
         render(view:"/editProfile/show")
     }
     def updateInfo(){
@@ -38,6 +38,15 @@ class ProfileController {
         }
 
     }
-
-    
+    def userProfile(){
+        User user = User.findByEmail(session.userEmail)
+        List<Resource> postsOfUser = Resource.findAllByCreatedBy(user)
+        List<Topic> topicsCreatedByUser = Topic.createCriteria().list(){
+            eq("createdBy",user)
+            eq("visibility",enums.Visibility.Public)
+            order("lastUpdated","desc")
+        }
+        List<Subscription> subscriptionsOfUser = Subscription.findAllByUser(user)
+        render(view: "/userProfile/show",model: [postsOfUser:postsOfUser ,topicsCreatedByUser:topicsCreatedByUser,subscriptionsOfUser:subscriptionsOfUser])
+    }
 }

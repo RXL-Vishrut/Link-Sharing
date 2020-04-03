@@ -9,6 +9,9 @@ class PostController {
         User user = User.findById(params.userId)
         Topic topic = Topic.findById(params.topicId)
        Resource resource = Resource.findById(params.resourceId)
+       println(user)
+       println topic
+       println resource
        def trendingTopics = Resource.createCriteria().list(max:5){
            projections{
                count("id","t")

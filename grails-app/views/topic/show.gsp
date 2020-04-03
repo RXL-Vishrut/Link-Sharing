@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <asset:stylesheet src="topic.css"/>
     <asset:javascript src="topic.js"/>
-    <title>mainapp.Topic Page</title>
+    <title>Topic Page</title>
 </head>
 
 <body>
@@ -43,7 +43,7 @@
                 <div class="card-body" style="padding: 10px;margin-left: 16px;margin-right: 16px">
                     <div class="row" style="background-color: #f1f1f1">
                         <div class="col-lg-3">
-                            <img height="90" width="90"
+                            <img height="90" width="90" style="border-radius: 13px"
                                  src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': topic.createdBy.id])}"/>
                         </div>
 
@@ -117,12 +117,12 @@
                     <span><b>Users :</b><b style="color: white">"${topic.name}"</b></span>
                     <span style="float:right;"><b><a href="#"><u style="color: white">View All</u></a></b></span>
                 </div>
-                <g:each in="${subscribedUsers}" var="user">
+                <g:each in="${subscribedUsers}" var="${user}">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" style="margin:5px">
                             <div class="row" style="background-color: #f1f1f1">
                                 <div class="col-lg-3">
-                                    <img height="90" width="90"
+                                    <img height="90" width="90" style="border-radius: 13px"
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': user.id])}"/>
                                 </div>
 
@@ -149,10 +149,10 @@
                                         </div>
                                         <div class="w-100"></div>
                                         <div class="col">
-                                            <ls:subscriptionCount userId="user.id"></ls:subscriptionCount>
+                                            <ls:subscriptionCount userId="${user.id}"></ls:subscriptionCount>
                                         </div>
                                         <div class="col">
-                                            <ls:topicCount userId="user.id"></ls:topicCount>
+                                            <ls:topicCount userId="${user.id}"></ls:topicCount>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                             <div class="row"
                                  style="background-color: #f1f1f1;margin-bottom: 10px;margin-right: 5px;margin-left: 5px">
                                 <div class="col-lg-3">
-                                    <img height="90" width="90"
+                                    <img height="110" width="90" style="border-radius: 13px;margin-top: 5px"
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': post.createdBy.id])}"/>
                                 </div>
 
@@ -234,20 +234,21 @@
 
                                         <div class="col-lg-9" style="font-size: 13px;padding: 0px">
                                             <g:if test="${post.class != mainapp.LinkResource}">
-                                                <g:link action="#" controller="#"><u
+                                                <g:link controller="dashboard" action="download"
+                                                        params="[postId: post.id]"><u
                                                         style="margin-right:22px;">Download</u></g:link>
                                                 <g:link action="#" controller="#"><u
                                                         style="margin-right:22px;">Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
-                                                        params="[userId: post.createdBy.id, topicId: post.topic.id]"><u>View Post</u></g:link>
+                                                        params="[userId: post.createdBy.id, topicId: post.topic.id,resourceId:post.id]"><u>View Post</u></g:link>
                                             </g:if>
                                             <g:if test="${post.class != mainapp.DocumentResource}">
-                                                <g:link action="#" controller="#"><u
-                                                        style="margin-right:22px;">View Full Site</u></g:link>
+                                                <a style="margin-right: 22px" href="${post.url}"
+                                                   target="_blank"><u>View full site</u></a>
                                                 <g:link action="#" controller="#"><u
                                                         style="margin-right:22px;">Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
-                                                        params="[userId: post.createdBy.id, topicId: post.topic.id]"><u>View Post</u></g:link>
+                                                        params="[userId: post.createdBy.id, topicId: post.topic.id,resourceId:post.id]"><u>View Post</u></g:link>
                                             </g:if>
                                         </div>
                                     </div>

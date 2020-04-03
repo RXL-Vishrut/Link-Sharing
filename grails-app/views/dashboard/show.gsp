@@ -44,7 +44,7 @@
                 <div class="card-body text-dark " style="padding: 12px;margin-right: 15px">
                     <div class="row" style="background-color: #f1f1f1;margin-left: 1px">
                         <div class="col-lg-4">
-                            <a href="${createLink(controller: "profile", action: "show")}">
+                            <a href="${createLink(controller: "profile", action: "userProfile")}">
                                 <img style="width: 100px;height: 110px;border-radius: 8px"
                                      src="data:image/jpg;base64,${session.getAttribute("userPhoto")}"/></a>
                         </div>
@@ -303,7 +303,6 @@
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
                                         ${resource.description}
-                                        ${resource.id}
                                     </div>
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
@@ -335,7 +334,7 @@
                                                 <g:link controller="dashboard" action="isRead"
                                                         style="margin-right:22px;"><u>Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
-                                                        params="[userId: resource.createdBy.id, topicId: resource.id, resourceId: resource.id]"><u>View Post</u></g:link>
+                                                        params="[userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id]"><u>View Post</u></g:link>
                                             </g:if>
                                         </div>
                                     </div>

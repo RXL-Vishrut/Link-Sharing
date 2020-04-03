@@ -109,13 +109,17 @@
                                            style="color: red"></i></a>
                         </div>
 
+
                         <div class="col-lg-8" style="top: 5px;left: 50px">
                             <a style="font-size: 15px;margin-right: 3px"
                                href="${createLink(controller: "login", action: "error")}"><u><b>Delete</b></u></a>
                             <a style="font-size: 15px;margin-right: 3px"
                                href="${createLink(controller: "login", action: "error")}"><u><b>Edit</b></u></a>
-                            <a style="font-size: 15px;margin-right: 3px"
-                               href="${createLink(controller: "login", action: "error")}"><u><b>Download</b></u></a>
+                            <g:if test="${resource.class == mainapp.DocumentResource}">
+                                <a style="font-size: 15px;margin-right: 3px"
+                                   href="${createLink(controller: "dashboard", action: "download")}"><u><b>Download</b></u></a>
+                            </g:if>
+
                             <a style="font-size: 15px;margin-right: 3px"
                                href="${createLink(controller: "login", action: "error")}"><u><b>View Full Site</b></u></a>
                         </div>
@@ -222,7 +226,6 @@
                                                     </b></g:link>
                                                 </div>
                                             </div>
-
                                             <div class="row" style="font-size: 15px">
                                                 <div class="col-lg-5"><b
                                                         style="color: dimgrey">@${p[1].createdBy.userName}</b>
@@ -237,9 +240,7 @@
 
                                                 <div class="col-lg-5">
                                                     <g:if test="${list.topic.name.contains(p[1].name)}">
-                                                        <g:link controller="dashboard" action="unsubscribe"
-                                                                params="[userId: session.getAttribute('userId'), topicId: p[1].id]"><b><u>Unsubscribe</u>
-                                                        </b></g:link>
+                                                       <b><u><ls:showSubscribe topicId="${p[1].id}" userId="${p[1].createdBy.id}"></ls:showSubscribe> </u></b>
                                                     </g:if>
                                                     <g:else>
                                                         <g:link controller="dashboard"
@@ -249,9 +250,9 @@
                                                     </g:else>
                                                 </div>
 
-                                                <div class="col-lg-4" style="text-align: center">50</div>
+                                                <div class="col-lg-4" style="text-align: center"><ls:subscriptionCount topicId="${p[1].id}"></ls:subscriptionCount> </div>
 
-                                                <div class="col-lg-3">40</div>
+                                                <div class="col-lg-3"><ls:postCount topicId="${p[1].id}"></ls:postCount> </div>
 
                                             </div>
                                         </div>
@@ -265,33 +266,7 @@
         </div>
     </div>
 </div>
-%{--<script>--}%
-%{--    var rate = function(){--}%
-%{--        $.ajax({--}%
-%{--            url: "/post/rating/",--}%
-%{--            type: "POST",--}%
-%{--            data:{"value": $("input[type='radio'][name='rating']:checked").val() },--}%
-%{--            success: function (data) {--}%
-%{--                if(data.success==true){--}%
-%{--                    alert("success")--}%
-%{--                }else{--}%
-%{--                    alert("failed")--}%
-%{--                }--}%
-%{--            },--}%
-%{--            error: function () {--}%
-%{--                alert("Topic save failed")--}%
-%{--            }--}%
 
-%{--        });--}%
-%{--    };--}%
-
-%{--    $(document).ready(function(){--}%
-%{--        $("#star1,#star2,#star3,#star4,#star5").click(function(){--}%
-%{--            console.log("done");--}%
-%{--            rate();--}%
-%{--        })--}%
-%{--    });--}%
-%{--</script>--}%
 </body>
 
 </html>
