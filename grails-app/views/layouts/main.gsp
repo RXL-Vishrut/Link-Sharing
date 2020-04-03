@@ -261,7 +261,7 @@
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item"
-                       href="${createLink(controller: "profile", action: "showProfile")}"><b>PROFILE</b></a>
+                       href="${createLink(controller: "profile", action: "show")}"><b>PROFILE</b></a>
                     <g:if test="${session.getAttribute("userIsAdmin")}">
                         <a class="dropdown-item"
                            href="${createLink(controller: "logout", action: "logout")}"><b>TOPICS</b></a>

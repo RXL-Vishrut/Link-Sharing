@@ -44,7 +44,7 @@
                 <div class="card-body text-dark " style="padding: 12px;margin-right: 15px">
                     <div class="row" style="background-color: #f1f1f1;margin-left: 1px">
                         <div class="col-lg-4">
-                            <a href="${createLink(controller: "profile", action: "showProfile")}">
+                            <a href="${createLink(controller: "profile", action: "show")}">
                                 <img style="width: 100px;height: 110px;border-radius: 8px"
                                      src="data:image/jpg;base64,${session.getAttribute("userPhoto")}"/></a>
                         </div>
@@ -70,13 +70,11 @@
                                     </div>
 
                                     <div class="col-lg-6" style="text-align: center;position:relative;right: 10px">
-                                        %{--                                        <g:link controller="#" action="#"><b>${list2[0]}</b></g:link>--}%
-                                        <ls:subscriptionCount userId="user.id"></ls:subscriptionCount>
+                                        <b><ls:subscriptionCount userId="${user.id}"></ls:subscriptionCount></b>
                                     </div>
 
                                     <div class="col-lg-6" style="text-align: center;position:relative;right: 40px">
-                                        %{--                                        <g:link controller="#" action="#"><b>${list2[1]}</b></g:link>--}%
-                                        <ls:topicCount userId="user.id"></ls:topicCount>
+                                        <b><ls:topicCount userId="${user.id}"></ls:topicCount></b>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +85,7 @@
             </div>
 
 
-            <g:render template="subscription"></g:render>
+            <g:render template="subscription" model="[userSubscriptions: userSubscriptions]"></g:render>
 
 
 
@@ -100,15 +98,15 @@
                 </div>
 
                 <div class="card-body text-dark" style="height: 284px;overflow: scroll">
-                    <g:if test="${list1}">
-                        <g:each in="${list1}" var="${p}">
+                    <g:if test="${trendingTopics}">
+                        <g:each in="${trendingTopics}" var="trendingTopic">
                             <ul class="list-group list-group-flush">
-                                <g:if test="${p[1].createdBy.email == session.userEmail}">
+                                <g:if test="${trendingTopic[1].createdBy.email == session.userEmail}">
                                     <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <img height="90" width="90" style="border-radius: 8px"
-                                                     src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
+                                                     src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': trendingTopic[1].createdBy.id])}"/>
                                             </div>
 
                                             <div class="col-lg-9" style="font-size: 15px">
@@ -116,9 +114,9 @@
                                                     <div class="col-lg-12">
                                                         <div class="hidden-field" hidden>
                                                             <g:textField name="topic" class="subscriptionName"
-                                                                         placeholder="${p[1].name}"
+                                                                         placeholder="${trendingTopic[1].name}"
                                                                          style="width: 180px"></g:textField>
-                                                            <div hidden>${p[1].id}</div>
+                                                            <div hidden>${trendingTopic[1].id}</div>
                                                             <button type="submit" name="save"
                                                                     class="subscriptionSave">Save</button>
                                                             <button type="submit" name="cancel"
@@ -128,7 +126,7 @@
                                                         <div class="topic">
                                                             <g:link controller="topic"
                                                                     action="show"
-                                                                    params="[userId: p[1].createdBy.id, topicId: p[1].id]"><b><u>${p[1].name}</u>
+                                                                    params="[userId: trendingTopic[1].createdBy.id, topicId: trendingTopic[1].id]"><b><u>${trendingTopic[1].name}</u>
                                                             </b></g:link>
                                                         </div>
                                                     </div>
@@ -136,7 +134,7 @@
 
                                                 <div class="row Item-2">
                                                     <div class="col-lg-5"><b
-                                                            style="color: dimgrey">@${p[1].createdBy.userName}</b>
+                                                            style="color: dimgrey">@${trendingTopic[1].createdBy.userName}</b>
                                                     </div>
 
                                                     <div class="col" style="display: contents"><b>Subscriptions</b>
@@ -147,16 +145,16 @@
                                                     <div class="w-100"></div>
 
                                                     <div class="col-lg-5">
-                                                        <g:link controller="dashboard"
-                                                                action="unsubscribe"><b><u>Unsubscribe</u>
-                                                        </b></g:link></div>
-
+                                                        <b><u><ls:showSubscribe
+                                                                topicId="${trendingTopic[1].id}"></ls:showSubscribe></u></b>
+                                                    </div>
                                                     <div class="col-lg-4"
-                                                         style="text-align: center"><ls:subscriptionCount
-                                                            topicId="${p[1].id}"></ls:subscriptionCount></div>
+                                                         style="text-align: center"><b><u><ls:subscriptionCount
+                                                            topicId="${trendingTopic[1].id}"></ls:subscriptionCount></u>
+                                                    </b></div>
 
                                                     <div class="col-lg-3"><ls:postCount
-                                                            topicId="${p[1].id}"></ls:postCount></div>
+                                                            topicId="${trendingTopic[1].id}"></ls:postCount></div>
                                                 </div>
 
                                                 <div class="row Item-3" style="margin-top: 4px">
@@ -171,7 +169,6 @@
                                                     </div>
 
                                                     <div class="col" style="left: 20px">
-
                                                         <a class="subscriptionInvite"><i class="fa fa-envelope fa-lg "
                                                                                          aria-hidden="true"
                                                                                          style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
@@ -191,16 +188,12 @@
                                     </li>
                                 </g:if>
 
-
-
-
-
                                 <g:else>
                                     <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <img height="90" width="90" style="border-radius: 15px"
-                                                     src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
+                                                     src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': trendingTopic[1].createdBy.id])}"/>
                                             </div>
 
                                             <div class="col-lg-9">
@@ -208,14 +201,14 @@
                                                     <div class="col-lg-12">
                                                         <g:link controller="topic"
                                                                 action="show"
-                                                                params="[userId: p[1].createdBy.id, topicId: p[1].id]"><b><u>${p[1].name}</u>
+                                                                params="[userId: trendingTopic[1].createdBy.id, topicId: trendingTopic[1].id]"><b><u>${trendingTopic[1].name}</u>
                                                         </b></g:link>
                                                     </div>
                                                 </div>
 
                                                 <div class="row" style="font-size: 15px">
                                                     <div class="col-lg-5"><b
-                                                            style="color: dimgrey">@${p[1].createdBy.userName}</b>
+                                                            style="color: dimgrey">@${trendingTopic[1].createdBy.userName}</b>
                                                     </div>
 
                                                     <div class="col" style="display: contents"><b>Subscriptions</b>
@@ -226,26 +219,19 @@
                                                     <div class="w-100"></div>
 
                                                     <div class="col-lg-5">
-                                                        <g:if test="${list.topic.name.contains(p[1].name)}">
-                                                            <g:link controller="dashboard" action="unsubscribe"
-                                                                    params="[userId: session.getAttribute('userId'), topicId: p[1].id]"><b><u>Unsubscribe</u>
-                                                            </b></g:link>
-                                                        </g:if>
-                                                        <g:else>
-                                                            <g:link controller="dashboard"
-                                                                    action="subscribe"
-                                                                    params="[userId: session.getAttribute('userId'), topicId: p[1].id]"><b><u>Subscribe</u>
-                                                            </b></g:link>
-                                                        </g:else>
+                                                        <u><b><ls:showSubscribe
+                                                                topicId="${trendingTopic[1].id}"></ls:showSubscribe></b>
+                                                        </u>
                                                     </div>
 
                                                     <div class="col-lg-4"
-                                                         style="text-align: center"><ls:subscriptionCount
-                                                            topicId="${p[1].id}"></ls:subscriptionCount></div>
+                                                         style="text-align: center"><u><b><ls:subscriptionCount
+                                                            topicId="${trendingTopic[1].id}"
+                                                            userId="${trendingTopic[1].createdBy.id}"></ls:subscriptionCount></b>
+                                                    </u></div>
 
                                                     <div class="col-lg-3"><ls:postCount
-                                                            topicId="${p[1].id}"></ls:postCount></div>
-
+                                                            topicId="${trendingTopic[1].id}"></ls:postCount></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -283,41 +269,41 @@
                 </div>
 
                 <div class="card-body text-dark" style="padding: 5px;margin-top: 5px">
-                    <g:each in="${PublicTopicsNotCreatedByUser}" var="${p}">
-                        <g:if test="${p.resources.description[0] != null}">
+                    <g:each in="${resources}" var="${resource}">
+                        <g:if test="${resource.description != null}">
                             <div class="row"
                                  style="background-color: #f1f1f1;margin-bottom: 10px;margin-right: 5px;margin-left: 5px">
                                 <div class="col-lg-3" style="margin-top: 10px">
                                     <img height="110" width="90" style="border-radius: 15px"
-                                         src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p.createdBy.id])}"/>
+                                         src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': resource.createdBy.id])}"/>
                                 </div>
 
                                 <div class="col-lg-9">
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
                                         <div class="col" style="padding: 0px;position:relative;top: 3px">
-                                            <b>${p.createdBy.firstName + " "}${p.createdBy.lastName + " "}</b>
+                                            <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName + " "}</b>
                                         </div>
 
                                         <div class="col" style="padding: 0px;top: 2px">
-                                            <b style="color: dimgrey; font-size: 15px">@${p.createdBy.userName}</b>
+                                            <b style="color: dimgrey; font-size: 15px">@${resource.createdBy.userName}</b>
                                         </div>
 
                                         <div class="col-auto"
                                              style="font-size: 15px;padding:0px;color: dimgrey;top: 4px">
                                             <g:formatDate format=" hh:mm dd MMMM yyyy"
-                                                          date="${p.lastUpdated}"/>
+                                                          date="${resource.lastUpdated}"/>
                                         </div>
                                     </div>
 
                                     <div class="row" style="font-size: 15px">
                                         <b>Topic Name :</b><g:link controller="topic" action="show"
-                                                                   params="[userId: p.createdBy.id, topicId: p.id]"><b><u>${p.name}</u>
+                                                                   params="[userId: resource.createdBy.id, topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
                                         </b></g:link>
                                     </div>
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
-                                        ${p.resources.description[0]}
-                                        ${p.resources.id[0]}
+                                        ${resource.description}
+                                        ${resource.id}
                                     </div>
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
@@ -333,23 +319,23 @@
 
 
                                         <div class="col-lg-9" style="font-size: 13px;padding: 0px">
-                                            <g:if test="${p.resources[0].class == mainapp.DocumentResource}">
+                                            <g:if test="${resource.class == mainapp.DocumentResource}">
                                                 <g:link controller="dashboard" action="download"
-                                                        params="[postId: p.resources[0].id]"><u
+                                                        params="[postId: resource.id]"><u
                                                         style="margin-right:22px;">Download</u></g:link>
                                                 <g:link controller="dashboard" action="isRead"
                                                         style="margin-right:22px;"><u>Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
-                                                        params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
+                                                        params="[userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id]"><u>View Post</u></g:link>
                                             </g:if>
 
-                                            <g:if test="${p.resources[0].class == mainapp.LinkResource}">
-                                                <a style="margin-right: 22px" href="${p.resources[0].url}"
+                                            <g:if test="${resource.class == mainapp.LinkResource}">
+                                                <a style="margin-right: 22px" href="${resource.url}"
                                                    target="_blank"><u>View full site</u></a>
                                                 <g:link controller="dashboard" action="isRead"
                                                         style="margin-right:22px;"><u>Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
-                                                        params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
+                                                        params="[userId: resource.createdBy.id, topicId: resource.id, resourceId: resource.id]"><u>View Post</u></g:link>
                                             </g:if>
                                         </div>
                                     </div>

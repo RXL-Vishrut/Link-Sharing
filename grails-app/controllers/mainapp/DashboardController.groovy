@@ -11,35 +11,31 @@ class DashboardController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def show() {
-
+        if(!session.userId){
+            redirect(controller: "login" , action: "home")
+            return
+        }
         User user = User.findByEmail(session.userEmail)
-        List PublicTopicsNotCreatedByUser = Topic.createCriteria().list() {
-            and {
-                not { 'in'("createdBy", user) }
-                eq("visibility", Visibility.Public)
-            }
+        List<Topic> subscribedTopics = Subscription.findAllByUser(user)*.topic
+        List<Resource> resources = Resource.createCriteria().list(){
+            'in'("topic.id",subscribedTopics*.id)
+            ne("createdBy.id",user.id)
+
         }
-//        List<Topic> topics = Topic.findAllByVisibility(enums.Visibility.Public)
-//        List<Resource> resources = Resource.createCriteria().list ()
-        List<Resource> resources = Resource.findAllByCreatedByNotEqual(user)
-        List<Topic> t = Topic.findAllByVisibility('Private')
-//        List<Resource> res = Resource.findAllByTopicNotInList(t)
 //        <----------------subscriptions------------------->
-        def userSubscriptions = Subscription.createCriteria().list() {
-            and {
-                inList("user", user)
-                order("dateCreated", "desc")
-            }
+        List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
+            eq("user.id", user.id)
+            order("dateCreated", "desc")
         }
-        def trendingTopics = Resource.createCriteria().list(max: 5) {
+        List<Resource> trendingTopics = Resource.createCriteria().list(max: 5) {
             projections {
-                count("id", "t")
+                count("id", "count")
             }
             groupProperty("topic")
-            order("t", "desc")
+            order("count", "desc")
         }
 
-        render(view: "/dashboard/show", model: [list: userSubscriptions, list1: trendingTopics, user:user, PublicTopicsNotCreatedByUser: PublicTopicsNotCreatedByUser])
+        render(view: "/dashboard/show", model: [resources: resources, userSubscriptions: userSubscriptions, user: user, trendingTopics: trendingTopics ])
     }
 
     def viewImage() {
@@ -88,7 +84,6 @@ class DashboardController {
     }
 
 
-
     def unsubscribe() {
         User user = User.findById(params.userId)
         Topic topic = Topic.findById(params.topicId)
@@ -99,8 +94,7 @@ class DashboardController {
     }
 
     def subscribe() {
-        User user = User.get(params.userId)
-        println(user.id)
+        User user = User.get(session.userId)
         Topic topic = Topic.get(params.topicId)
         println(topic.id)
         Subscription sub = new Subscription(user: user, topic: topic, seriousness: Seriousness.Very_Serious.name())
@@ -126,7 +120,7 @@ class DashboardController {
         User usr = User.get(params.userId)
         Resource resource = Resource.get(params.resourceId)
         ReadingItem readItem = new ReadingItem(user: usr, resource: resource, isRead: params.value)
-        readItem.save(flush:true,failOnError:true)
+        readItem.save(flush: true, failOnError: true)
         render([success: true] as JSON)
     }
 

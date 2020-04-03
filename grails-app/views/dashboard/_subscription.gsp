@@ -5,17 +5,17 @@
     </div>
 
     <div class="card-body text-dark overflow-auto" style="padding: 15px;height: 319px;overflow: scroll">
-        <g:if test="${list}">
-            <g:each in="${list.take(5)}" var="${p}">
+        <g:if test="${userSubscriptions}">
+            <g:each in="${userSubscriptions.take(5)}" var="${userSubscription}">
 
                 <ul class="list-group list-group-flush">
-                    <g:if test="${p.user.email == session.userEmail}">
+                    <g:if test="${userSubscription.user.email == session.userEmail}">
                         <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
                             %{--                    <g:if test="${p.topic.createdBy}"--}%
                             <div class="row">
                                 <div class="col-lg-3">
                                     <img height="90" width="90" style="border-radius: 15px"
-                                         src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p.topic.createdBy.id])}"/>
+                                         src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': userSubscription.user.id])}"/>
                                 </div>
 
 
@@ -25,9 +25,9 @@
                                         <div class="col-lg-12">
                                             <div class="hidden-field" hidden>
                                                 <g:textField name="topic" class="subscriptionName"
-                                                             placeholder="${p.topic.name}"
+                                                             placeholder="${userSubscription.topic.name}"
                                                              style="width: 180px"></g:textField>
-                                                <div hidden>${p.topic.id}</div>
+                                                <div hidden>${userSubscription.topic.id}</div>
                                                 <button type="submit" name="save"
                                                         class="subscriptionSave">Save</button>
                                                 <button type="submit" name="cancel"
@@ -37,7 +37,7 @@
                                             <div class="topic">
                                                 <g:link controller="topic"
                                                         action="show"
-                                                        params="[userId: p.topic.createdBy.id, topicId: p.topic.id]"><b><u>${p.topic.name}</u>
+                                                        params="[userId: userSubscription.user.id, topicId: userSubscription.topic.id]"><b><u>${userSubscription.topic.name}</u>
                                                 </b></g:link>
                                             </div>
                                         </div>
@@ -45,7 +45,7 @@
 
                                     <div class="row Item-2" style="font-size: 15px">
                                         <div class="col-lg-5"><b
-                                                style="color: dimgrey">@${p.topic.createdBy.userName}</b>
+                                                style="color: dimgrey">@${userSubscription.user.userName}</b>
                                         </div>
 
                                         <div class="col" style="display: contents;font-size: 15px"><b>Subscriptions</b>
@@ -56,14 +56,14 @@
                                         <div class="w-100"></div>
 
                                         <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe"
-                                                                      params="[userId: p.user.id, topicId: p.topic.id]"><b><u>Unsubscribe</u>
+                                                                      params="[userId: userSubscription.user.id, topicId: userSubscription.topic.id]"><b><u>Unsubscribe</u>
                                             </b></g:link></div>
 
                                         <div class="col-lg-4" style="position:relative;left: 20px"><ls:subscriptionCount
-                                                topicId="${p.topic.id}"></ls:subscriptionCount></div>
+                                                topicId="${userSubscription.topic.id}"></ls:subscriptionCount></div>
 
                                         <div class="col-lg-3"><ls:postCount
-                                                topicId="${p.topic.id}"></ls:postCount></div>
+                                                topicId="${userSubscription.topic.id}"></ls:postCount></div>
                                     </div>
 
                                     <div class="row Item-3" style="margin-top: 4px">
@@ -105,7 +105,7 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <img height="90" width="90"
-                                         src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
+                                         src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': userSubscription.user.id])}"/>
                                 </div>
 
                                 <div class="col-lg-9">
@@ -113,14 +113,14 @@
                                         <div class="col-lg-12">
                                             <g:link controller="topic"
                                                     action="show"
-                                                    params="[topicId: p.topic.id]"><b><u>${p.topic.name}</u>
+                                                    params="[topicId: userSubscription.topic.id]"><b><u>${userSubscription.topic.name}</u>
                                             </b></g:link>
                                         </div>
                                     </div>
 
                                     <div class="row" style="font-size: 15px">
                                         <div class="col-lg-5"><b
-                                                style="color: dimgrey">@${p.topic.createdBy.userName}</b>
+                                                style="color: dimgrey">@${userSubscription.user.userName}</b>
                                         </div>
 
                                         <div class="col"><b>Subscriptions</b></div>
@@ -130,7 +130,7 @@
                                         <div class="w-100"></div>
 
                                         <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe"
-                                                                      params="[userId: p.user.id, topicId: p.topic.id]"><b><u>Unsubscribe</u>
+                                                                      params="[userId: userSubscription.user.id, topicId: userSubscription.topic.id]"><b><u>Unsubscribe</u>
                                             </b></g:link></div>
 
                                         <div class="col-lg-4" style="text-align: center">50</div>

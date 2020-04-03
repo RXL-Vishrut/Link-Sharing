@@ -62,11 +62,11 @@
                                     </div>
 
                                     <div class="col-lg-6" style="text-align: center;position:relative;right: 10px">
-                                        <g:link controller="#" action="#"><b>${list[0]}</b></g:link>
+                                        <ls:subscriptionCount userId="${session.getAttribute("userId")}"></ls:subscriptionCount>
                                     </div>
 
                                     <div class="col-lg-6" style="text-align: center;position:relative;right: 40px">
-                                        <g:link controller="#" action="#"><b>${list[1]}</b></g:link>
+                                        <ls:topicCount userId="${session.getAttribute("userId")}"></ls:topicCount>
                                     </div>
                                 </div>
                             </div>
@@ -76,8 +76,8 @@
             </div>
         </div>
         <div class="col-lg-7" style="position:relative;left: 70px">
-            <g:render template="profile"></g:render>
-            <g:render template="changePassword"></g:render>
+            <g:render template="/editProfile/profile"></g:render>
+            <g:render template="/editProfile/changePassword"></g:render>
         </div>
 
     </div>

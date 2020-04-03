@@ -3,25 +3,12 @@ package mainapp
 
 class ProfileController {
 
-    static defaultAction = "showProfile"
+    static defaultAction = "show"
 
-    def showProfile(){
+    def show(){
         User user = User.findByEmail(session.userEmail)
-        def subscriptionsOfUser = Subscription.createCriteria().list(){
-            projections{count("user")}
-            inList("user",user)
-        }
 
-        def topicsCreatedByUser = Topic.createCriteria().list(){
-            projections{count("createdBy")}
-            inList("createdBy",user)
-        }
-
-        List l=[]
-        l.add(subscriptionsOfUser[0])
-        l.add(topicsCreatedByUser[0])
-
-        render(view:"profile",model:[list:l])
+        render(view:"/editProfile/show")
     }
     def updateInfo(){
         User user = User.findByEmail(session.userEmail)
@@ -47,11 +34,10 @@ class ProfileController {
             redirect(controller:"dashboard", action:"show")
         }else{
             flash.message = "Password didn't matched"
-            redirect(controller:"profile", action:"showProfile")
+            redirect(controller:"profile", action:"show")
         }
 
     }
-
 
     
 }
