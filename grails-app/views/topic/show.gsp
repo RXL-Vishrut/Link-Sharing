@@ -47,7 +47,7 @@
                                  src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': topic.createdBy.id])}"/>
                         </div>
 
-                        <div class="col-xs-9">
+                        <div class="col-lg-9">
                             <div class="row">
                                 <div class="col">
                                     <g:link controller="topic" action="show"><b><u>${topic.name}</u>
@@ -145,7 +145,7 @@
                                         </div>
 
                                         <div class="col">
-                                            <b style="color: dimgrey">Posts</b>
+                                            <b style="color: dimgrey">Topics</b>
                                         </div>
                                         <div class="w-100"></div>
                                         <div class="col">

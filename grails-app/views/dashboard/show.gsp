@@ -1,16 +1,17 @@
 <%@ page import="mainapp.Topic; java.beans.Visibility" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:hidden="http://www.w3.org/1999/xhtml">
 <head>
-            <meta name="layout" content="main"/>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
+    <meta name="layout" content="main"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    %{--    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"--}%
+    %{--            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"--}%
+    %{--            crossorigin="anonymous"></script>--}%
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
@@ -69,11 +70,13 @@
                                     </div>
 
                                     <div class="col-lg-6" style="text-align: center;position:relative;right: 10px">
-                                        <g:link controller="#" action="#"><b>${list2[0]}</b></g:link>
+                                        %{--                                        <g:link controller="#" action="#"><b>${list2[0]}</b></g:link>--}%
+                                        <ls:subscriptionCount userId="user.id"></ls:subscriptionCount>
                                     </div>
 
                                     <div class="col-lg-6" style="text-align: center;position:relative;right: 40px">
-                                        <g:link controller="#" action="#"><b>${list2[1]}</b></g:link>
+                                        %{--                                        <g:link controller="#" action="#"><b>${list2[1]}</b></g:link>--}%
+                                        <ls:topicCount userId="user.id"></ls:topicCount>
                                     </div>
                                 </div>
                             </div>
@@ -109,15 +112,29 @@
                                             </div>
 
                                             <div class="col-lg-9" style="font-size: 15px">
-                                                <div class="row">
+                                                <div class="row Item-1">
                                                     <div class="col-lg-12">
-                                                        <g:link controller="topic"
-                                                                action="topic" params="[userId:p[1].createdBy.id,topicId: p[1].id]"><b><u>${p[1].name}</u>
-                                                        </b></g:link>
+                                                        <div class="hidden-field" hidden>
+                                                            <g:textField name="topic" class="subscriptionName"
+                                                                         placeholder="${p[1].name}"
+                                                                         style="width: 180px"></g:textField>
+                                                            <div hidden>${p[1].id}</div>
+                                                            <button type="submit" name="save"
+                                                                    class="subscriptionSave">Save</button>
+                                                            <button type="submit" name="cancel"
+                                                                    class="subscriptionCancel ">Cancel</button>
+                                                        </div>
+
+                                                        <div class="topic">
+                                                            <g:link controller="topic"
+                                                                    action="show"
+                                                                    params="[userId: p[1].createdBy.id, topicId: p[1].id]"><b><u>${p[1].name}</u>
+                                                            </b></g:link>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
+                                                <div class="row Item-2">
                                                     <div class="col-lg-5"><b
                                                             style="color: dimgrey">@${p[1].createdBy.userName}</b>
                                                     </div>
@@ -134,30 +151,36 @@
                                                                 action="unsubscribe"><b><u>Unsubscribe</u>
                                                         </b></g:link></div>
 
-                                                    <div class="col-lg-4" style="text-align: center">50</div>
+                                                    <div class="col-lg-4"
+                                                         style="text-align: center"><ls:subscriptionCount
+                                                            topicId="${p[1].id}"></ls:subscriptionCount></div>
 
-                                                    <div class="col-lg-3">40</div>
+                                                    <div class="col-lg-3"><ls:postCount
+                                                            topicId="${p[1].id}"></ls:postCount></div>
                                                 </div>
 
-                                                <div class="row" style="margin-top: 4px">
-                                                    <div class="col">
+                                                <div class="row Item-3" style="margin-top: 4px">
+                                                    <div class="col visible" hidden>
                                                         <g:select name="visibility"
                                                                   from="${enums.Visibility.values()}"></g:select>
                                                     </div>
 
-                                                    <div class="col">
+                                                    <div class="col seriousness" hidden>
                                                         <g:select name="seriousness"
                                                                   from="${enums.Seriousness.values()}"></g:select>
                                                     </div>
 
-                                                    <div class="col">
-                                                        <a href="#"><i class="fa fa-envelope fa-lg" aria-hidden="true"
-                                                                       style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
-                                                                       ;></i></a>
-                                                        <a href="#"><i class="fa fa-pencil-square-o fa-lg"
-                                                                       aria-hidden="true"
-                                                                       style="color:black; position: relative;font-size: 15px;bottom: 2px"
-                                                                       ;></i></a>
+                                                    <div class="col" style="left: 20px">
+
+                                                        <a class="subscriptionInvite"><i class="fa fa-envelope fa-lg "
+                                                                                         aria-hidden="true"
+                                                                                         style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
+                                                                                         ;></i></a>
+                                                        <a class="subscriptionEdit"><i
+                                                                class="fa fa-pencil-square-o fa-lg "
+                                                                aria-hidden="true"
+                                                                style="color:black; position: relative;font-size: 15px;bottom: 2px"
+                                                                ;></i></a>
                                                         <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
                                                                        style="color:black; position: relative;left: 7px;font-size: 17px;bottom: 3px"
                                                                        ;></i></a>
@@ -184,7 +207,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <g:link controller="topic"
-                                                                action="topic" params="[userId:p[1].createdBy.id,topicId: p[1].id]"><b><u>${p[1].name}</u>
+                                                                action="show"
+                                                                params="[userId: p[1].createdBy.id, topicId: p[1].id]"><b><u>${p[1].name}</u>
                                                         </b></g:link>
                                                     </div>
                                                 </div>
@@ -215,9 +239,12 @@
                                                         </g:else>
                                                     </div>
 
-                                                    <div class="col-lg-4" style="text-align: center">50</div>
+                                                    <div class="col-lg-4"
+                                                         style="text-align: center"><ls:subscriptionCount
+                                                            topicId="${p[1].id}"></ls:subscriptionCount></div>
 
-                                                    <div class="col-lg-3">40</div>
+                                                    <div class="col-lg-3"><ls:postCount
+                                                            topicId="${p[1].id}"></ls:postCount></div>
 
                                                 </div>
                                             </div>
@@ -256,7 +283,7 @@
                 </div>
 
                 <div class="card-body text-dark" style="padding: 5px;margin-top: 5px">
-                    <g:each in="${list3}" var="${p}">
+                    <g:each in="${PublicTopicsNotCreatedByUser}" var="${p}">
                         <g:if test="${p.resources.description[0] != null}">
                             <div class="row"
                                  style="background-color: #f1f1f1;margin-bottom: 10px;margin-right: 5px;margin-left: 5px">
@@ -289,7 +316,6 @@
                                     </div>
 
                                     <div class="row" style="padding-bottom: 5px;padding-top: 5px">
-
                                         ${p.resources.description[0]}
                                         ${p.resources.id[0]}
                                     </div>
@@ -307,20 +333,21 @@
 
 
                                         <div class="col-lg-9" style="font-size: 13px;padding: 0px">
-                                            <g:if test="${p.resources[0].class != mainapp.LinkResource}">
+                                            <g:if test="${p.resources[0].class == mainapp.DocumentResource}">
                                                 <g:link controller="dashboard" action="download"
                                                         params="[postId: p.resources[0].id]"><u
                                                         style="margin-right:22px;">Download</u></g:link>
-                                                <g:link controller="dashboard" action="isRead" params="[userId: p.createdBy.id,resourceId:p.resources[0].id]"><u
-                                                        style="margin-right:22px;">Mark as read</u></g:link>
+                                                <g:link controller="dashboard" action="isRead"
+                                                        style="margin-right:22px;"><u>Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
                                                         params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
                                             </g:if>
-                                            <g:if test="${p.resources[0].class != mainapp.DocumentResource}">
-                                                <g:link action="#" controller="#"><u
-                                                        style="margin-right:22px;">View Full Site</u></g:link>
-                                                <g:link action="#" controller="#" id="read"><u
-                                                        style="margin-right:22px;">Mark as read</u></g:link>
+
+                                            <g:if test="${p.resources[0].class == mainapp.LinkResource}">
+                                                <a style="margin-right: 22px" href="${p.resources[0].url}"
+                                                   target="_blank"><u>View full site</u></a>
+                                                <g:link controller="dashboard" action="isRead"
+                                                        style="margin-right:22px;"><u>Mark as read</u></g:link>
                                                 <g:link controller="post" action="show"
                                                         params="[userId: p.createdBy.id, topicId: p.id, resourceId: p.resources[0].id]"><u>View Post</u></g:link>
                                             </g:if>
@@ -329,7 +356,6 @@
                                 </div>
                             </div>
                         </g:if>
-
                     </g:each>
                 </div>
             </div>

@@ -25,28 +25,3 @@ $(document).ready(function(){
 
 
 
-var read = function(){
-    $.ajax({
-        url: "/dashboard/isRead/",
-        type: "POST",
-        data:{"value": true },
-        success: function (data) {
-            if(data.success  ==  true){
-                alert("success")
-            }else{
-                alert("rating changed")
-            }
-        },
-        error: function () {
-            alert("Resource rating failed")
-        }
-
-    });
-};
-
-
-$(document).ready(function(){
-    $("#read").click(function(){
-        read()
-    });
-});

@@ -19,6 +19,11 @@ class DashboardController {
                 eq("visibility", Visibility.Public)
             }
         }
+//        List<Topic> topics = Topic.findAllByVisibility(enums.Visibility.Public)
+//        List<Resource> resources = Resource.createCriteria().list ()
+        List<Resource> resources = Resource.findAllByCreatedByNotEqual(user)
+        List<Topic> t = Topic.findAllByVisibility('Private')
+//        List<Resource> res = Resource.findAllByTopicNotInList(t)
 //        <----------------subscriptions------------------->
         def userSubscriptions = Subscription.createCriteria().list() {
             and {
@@ -26,21 +31,6 @@ class DashboardController {
                 order("dateCreated", "desc")
             }
         }
-//        <----------------photo sub---------------------->
-        def subscriptionsOfUser = Subscription.createCriteria().list() {
-            projections { count("user") }
-            inList("user", user)
-        }
-
-        def topicsCreatedByUser = Topic.createCriteria().list() {
-            projections { count("createdBy") }
-            inList("createdBy", user)
-        }
-
-        List l = []
-        l.add(subscriptionsOfUser[0])
-        l.add(topicsCreatedByUser[0])
-
         def trendingTopics = Resource.createCriteria().list(max: 5) {
             projections {
                 count("id", "t")
@@ -49,7 +39,7 @@ class DashboardController {
             order("t", "desc")
         }
 
-        render(view: "/dashboard/dashboard", model: [list: userSubscriptions, list1: trendingTopics, list2: l, list3: PublicTopicsNotCreatedByUser])
+        render(view: "/dashboard/show", model: [list: userSubscriptions, list1: trendingTopics, user:user, PublicTopicsNotCreatedByUser: PublicTopicsNotCreatedByUser])
     }
 
     def viewImage() {
@@ -136,7 +126,8 @@ class DashboardController {
         User usr = User.get(params.userId)
         Resource resource = Resource.get(params.resourceId)
         ReadingItem readItem = new ReadingItem(user: usr, resource: resource, isRead: params.value)
-
+        readItem.save(flush:true,failOnError:true)
+        render([success: true] as JSON)
     }
 
 }

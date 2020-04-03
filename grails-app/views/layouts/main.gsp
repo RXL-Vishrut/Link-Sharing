@@ -120,10 +120,10 @@
                                        style="padding-left: initial"><b><g:message
                                         code="dashboard.link.topic"></g:message></b></label>
 
-                                %{--                                <div class="col-sm-6 " style="display: inline-grid">--}%
-                                %{--                                    <g:select name="docTopic" from="${navList.topic.name}"--}%
-                                %{--                                              id="inputTopic"/>--}%
-                                %{--                                </div>--}%
+                                <div class="col-sm-6 " style="display: inline-grid">
+                                    <g:select name="docTopic" from="${mainapp.Topic.list().name}"
+                                              id="inputTopic"/>
+                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -181,10 +181,10 @@
                                        style="padding-left: initial"><b><g:message
                                         code="dashboard.link.topic"></g:message></b></label>
 
-                                %{--                                <div class="col-sm-6 " style="display: inline-grid">--}%
-                                %{--                                    <g:select name="linkTopic" from="${navList.topic.name}"--}%
-                                %{--                                              id="inputTopic"/>--}%
-                                %{--                                </div>--}%
+                                <div class="col-sm-6 " style="display: inline-grid">
+                                    <g:select name="linkTopic" from="${mainapp.Topic.list().name}"
+                                              id="inputTopic"/>
+                                </div>
                             </div>
 
                             <div class="modal-footer">

@@ -9,7 +9,7 @@
             <g:each in="${list.take(5)}" var="${p}">
 
                 <ul class="list-group list-group-flush">
-                    <g:if test="${p.user.email==session.userEmail}">
+                    <g:if test="${p.user.email == session.userEmail}">
                         <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
                             %{--                    <g:if test="${p.topic.createdBy}"--}%
                             <div class="row">
@@ -18,48 +18,75 @@
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p.topic.createdBy.id])}"/>
                                 </div>
 
+
                                 <div class="col-lg-9">
-                                    <div class="row">
-                                        <div class="col-lg-12" style="font-size: 15px">
-                                            <b>Topic Name :</b><g:link controller="topic"
-                                                                       action="show" params="[userId:p.topic.createdBy.id, topicId:p.topic.id]"><b><u>${p.topic.name}</u>
-                                            </b></g:link>
+
+                                    <div class="row Item-1">
+                                        <div class="col-lg-12">
+                                            <div class="hidden-field" hidden>
+                                                <g:textField name="topic" class="subscriptionName"
+                                                             placeholder="${p.topic.name}"
+                                                             style="width: 180px"></g:textField>
+                                                <div hidden>${p.topic.id}</div>
+                                                <button type="submit" name="save"
+                                                        class="subscriptionSave">Save</button>
+                                                <button type="submit" name="cancel"
+                                                        class="subscriptionCancel ">Cancel</button>
+                                            </div>
+
+                                            <div class="topic">
+                                                <g:link controller="topic"
+                                                        action="show"
+                                                        params="[userId: p.topic.createdBy.id, topicId: p.topic.id]"><b><u>${p.topic.name}</u>
+                                                </b></g:link>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="row" style="font-size: 15px">
-                                        <div class="col-lg-5"><b style="color: dimgrey">@${p.topic.createdBy.userName}</b>
+                                    <div class="row Item-2" style="font-size: 15px">
+                                        <div class="col-lg-5"><b
+                                                style="color: dimgrey">@${p.topic.createdBy.userName}</b>
                                         </div>
 
-                                        <div class="col" style="display: contents;font-size: 15px"><b>Subscriptions</b></div>
+                                        <div class="col" style="display: contents;font-size: 15px"><b>Subscriptions</b>
+                                        </div>
 
                                         <div class="col" style="font-size: 15px"><b>Posts</b></div>
 
                                         <div class="w-100"></div>
 
-                                        <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe" params="[userId:p.user.id, topicId:p.topic.id]"><b><u>Unsubscribe</u></b></g:link></div>
+                                        <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe"
+                                                                      params="[userId: p.user.id, topicId: p.topic.id]"><b><u>Unsubscribe</u>
+                                            </b></g:link></div>
 
-                                        <div class="col-lg-4" style="position:relative;left: 20px">50</div>
+                                        <div class="col-lg-4" style="position:relative;left: 20px"><ls:subscriptionCount
+                                                topicId="${p.topic.id}"></ls:subscriptionCount></div>
 
-                                        <div class="col-lg-3" >40</div>
+                                        <div class="col-lg-3"><ls:postCount
+                                                topicId="${p.topic.id}"></ls:postCount></div>
                                     </div>
 
-                                    <div class="row" style="margin-top: 4px">
-                                        <div class="col">
-                                            <g:select name="visibility" id="visibility" from="${enums.Visibility.values()}"></g:select>
+                                    <div class="row Item-3" style="margin-top: 4px">
+                                        <div class="col visible" hidden>
+                                            <g:select name="visibility" id="visibility"
+                                                      from="${enums.Visibility.values()}"></g:select>
                                         </div>
 
-                                        <div class="col">
-                                            <g:select name="seriousness" id="seriousness" from="${enums.Seriousness.values()}"></g:select>
+                                        <div class="col seriousness" hidden>
+                                            <g:select name="seriousness" id="seriousness"
+                                                      from="${enums.Seriousness.values()}"></g:select>
                                         </div>
 
-                                        <div class="col">
-                                            <a href="#"><i class="fa fa-envelope fa-lg" aria-hidden="true"
-                                                           style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
-                                                           ;></i></a>
-                                            <a href="#"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"
-                                                           style="color:black; position: relative;font-size: 15px;bottom: 2px"
-                                                           ;></i></a>
+                                        <div class="col" style="left: 20px">
+
+                                            <a class="subscriptionInvite"><i class="fa fa-envelope fa-lg " aria-hidden="true"
+                                                                             style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
+                                                                             ;></i></a>
+                                            <a class="subscriptionEdit"><i
+                                                    class="fa fa-pencil-square-o fa-lg "
+                                                    aria-hidden="true"
+                                                    style="color:black; position: relative;font-size: 15px;bottom: 2px"
+                                                    ;></i></a>
                                             <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
                                                            style="color:black; position: relative;left: 7px;font-size: 17px;bottom: 3px"
                                                            ;></i></a>
@@ -85,13 +112,15 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <g:link controller="topic"
-                                                    action="show" params="[topicId:p.topic.id]"><b><u>${p.topic.name}</u>
+                                                    action="show"
+                                                    params="[topicId: p.topic.id]"><b><u>${p.topic.name}</u>
                                             </b></g:link>
                                         </div>
                                     </div>
 
                                     <div class="row" style="font-size: 15px">
-                                        <div class="col-lg-5"><b style="color: dimgrey">@${p.topic.createdBy.userName}</b>
+                                        <div class="col-lg-5"><b
+                                                style="color: dimgrey">@${p.topic.createdBy.userName}</b>
                                         </div>
 
                                         <div class="col"><b>Subscriptions</b></div>
@@ -100,7 +129,9 @@
 
                                         <div class="w-100"></div>
 
-                                        <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe" params="[userId:p.user.id, topicId:p.topic.id]"><b><u>Unsubscribe</u></b></g:link></div>
+                                        <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe"
+                                                                      params="[userId: p.user.id, topicId: p.topic.id]"><b><u>Unsubscribe</u>
+                                            </b></g:link></div>
 
                                         <div class="col-lg-4" style="text-align: center">50</div>
 
@@ -113,7 +144,8 @@
                                         </div>
 
                                         <div class="col-lg-4">
-                                            <g:select class="subvisib" name="seriousness" from="${enums.Seriousness.values()}"></g:select>
+                                            <g:select class="subvisib" name="seriousness"
+                                                      from="${enums.Seriousness.values()}"></g:select>
                                         </div>
 
                                         <div class="col-g-1">

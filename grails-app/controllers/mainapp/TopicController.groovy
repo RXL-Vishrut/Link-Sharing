@@ -14,23 +14,36 @@ class TopicController {
         Topic topic = Topic.findById(params.topicId)
         List<User> subscribedUsers = Subscription.findAllByTopic(topic)*.user
         List<Resource> postsOfTopic = Resource.findAllByTopic(topic)
-        render(view: "/topic/show", model: [subscribedUsers:subscribedUsers, postsOfTopic:postsOfTopic,topic:topic,user: user])
+        render(view: "/topic/show", model: [subscribedUsers: subscribedUsers, postsOfTopic: postsOfTopic, topic: topic, user: user])
     }
 
     def create() {
         Topic topic = Topic.findByName(params.name)
-        User user = User.findByEmail(session.getAttribute("userEmail"))
-        if (topic != null && topic.createdBy == user) {
+        User user = User.findByEmail(session.userEmail)
+
+        if (topic!=null && topic.createdBy == user) {
             render([success: false] as JSON)
         } else {
-            Topic t = new Topic()
-            bindData(t, params, [exclude: ['createdBy']])
-            Subscription sub = new Subscription(user: user, topic: t, seriousness: Seriousness.Very_Serious.name())
-            t.createdBy = user
-                    .addToSubscriptions(sub)
-            t.save(flush: true, failOnError: true)
+            Topic newTopic = new Topic(name: params.name, createdBy: user, visibility: params.visibility)
+            println(newTopic.properties)
+            Subscription sub = new Subscription(user: user, topic: newTopic, seriousness: Seriousness.Very_Serious.name())
+            newTopic.addToSubscriptions(sub)
+            newTopic.save(flush: true, failOnError: true)
             render([success: true] as JSON)
         }
     }
+
+    def editTopic() {
+        Topic topic = Topic.findBy(params.topicId)
+        User currentUser = User.findById(session.userId)
+        Subscription subscription = Subscription.findByUserAndTopic(currentUser, topic)
+        topic.name = params.topicName
+        topic.visibility = params.visibility
+        subscription.seriousness = params.seriousness
+        topic.save(flush: true)
+        subscription.save(flush: true)
+        render([success: true] as JSON)
+    }
+
 
 }
