@@ -21,7 +21,7 @@ class TopicController {
         Topic topic = Topic.findByName(params.name)
         User user = User.findByEmail(session.userEmail)
 
-        if (topic!=null && topic.createdBy == user) {
+        if (topic != null && topic.createdBy == user) {
             render([success: false] as JSON)
         } else {
             Topic newTopic = new Topic(name: params.name, createdBy: user, visibility: params.visibility)

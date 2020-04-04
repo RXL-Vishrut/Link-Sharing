@@ -79,7 +79,7 @@ var read = function(){
     $.ajax({
         url: "/dashboard/isRead/",
         type: "POST",
-        data:{"value": true },
+        data:{"value": true , "resourceId": $(".resource").text()},
         success: function (data) {
             if(data.success  ==  true){
                 alert("success")
@@ -93,6 +93,13 @@ var read = function(){
 
     });
 };
+
+$(document).ready(function () {
+    $(".readPost").click(function () {
+        read();
+    });
+});
+
 
 $(document).ready(function () {
     $(".custom-file-input").on("change", function () {

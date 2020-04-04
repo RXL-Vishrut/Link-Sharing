@@ -11,15 +11,11 @@ class DashboardController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def show() {
-        if(!session.userId){
-            redirect(controller: "login" , action: "home")
-            return
-        }
         User user = User.findByEmail(session.userEmail)
         List<Topic> subscribedTopics = Subscription.findAllByUser(user)*.topic
-        List<Resource> resources = Resource.createCriteria().list(){
-            'in'("topic.id",subscribedTopics*.id)
-            ne("createdBy.id",user.id)
+        List<Resource> resources = Resource.createCriteria().list() {
+            'in'("topic.id", subscribedTopics*.id)
+            ne("createdBy.id", user.id)
 
         }
 //        <----------------subscriptions------------------->
@@ -35,7 +31,7 @@ class DashboardController {
             order("count", "desc")
         }
 
-        render(view: "/dashboard/show", model: [resources: resources, userSubscriptions: userSubscriptions, user: user, trendingTopics: trendingTopics ])
+        render(view: "/dashboard/show", model: [resources: resources, userSubscriptions: userSubscriptions, user: user, trendingTopics: trendingTopics])
     }
 
     def viewImage() {
@@ -73,10 +69,11 @@ class DashboardController {
     }
 
     def send() {
+        println(params)
         sendMail {
             to params.address
             subject params.subject
-            text params.body
+            text params.body + " http://localhost:9090/topic/show?userId=${params.userId}&topicId=${params.topicId}"
         }
 
         flash.message = "Message sent to " + params.address + " at " + new Date()
@@ -117,7 +114,9 @@ class DashboardController {
     }
 
     def isRead() {
-        User usr = User.get(params.userId)
+        println(params)
+        println(session.userId)
+        User usr = User.get(session.userId)
         Resource resource = Resource.get(params.resourceId)
         ReadingItem readItem = new ReadingItem(user: usr, resource: resource, isRead: params.value)
         readItem.save(flush: true, failOnError: true)

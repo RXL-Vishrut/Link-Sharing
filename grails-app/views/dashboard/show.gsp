@@ -99,144 +99,151 @@
 
                 <div class="card-body text-dark" style="height: 284px;overflow: scroll">
                     <g:if test="${trendingTopics}">
-                        <g:each in="${trendingTopics}" var="trendingTopic">
+                        <g:each in="${trendingTopics}" var="${trendingTopic}">
                             <ul class="list-group list-group-flush">
-                                <g:if test="${trendingTopic[1].createdBy.email == session.userEmail}">
-                                    <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <img height="90" width="90" style="border-radius: 8px"
-                                                     src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': trendingTopic[1].createdBy.id])}"/>
-                                            </div>
-
-                                            <div class="col-lg-9" style="font-size: 15px">
-                                                <div class="row Item-1">
-                                                    <div class="col-lg-12">
-                                                        <div class="hidden-field" hidden>
-                                                            <g:textField name="topic" class="subscriptionName"
-                                                                         placeholder="${trendingTopic[1].name}"
-                                                                         style="width: 180px"></g:textField>
-                                                            <div hidden>${trendingTopic[1].id}</div>
-                                                            <button type="submit" name="save"
-                                                                    class="subscriptionSave">Save</button>
-                                                            <button type="submit" name="cancel"
-                                                                    class="subscriptionCancel ">Cancel</button>
-                                                        </div>
-
-                                                        <div class="topic">
-                                                            <g:link controller="topic"
-                                                                    action="show"
-                                                                    params="[userId: trendingTopic[1].createdBy.id, topicId: trendingTopic[1].id]"><b><u>${trendingTopic[1].name}</u>
-                                                            </b></g:link>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row Item-2">
-                                                    <div class="col-lg-5"><b
-                                                            style="color: dimgrey">@${trendingTopic[1].createdBy.userName}</b>
-                                                    </div>
-
-                                                    <div class="col" style="display: contents"><b>Subscriptions</b>
-                                                    </div>
-
-                                                    <div class="col"><b>Posts</b></div>
-
-                                                    <div class="w-100"></div>
-
-                                                    <div class="col-lg-5">
-                                                        <b><u><ls:showSubscribe
-                                                                topicId="${trendingTopic[1].id}"></ls:showSubscribe></u></b>
-                                                    </div>
-                                                    <div class="col-lg-4"
-                                                         style="text-align: center"><b><u><ls:subscriptionCount
-                                                            topicId="${trendingTopic[1].id}"></ls:subscriptionCount></u>
-                                                    </b></div>
-
-                                                    <div class="col-lg-3"><ls:postCount
-                                                            topicId="${trendingTopic[1].id}"></ls:postCount></div>
-                                                </div>
-
-                                                <div class="row Item-3" style="margin-top: 4px">
-                                                    <div class="col visible" hidden>
-                                                        <g:select name="visibility"
-                                                                  from="${enums.Visibility.values()}"></g:select>
-                                                    </div>
-
-                                                    <div class="col seriousness" hidden>
-                                                        <g:select name="seriousness"
-                                                                  from="${enums.Seriousness.values()}"></g:select>
-                                                    </div>
-
-                                                    <div class="col" style="left: 20px">
-                                                        <a class="subscriptionInvite"><i class="fa fa-envelope fa-lg "
-                                                                                         aria-hidden="true"
-                                                                                         style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
-                                                                                         ;></i></a>
-                                                        <a class="subscriptionEdit"><i
-                                                                class="fa fa-pencil-square-o fa-lg "
-                                                                aria-hidden="true"
-                                                                style="color:black; position: relative;font-size: 15px;bottom: 2px"
-                                                                ;></i></a>
-                                                        <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
-                                                                       style="color:black; position: relative;left: 7px;font-size: 17px;bottom: 3px"
-                                                                       ;></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                %{--                                <g:if test="${trendingTopic[1].createdBy.email == session.userEmail}">--}%
+                                <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <img height="90" width="90" style="border-radius: 8px"
+                                                 src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': trendingTopic[1].createdBy.id])}"/>
                                         </div>
-                                    </li>
-                                </g:if>
 
-                                <g:else>
-                                    <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <img height="90" width="90" style="border-radius: 15px"
-                                                     src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': trendingTopic[1].createdBy.id])}"/>
-                                            </div>
+                                        <div class="col-lg-9" style="font-size: 15px">
+                                            <div class="row Item-1">
+                                                <div class="col-lg-12">
+                                                    <div class="hidden-field" hidden>
+                                                        <g:textField name="topic" class="subscriptionName"
+                                                                     placeholder="${trendingTopic[1].name}"
+                                                                     style="width: 180px"></g:textField>
+                                                        <div hidden>${trendingTopic[1].id}</div>
+                                                        <button type="submit" name="save"
+                                                                class="subscriptionSave">Save</button>
+                                                        <button type="submit" name="cancel"
+                                                                class="subscriptionCancel ">Cancel</button>
+                                                    </div>
 
-                                            <div class="col-lg-9">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
+                                                    <div class="topic">
                                                         <g:link controller="topic"
                                                                 action="show"
                                                                 params="[userId: trendingTopic[1].createdBy.id, topicId: trendingTopic[1].id]"><b><u>${trendingTopic[1].name}</u>
                                                         </b></g:link>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="row" style="font-size: 15px">
-                                                    <div class="col-lg-5"><b
-                                                            style="color: dimgrey">@${trendingTopic[1].createdBy.userName}</b>
-                                                    </div>
-
-                                                    <div class="col" style="display: contents"><b>Subscriptions</b>
-                                                    </div>
-
-                                                    <div class="col"><b>Posts</b></div>
-
-                                                    <div class="w-100"></div>
-
-                                                    <div class="col-lg-5">
-                                                        <u><b><ls:showSubscribe
-                                                                topicId="${trendingTopic[1].id}"></ls:showSubscribe></b>
-                                                        </u>
-                                                    </div>
-
-                                                    <div class="col-lg-4"
-                                                         style="text-align: center"><u><b><ls:subscriptionCount
-                                                            topicId="${trendingTopic[1].id}"
-                                                            userId="${trendingTopic[1].createdBy.id}"></ls:subscriptionCount></b>
-                                                    </u></div>
-
-                                                    <div class="col-lg-3"><ls:postCount
-                                                            topicId="${trendingTopic[1].id}"></ls:postCount></div>
+                                            <div class="row Item-2">
+                                                <div class="col-lg-5"><b
+                                                        style="color: dimgrey">@${trendingTopic[1].createdBy.userName}</b>
                                                 </div>
+
+                                                <div class="col" style="display: contents"><b>Subscriptions</b>
+                                                </div>
+
+                                                <div class="col"><b>Posts</b></div>
+
+                                                <div class="w-100"></div>
+
+                                                <div class="col-lg-5">
+                                                    <b><u><ls:showSubscribe
+                                                            topicId="${trendingTopic[1].id}"
+                                                            userId="${trendingTopic[1].createdBy.id}"></ls:showSubscribe></u>
+                                                    </b>
+                                                </div>
+
+                                                <div class="col-lg-4"
+                                                     style="text-align: center"><b><u><ls:subscriptionCount
+                                                        topicId="${trendingTopic[1].id}"></ls:subscriptionCount></u>
+                                                </b></div>
+
+                                                <div class="col-lg-3"><ls:postCount
+                                                        topicId="${trendingTopic[1].id}"></ls:postCount></div>
+                                            </div>
+
+                                            <div class="row Item-3" style="margin-top: 4px">
+                                                <div class="col visible" hidden>
+                                                    <g:select name="visibility"
+                                                              from="${enums.Visibility.values()}"></g:select>
+                                                </div>
+
+                                                <div class="col seriousness" hidden>
+                                                    <g:select name="seriousness"
+                                                              from="${enums.Seriousness.values()}"></g:select>
+                                                </div>
+                                                <g:if test="${trendingTopic[1].createdBy.id == session.userId}">
+                                                    ${trendingTopic[1].name}
+
+                                                    <div class="col">
+                                                        <button class="btn" data-toggle="modal" data-target="#trendingTopicInvite"
+                                                                style="line-height: 1"><i
+                                                                class="fa fa-envelope"
+                                                                style="font-size: 20px"></i>
+                                                        </button>
+                                                        <form url='[controller: "dashboard", action: "send", params: [topicId: trendingTopic[1].id, userId: trendingTopic[1].createdBy.id]]'
+                                                                style="display: contents">
+                                                            <div class="modal fade" id="trendingTopicInvite" tabindex="-1"
+                                                                 role="dialog"
+                                                                 aria-labelledby="exampleModalCenterTitle"
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered"
+                                                                     role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="exampleModalLongTitle2"><b>SEND INVITE</b>
+                                                                            </h5>
+                                                                            <button type="button" class="close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+
+                                                                        <div class="modal-body">
+                                                                            <div class="fieldcontain"
+                                                                                 style="margin-bottom: 3px">
+                                                                                <g:textField name="address"
+                                                                                             placeholder="email@gmal.com"
+                                                                                             required=""/>
+                                                                            </div>
+                                                                            <div>${trendingTopic[1].name}</div>
+                                                                            <div class="fieldcontain"
+                                                                                 style="margin-bottom: 3px">
+                                                                                <g:textField name="subject"
+                                                                                             placeholder="Subject"
+                                                                                             required=""/>
+                                                                            </div>
+                                                                            <div class="fieldcontain"
+                                                                                 style="margin-bottom: 3px">
+                                                                                <g:textArea name="body" rows="5"
+                                                                                            cols="50"
+                                                                                            placeholder="Your message"
+                                                                                            required=""/>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit"
+                                                                                    class="btn btn-primary">Invite</button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <i style="cursor: pointer;color: black ;font-size: 20px;position:relative;;top: 2px"
+                                                           class="fa fa-pencil-square-o fa-lg subscriptionEdit"></i>
+                                                        <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
+                                                                       style="color:black; position: relative;left: 8px;top:1px;font-size: 20px;"
+                                                                       ;></i></a>
+                                                    </div>
+                                                </g:if>
                                             </div>
                                         </div>
-                                    </li>
-                                </g:else>
+                                    </div>
+                                </li>
                             </ul>
                         </g:each>
                     </g:if>
@@ -296,7 +303,7 @@
                                     </div>
 
                                     <div class="row" style="font-size: 15px">
-                                        <b>Topic Name :</b><g:link controller="topic" action="show"
+                                        <b>Topic :</b><g:link controller="topic" action="show"
                                                                    params="[userId: resource.createdBy.id, topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
                                         </b></g:link>
                                     </div>
@@ -317,13 +324,15 @@
                                         </div>
 
 
-                                        <div class="col-lg-9" style="font-size: 13px;padding: 0px">
+                                        <div class="col-lg-9" style="font-size: 13px;padding: 0px;">
                                             <g:if test="${resource.class == mainapp.DocumentResource}">
                                                 <g:link controller="dashboard" action="download"
                                                         params="[postId: resource.id]"><u
                                                         style="margin-right:22px;">Download</u></g:link>
-                                                <g:link controller="dashboard" action="isRead"
-                                                        style="margin-right:22px;"><u>Mark as read</u></g:link>
+                                                <a class="readPost"><u style="color: blue;margin-right: 22px;cursor: pointer">Mark as read </u></a>
+                                                <div class="resource" hidden>
+                                                    ${resource.id}
+                                                </div>
                                                 <g:link controller="post" action="show"
                                                         params="[userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id]"><u>View Post</u></g:link>
                                             </g:if>
@@ -331,8 +340,10 @@
                                             <g:if test="${resource.class == mainapp.LinkResource}">
                                                 <a style="margin-right: 22px" href="${resource.url}"
                                                    target="_blank"><u>View full site</u></a>
-                                                <g:link controller="dashboard" action="isRead"
-                                                        style="margin-right:22px;"><u>Mark as read</u></g:link>
+                                                <div class="resource" hidden>
+                                                    ${resource.id}
+                                                </div>
+                                                <a class="readPost"><u style="color: blue;margin-right: 22px;cursor: pointer">Mark as read </u></a>
                                                 <g:link controller="post" action="show"
                                                         params="[userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id]"><u>View Post</u></g:link>
                                             </g:if>

@@ -228,10 +228,6 @@
                                 <div class="fieldcontain" style="margin-bottom: 3px">
                                     <g:textArea name="body" rows="5" cols="50" placeholder="Your message" required=""/>
                                 </div>
-
-                                <div>
-                                    <input type="file" name="attachment"/>
-                                </div>
                             </div>
 
                             <div class="modal-footer">

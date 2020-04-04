@@ -156,7 +156,7 @@
                     </g:each>
                 </div>
             </div>
-            
+
         </div>
 
 
@@ -165,7 +165,7 @@
                 <div class="card-header" style="background-color: #343a40;color: white">
                     <div class="row">
                         <div class="col" style="margin-top: 7px">
-                            <b style="padding: 2px">Posts"</b>
+                            <b style="padding: 2px">Posts</b>
                         </div>
 
                         <form class="form-inline">

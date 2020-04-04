@@ -18,9 +18,7 @@
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': userSubscription.user.id])}"/>
                                 </div>
 
-
                                 <div class="col-lg-9">
-
                                     <div class="row Item-1">
                                         <div class="col-lg-12">
                                             <div class="hidden-field" hidden>
@@ -76,21 +74,50 @@
                                             <g:select name="seriousness" id="seriousness"
                                                       from="${enums.Seriousness.values()}"></g:select>
                                         </div>
+                                        <g:if test="${userSubscription.topic.createdBy.id == session.userId}">
+                                            <div class="col">
+                                                <button class="btn" data-toggle="modal" data-target="#invite" style="line-height: 1"><i
+                                                        class="fa fa-envelope"
+                                                        style="font-size: 20px"></i>
+                                                </button>
+                                                <g:form url='[controller: "dashboard", action: "send" , params: [topicId: userSubscription.topic.id,userId: userSubscription.user.id]]' style="display: contents">
+                                                    <div class="modal fade" id="invite" tabindex="-1" role="dialog"
+                                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle2"><b>SEND INVITE</b></h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="fieldcontain" style="margin-bottom: 3px">
+                                                                        <g:textField name="address" placeholder="email@gmal.com" required=""/>
+                                                                    </div>
+                                                                    <div class="fieldcontain" style="margin-bottom: 3px">
+                                                                        <g:textField name="subject" placeholder="Subject" required=""/>
+                                                                    </div>
+                                                                    <div class="fieldcontain" style="margin-bottom: 3px">
+                                                                        <g:textArea name="body" rows="5" cols="50" placeholder="Your message" required=""/>
+                                                                    </div>
+                                                                </div>
 
-                                        <div class="col" style="left: 20px">
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-primary">Invite</button>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                            <a class="subscriptionInvite"><i class="fa fa-envelope fa-lg " aria-hidden="true"
-                                                                             style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
-                                                                             ;></i></a>
-                                            <a class="subscriptionEdit"><i
-                                                    class="fa fa-pencil-square-o fa-lg "
-                                                    aria-hidden="true"
-                                                    style="color:black; position: relative;font-size: 15px;bottom: 2px"
-                                                    ;></i></a>
-                                            <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
-                                                           style="color:black; position: relative;left: 7px;font-size: 17px;bottom: 3px"
-                                                           ;></i></a>
-                                        </div>
+                                                </g:form>
+                                                <i style="cursor: pointer;color: black ;font-size: 20px;position:relative;;top: 2px"  class="fa fa-pencil-square-o fa-lg subscriptionEdit"
+                                                ></i>
+                                                <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
+                                                               style="color:black; position: relative;left: 8px;top:1px;font-size: 20px;"                                                           ;></i></a>
+                                            </div>
+                                        </g:if>
                                     </div>
                                 </div>
                             </div>

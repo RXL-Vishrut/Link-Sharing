@@ -7,7 +7,7 @@ class AuthLogoutInterceptor {
     }
 
     boolean before() {
-        if (!session) {
+        if (!session.userId) {
             flash.message = "Please login"
             redirect(controller: "login", action: "home")
             return false
@@ -16,11 +16,15 @@ class AuthLogoutInterceptor {
     }
 
     boolean after() {
-
-            true
-        }
-
-        void afterView() {
-            // no-op
-        }
+//        if (!session.userId) {
+//            flash.message = "Please login"
+//            redirect(controller: "login", action: "home")
+//            return false
+//        }
+        true
     }
+
+    void afterView() {
+        // no-op
+    }
+}
