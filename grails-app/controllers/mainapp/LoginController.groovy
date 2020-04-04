@@ -60,17 +60,17 @@ class LoginController {
     }
 
     def login() {
-        User val = User.findByEmailAndPassword(params.email, params.password)
-        if (val != null) {
-            if (val.active == true) {
+        User user = User.findByEmailAndPassword(params.email, params.password)
+        if (user) {
+            if (user.active) {
                 HttpSession session = request.getSession()
-                session.setAttribute("userFirstName", val.firstName)
-                session.setAttribute("userLastName", val.lastName)
-                session.setAttribute("userUserName", val.userName)
-                session.setAttribute("userEmail", val.email)
-                session.setAttribute("userId", val.id)
-                session.setAttribute("userIsAdmin", val.admin)
-                String encoded = Base64.getEncoder().encodeToString(val.photo)
+                session.setAttribute("userFirstName", user.firstName)
+                session.setAttribute("userLastName", user.lastName)
+                session.setAttribute("userUserName", user.userName)
+                session.setAttribute("userEmail", user.email)
+                session.setAttribute("userId", user.id)
+                session.setAttribute("userIsAdmin", user.admin)
+                String encoded = Base64.getEncoder().encodeToString(user.photo)
                 session.setAttribute("userPhoto", encoded)
                 redirect(controller: "dashboard", action: "show")
             } else {

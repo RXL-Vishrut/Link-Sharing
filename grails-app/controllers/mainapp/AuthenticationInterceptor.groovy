@@ -1,9 +1,9 @@
 package mainapp
 
 
-class AuthLogoutInterceptor {
-    AuthLogoutInterceptor() {
-        matchAll().excludes(controller: "login", action: "home")
+class AuthenticationInterceptor {
+    AuthenticationInterceptor() {
+        matchAll().excludes(controller: "login")
     }
 
     boolean before() {

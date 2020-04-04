@@ -19,7 +19,8 @@
     <div class="container-fluid">
 
         <div class="col-lg-3">
-            <a class="navbar-brand" href="${createLink(controller: "dashboard" , action: "show")}"><b>Link Sharing</b></a>
+            <a class="navbar-brand" href="${createLink(controller: "dashboard", action: "show")}"><b>Link Sharing</b>
+            </a>
 
         </div>
 
@@ -121,8 +122,8 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select name="docTopic" from="${mainapp.Topic.list().name}"
-                                              id="inputTopic"/>
+                                    <ls:showSubscribedTopics userId="${session.userId}"
+                                                             id="inputTopic"></ls:showSubscribedTopics>
                                 </div>
                             </div>
 
@@ -182,8 +183,7 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <g:select name="linkTopic" from="${mainapp.Topic.list().name}"
-                                              id="inputTopic"/>
+                                    <ls:showSubscribedTopics userId="${session.userId}"></ls:showSubscribedTopics>
                                 </div>
                             </div>
 
@@ -204,7 +204,7 @@
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SEND INVITE</b>
             </button>
-            <g:uploadForm url='[controller: "dashboard", action: "send"]'>
+            <g:uploadForm url='[controller: "dashboard", action: "invite"]'>
                 <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">

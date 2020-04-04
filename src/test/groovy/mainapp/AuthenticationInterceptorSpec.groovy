@@ -3,7 +3,7 @@ package mainapp
 import grails.testing.web.interceptor.InterceptorUnitTest
 import spock.lang.Specification
 
-class AuthLogoutInterceptorSpec extends Specification implements InterceptorUnitTest<AuthLogoutInterceptor> {
+class AuthenticationInterceptorSpec extends Specification implements InterceptorUnitTest<AuthenticationInterceptor> {
 
     def setup() {
     }

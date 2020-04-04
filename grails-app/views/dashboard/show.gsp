@@ -147,7 +147,7 @@
                                                 <div class="col-lg-5">
                                                     <b><u><ls:showSubscribe
                                                             topicId="${trendingTopic[1].id}"
-                                                            userId="${trendingTopic[1].createdBy.id}"></ls:showSubscribe></u>
+                                                            userId="${session.userId}"></ls:showSubscribe></u>
                                                     </b>
                                                 </div>
 
@@ -171,68 +171,18 @@
                                                               from="${enums.Seriousness.values()}"></g:select>
                                                 </div>
                                                 <g:if test="${trendingTopic[1].createdBy.id == session.userId}">
-                                                    ${trendingTopic[1].name}
+                                                    ${trendingTopic[1].id}
 
                                                     <div class="col">
-                                                        <button class="btn" data-toggle="modal" data-target="#trendingTopicInvite"
+
+                                                        <button class="btn" data-toggle="modal"
+                                                                data-target="#trendingTopicInvite"
                                                                 style="line-height: 1"><i
                                                                 class="fa fa-envelope"
                                                                 style="font-size: 20px"></i>
                                                         </button>
-                                                        <form url='[controller: "dashboard", action: "send", params: [topicId: trendingTopic[1].id, userId: trendingTopic[1].createdBy.id]]'
-                                                                style="display: contents">
-                                                            <div class="modal fade" id="trendingTopicInvite" tabindex="-1"
-                                                                 role="dialog"
-                                                                 aria-labelledby="exampleModalCenterTitle"
-                                                                 aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered"
-                                                                     role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLongTitle2"><b>SEND INVITE</b>
-                                                                            </h5>
-                                                                            <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-
-                                                                        <div class="modal-body">
-                                                                            <div class="fieldcontain"
-                                                                                 style="margin-bottom: 3px">
-                                                                                <g:textField name="address"
-                                                                                             placeholder="email@gmal.com"
-                                                                                             required=""/>
-                                                                            </div>
-                                                                            <div>${trendingTopic[1].name}</div>
-                                                                            <div class="fieldcontain"
-                                                                                 style="margin-bottom: 3px">
-                                                                                <g:textField name="subject"
-                                                                                             placeholder="Subject"
-                                                                                             required=""/>
-                                                                            </div>
-                                                                            <div class="fieldcontain"
-                                                                                 style="margin-bottom: 3px">
-                                                                                <g:textArea name="body" rows="5"
-                                                                                            cols="50"
-                                                                                            placeholder="Your message"
-                                                                                            required=""/>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="modal-footer">
-                                                                            <button type="submit"
-                                                                                    class="btn btn-primary">Invite</button>
-                                                                            <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-dismiss="modal">Close</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                                        <g:render template="/topic/invite"
+                                                                  model="[topicId: trendingTopic[1].id, createdById: trendingTopic[1].createdBy.id]"></g:render>
                                                         <i style="cursor: pointer;color: black ;font-size: 20px;position:relative;;top: 2px"
                                                            class="fa fa-pencil-square-o fa-lg subscriptionEdit"></i>
                                                         <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
@@ -304,7 +254,7 @@
 
                                     <div class="row" style="font-size: 15px">
                                         <b>Topic :</b><g:link controller="topic" action="show"
-                                                                   params="[userId: resource.createdBy.id, topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
+                                                              params="[userId: resource.createdBy.id, topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
                                         </b></g:link>
                                     </div>
 
@@ -329,7 +279,10 @@
                                                 <g:link controller="dashboard" action="download"
                                                         params="[postId: resource.id]"><u
                                                         style="margin-right:22px;">Download</u></g:link>
-                                                <a class="readPost"><u style="color: blue;margin-right: 22px;cursor: pointer">Mark as read </u></a>
+                                                <a class="readPost"><u
+                                                        style="color: blue;margin-right: 22px;cursor: pointer">Mark as read</u>
+                                                </a>
+
                                                 <div class="resource" hidden>
                                                     ${resource.id}
                                                 </div>
@@ -340,10 +293,13 @@
                                             <g:if test="${resource.class == mainapp.LinkResource}">
                                                 <a style="margin-right: 22px" href="${resource.url}"
                                                    target="_blank"><u>View full site</u></a>
+
                                                 <div class="resource" hidden>
                                                     ${resource.id}
                                                 </div>
-                                                <a class="readPost"><u style="color: blue;margin-right: 22px;cursor: pointer">Mark as read </u></a>
+                                                <a class="readPost"><u
+                                                        style="color: blue;margin-right: 22px;cursor: pointer">Mark as read</u>
+                                                </a>
                                                 <g:link controller="post" action="show"
                                                         params="[userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id]"><u>View Post</u></g:link>
                                             </g:if>

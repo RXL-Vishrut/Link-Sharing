@@ -44,9 +44,8 @@ class DashboardController {
 
 
     def shareLink() {
-
-        User user = User.findByUserName(session.userUserName)
-        Topic topic = Topic.findByName(params.linkTopic)
+        User user = User.findById(session.userId)
+        Topic topic = Topic.findById(params.linkTopic)
         LinkResource lr = new LinkResource(url: params.link, description: params.linkdescription, createdBy: user, topic: topic)
         lr.save(flush: true, failOnError: true)
         flash.message = "Link has been added successfully"
@@ -68,7 +67,7 @@ class DashboardController {
         redirect(controller: "dashboard", action: 'show')
     }
 
-    def send() {
+    def invite() {
         println(params)
         sendMail {
             to params.address
@@ -82,7 +81,7 @@ class DashboardController {
 
 
     def unsubscribe() {
-        User user = User.findById(params.userId)
+        User user = User.findById(session.userId)
         Topic topic = Topic.findById(params.topicId)
         Subscription sub = Subscription.findByUserAndTopic(user, topic)
         sub.delete(failOnError: true, flush: true)

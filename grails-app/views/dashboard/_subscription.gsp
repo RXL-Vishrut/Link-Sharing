@@ -80,7 +80,7 @@
                                                         class="fa fa-envelope"
                                                         style="font-size: 20px"></i>
                                                 </button>
-                                                <g:form url='[controller: "dashboard", action: "send" , params: [topicId: userSubscription.topic.id,userId: userSubscription.user.id]]' style="display: contents">
+                                                <g:form url='[controller: "dashboard", action: "invite", params: [topicId: userSubscription.topic.id, userId: userSubscription.user.id]]' style="display: contents">
                                                     <div class="modal fade" id="invite" tabindex="-1" role="dialog"
                                                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
