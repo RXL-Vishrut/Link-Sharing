@@ -28,93 +28,9 @@
     <div class="row">
 
         <div class="col-lg-5">
+            <div class="card-header" style="background-color: #343a40;color: white;position:relative;top: 3px;width: 32rem"><b>User</b></div>
 
-            <div class="card border-dark mb-6" style="width: 30rem; margin-bottom: 50px;">
-                <div class="card-header" style="background-color: #343a40;color: white"><b>User</b></div>
-
-                <div class="card-body text-dark " style="padding: 12px;margin-right: 15px">
-                    <div class="row" style="background-color: #f1f1f1;margin-left: 1px">
-                        <div class="col-lg-4">
-                            <a href="${createLink(controller: "profile", action: "userProfile")}">
-                                <img style="width: 100px;height: 110px;border-radius: 8px"
-                                     src="data:image/jpg;base64,${session.getAttribute("userPhoto")}"/></a>
-                        </div>
-
-                        <div class="col-lg-8">
-                            <div>
-                                <p style="font-size: 25px; margin-bottom: 1px;padding: 5px"><b>${session.getAttribute("userFirstName")}  ${session.getAttribute("userLastName")}</b>
-                                    <b style="font-size: 15px;color: dimgrey;position: relative;bottom: 5px">~@${session.getAttribute("userUserName")}</b>
-                                </p>
-                            </div>
-
-                            <div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <b style="color: dimgrey">Subscriptions</b>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <b style="color: dimgrey">Topics</b>
-                                    </div>
-
-                                    <div class="w-100">
-                                    </div>
-
-                                    <div class="col-lg-6" style="text-align: center;position:relative;right: 10px">
-                                        <b><ls:subscriptionCount userId="${session.userId}"></ls:subscriptionCount></b>
-                                    </div>
-
-                                    <div class="col-lg-6" style="text-align: center;position:relative;right: 40px">
-                                        <b><ls:topicCount userId="${session.userId}"></ls:topicCount></b>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="card border-dark mb-6 " style="max-width: 35rem;margin-bottom: 50px">
-
-                <div class="card-header" style="background-color: #343a40;color: white">
-                    <span><b>Topics</b><b style="color: white"></b></span>
-                </div>
-
-                <div class="card-body text-dark" style="overflow: scroll;height: 270px;padding-top: 10px">
-                    <g:each in="${topicsCreatedByUser.take(5)}" var="${topic}">
-                        <div class="row" style="background-color: #f1f1f1;margin-bottom: 10px;padding: 12px">
-                            <div class="col-lg-5" style="font-size: 15px;">
-                                <b>Topic :</b><g:link controller="topic" action="show"
-                                                      params="[userId: topic.createdBy.id, topicId: topic.id]"><b><u>${topic.name}</u>
-                                </b></g:link>
-                            </div>
-
-                            <div class="col-lg-4" style="font-size: 14px">
-                                <b style="color: dimgrey">Subscriptions</b>
-                            </div>
-
-                            <div class="col-lg-3" style="font-size: 14px">
-                                <b style="color: dimgrey">Post</b>
-                            </div>
-
-                            <div class="w-100"></div>
-
-                            <div class="col-lg-6">
-                            </div>
-
-                            <div class="col">
-                                <ls:subscriptionCount
-                                        userId="${topic.createdBy.id}"></ls:subscriptionCount>
-                            </div>
-
-                            <div class="col" style="color: blue">
-                                <ls:postCount topicId="${topic.id}"></ls:postCount>
-                            </div>
-                        </div>
-                    </g:each>
-                </div>
-            </div>
+            <g:render template="/userProfile/userTemplate"></g:render>
 
             <div class="card border-dark mb-6 " style="max-width: 35rem;margin-bottom: 50px">
 

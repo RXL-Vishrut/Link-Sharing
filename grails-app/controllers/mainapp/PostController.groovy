@@ -10,20 +10,20 @@ class PostController {
         User user = User.findById(session.userId)
         Resource resource = Resource.findById(params.resourceId)
         Topic topic = resource.topic
-        def trendingTopics = Resource.createCriteria().list(max: 5) {
+        List trendingTopics = Resource.createCriteria().list(max: 5) {
             projections {
                 count("id", "id")
             }
             groupProperty("topic")
             order("id", "desc")
         }
-        def userSubscriptions = Subscription.createCriteria().list() {
+        List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
             and {
                 inList("user", user)
                 order("dateCreated", "desc")
             }
         }
-        render(view: "/viewPost/show", model: [user: user, topic: topic, resource: resource, list1: trendingTopics, list: userSubscriptions])
+        render(view: "/viewPost/show", model: [user: user, topic: topic, resource: resource, trendingTopics: trendingTopics, userSubscriptions: userSubscriptions])
     }
 
     def viewImage() {
@@ -56,8 +56,8 @@ class PostController {
     def shareLink() {
         User user = User.findByUserName(session.userUserName)
         Topic topic = Topic.findByName(params.linkTopic)
-        LinkResource lr = new LinkResource(url: params.link, description: params.linkdescription, createdBy: user, topic: topic)
-        lr.save(flush: true, failOnError: true)
+        LinkResource linkResource = new LinkResource(url: params.link, description: params.linkdescription, createdBy: user, topic: topic)
+        linkResource.save(flush: true, failOnError: true)
         flash.message = "Link has been added successfully"
         redirect(controller: "topic", action: 'show')
     }
@@ -71,8 +71,8 @@ class PostController {
         String dir2 = dir1.split(" ").join("")
         String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
         file1.transferTo(new File(dir))
-        DocumentResource dr = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
-        dr.save(flush: true, failOnError: true)
+        DocumentResource documentResource = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
+        documentResource.save(flush: true, failOnError: true)
         flash.message = "Document has been added successfully"
         redirect(controller: "topic", action: 'show')
     }

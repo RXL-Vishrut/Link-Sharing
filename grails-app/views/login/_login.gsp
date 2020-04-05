@@ -31,13 +31,54 @@
 
                 <div class="row">
                     <div class="col-sm-5">
-                        <g:link action="show" id="1"><u><b>Forgot Password</b></u></g:link>
+                        <a href="#my_modal" data-toggle="modal"
+                           >Forgot Password
+                        </a>
+
+                        <div class="modal fade" id="my_modal">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"
+                                            id="exampleModalLongTitle2"><b>Find Your Account</b>
+
+                                            <div class="alert-success forgot">
+                                            </div>
+
+                                        </h5>
+                                        <button type="button" class="close"
+                                                data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>Please enter your email address</p>
+                                        <div class="fieldcontain"
+                                             style="width: 250px">
+                                            <g:textField name="address"
+                                                         placeholder="email@gmal.com"
+                                                         required="" id="forgotAddress"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                                class="btn-primary forgot">Send</button>
+                                        <button type="button"
+                                                class="btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-4"></div>
 
                     <div class="col-sm-3">
-                        <button type="submit" class="btn " style="background-color: #343a40;color: white">Login</button>
+                        <button type="submit" class="btn" style="background-color: #343a40;color: white">Login</button>
                     </div>
                 </div>
             </g:form>

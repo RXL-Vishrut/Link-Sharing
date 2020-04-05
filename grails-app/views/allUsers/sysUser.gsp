@@ -55,14 +55,14 @@
             </tr>
             </thead>
             <tbody>
-            <g:each in="${list}" var="u">
+            <g:each in="${users}" var="${user}">
                 <tr>
-                    <td style="padding: 15px">${u.id}</td>
-                    <td style="padding: 15px">${u.userName}</td>
-                    <td style="padding: 15px">${u.email}</td>
-                    <td style="padding: 15px">${u.firstName}</td>
-                    <td style="padding: 15px">${u.lastName}</td>
-                    <td style="padding: 15px"><g:if test="${u.active}"><g:link controller="allUsers" action="changeActiveStatus" params="[userId:u.id]">Yes</g:link></g:if><g:if test="${!u.active}"><g:link controller="allUsers" action="changeActiveStatus" params="[userId:u.id]">No</g:link></g:if></td>
+                    <td style="padding: 15px">${user.id}</td>
+                    <td style="padding: 15px">${user.userName}</td>
+                    <td style="padding: 15px">${user.email}</td>
+                    <td style="padding: 15px">${user.firstName}</td>
+                    <td style="padding: 15px">${user.lastName}</td>
+                    <td style="padding: 15px"><g:if test="${user.active}"><g:link controller="allUsers" action="changeActiveStatus" params="[userId:u.id]">Yes</g:link></g:if><g:if test="${!u.active}"><g:link controller="allUsers" action="changeActiveStatus" params="[userId:u.id]">No</g:link></g:if></td>
                 </tr>
             </g:each>
             </tbody>

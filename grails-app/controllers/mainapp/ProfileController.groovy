@@ -6,8 +6,6 @@ class ProfileController {
     static defaultAction = "show"
 
     def show(){
-
-        User user = User.findByEmail(session.userEmail)
         render(view:"/editProfile/show")
     }
     def updateInfo(){
@@ -26,10 +24,10 @@ class ProfileController {
         redirect(controller:"dashboard", action:"show")
     }
     def changePassword(){
-        User usr = User.findByEmail(session.userEmail)
+        User user = User.findByEmail(session.userEmail)
         if(params.password==params.confirmPassword){
-            usr.password = params.password
-            usr.save(flush:true,failOnError:true)
+            user.password = params.password
+            user.save(flush:true,failOnError:true)
             flash.message = "Your password has been updated"
             redirect(controller:"dashboard", action:"show")
         }else{

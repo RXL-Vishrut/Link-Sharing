@@ -12,12 +12,11 @@ class DashboardController {
 
     def show() {
         User user = User.findByEmail(session.userEmail)
-        List<Topic> subscribedTopics = Subscription.findAllByUser(user)*.topic
-        List<Resource> resources = Resource.createCriteria().list() {
-            'in'("topic.id", subscribedTopics*.id)
-            ne("createdBy.id", user.id)
-
-        }
+        List<Topic> subscribedTopics = Subscription.findAllByUser(user)?.topic
+            List<Resource> resources = Resource.createCriteria().list() {
+                'in'("topic.id", subscribedTopics?.id)
+                ne("createdBy.id", user.id)
+            }
 //        <----------------subscriptions------------------->
         List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
             eq("user.id", user.id)
@@ -68,11 +67,10 @@ class DashboardController {
     }
 
     def invite() {
-        println(params)
         sendMail {
             to params.address
             subject params.subject
-            text params.body + " http://localhost:9090/topic/show?userId=${params.userId}&topicId=${params.topicId}"
+            text params.body
         }
 
         flash.message = "Message sent to " + params.address + " at " + new Date()
@@ -83,8 +81,8 @@ class DashboardController {
     def unsubscribe() {
         User user = User.findById(session.userId)
         Topic topic = Topic.findById(params.topicId)
-        Subscription sub = Subscription.findByUserAndTopic(user, topic)
-        sub.delete(failOnError: true, flush: true)
+        Subscription subscription = Subscription.findByUserAndTopic(user, topic)
+        subscription.delete(failOnError: true, flush: true)
         flash.message = "You have unsubscribed ${topic.name}"
         redirect(controller: "dashboard", action: "show")
     }
@@ -92,16 +90,15 @@ class DashboardController {
     def subscribe() {
         User user = User.get(session.userId)
         Topic topic = Topic.get(params.topicId)
-        println(topic.id)
-        Subscription sub = new Subscription(user: user, topic: topic, seriousness: Seriousness.Very_Serious.name())
-        sub.save(flush: true)
+        Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.Very_Serious.name())
+        subscription.save(flush: true)
         flash.message = "You have been subscribed to ${topic.name}"
         redirect(controller: "dashboard", action: "show")
     }
 
     def download() {
-        DocumentResource dr = DocumentResource.get(params.postId)
-        File file = new File(dr.filePath)
+        DocumentResource documentResource = DocumentResource.get(params.postId)
+        File file = new File(documentResource.filePath)
         byte[] orderPDF = file.bytes      //getBytes()
         response.setHeader("Content-disposition", "attachment; filename=" + file.name)
         response.contentType = "application/octet-stream"  //file-mime-type
@@ -113,11 +110,9 @@ class DashboardController {
     }
 
     def isRead() {
-        println(params)
-        println(session.userId)
-        User usr = User.get(session.userId)
+        User user = User.get(session.userId)
         Resource resource = Resource.get(params.resourceId)
-        ReadingItem readItem = new ReadingItem(user: usr, resource: resource, isRead: params.value)
+        ReadingItem readItem = new ReadingItem(user: user, resource: resource, isRead: params.value)
         readItem.save(flush: true, failOnError: true)
         render([success: true] as JSON)
     }

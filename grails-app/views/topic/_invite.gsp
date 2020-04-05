@@ -1,7 +1,7 @@
 
 <form url='[controller: "dashboard", action: "send", params: [topicId: topicId, userId: createdById]]'
       style="display: contents">
-    <div class="modal fade" id="trendingTopicInvite" tabindex="-1"
+    <div class="modal fade" id="invite" tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
@@ -24,21 +24,21 @@
                          style="margin-bottom: 3px">
                         <g:textField name="address"
                                      placeholder="email@gmal.com"
-                                     required=""/>
+                                     required="" id="address${topicId}"/>
                     </div>
                     <div>${topicId}</div>
                     <div class="fieldcontain"
                          style="margin-bottom: 3px">
                         <g:textField name="subject"
                                      placeholder="Subject"
-                                     required=""/>
+                                     required="" id="sub${topicId}"/>
                     </div>
                     <div class="fieldcontain"
                          style="margin-bottom: 3px">
                         <g:textArea name="body" rows="5"
                                     cols="50"
                                     placeholder="Your message"
-                                    required=""/>
+                                    required="" id="body${topicId}"/>
                     </div>
                 </div>
 

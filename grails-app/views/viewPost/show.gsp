@@ -36,14 +36,14 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <img height="100" width="100" style="border-radius: 8px"
-                                 src="${createLink(controller: 'post', action: 'viewImage', params: ['userId': user.id])}"/>
+                                 src="${createLink(controller: 'post', action: 'viewImage', params: ['userId': resource.createdBy.id])}"/>
 
                         </div>
 
                         <div class="col-lg-9">
                             <div class="row">
                                 <div style="font-size: 20px">
-                                    <b>${user.firstName + " "}${user.lastName}</b>
+                                    <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName}</b>
                                 </div>
 
                                 <div style="font-size: 20px;position:relative;left: 150px">
@@ -53,7 +53,7 @@
                                 <div class="w-100"></div>
 
                                 <div style="color: dimgrey">
-                                    <b>@${user.userName}</b>
+                                    <b>@${resource.createdBy.userName}</b>
                                 </div>
 
                                 <div style="color: dimgrey;position:relative;left: 190px;font-size: 12px">
@@ -136,131 +136,7 @@
                 </div>
 
                 <div class="card-body text-dark" style="height: 284px;overflow: scroll">
-                    <g:each in="${list1}" var="${p}">
-                        <ul class="list-group list-group-flush">
-                            <g:if test="${p[1].createdBy.email == session.userEmail}">
-                                <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-
-                                            <img height="90" width="90"
-                                                 src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
-                                        </div>
-
-                                        <div class="col-lg-9" style="font-size: 15px">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <g:link controller="#" action="#"><u><b>${p[1].name}</b>
-                                                    </u></g:link>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-lg-5"><b
-                                                        style="color: dimgrey">@${p[1].createdBy.userName}</b>
-                                                </div>
-
-                                                <div class="col" style="display: contents"><b>Subscriptions</b>
-                                                </div>
-
-                                                <div class="col"><b>Posts</b></div>
-
-                                                <div class="w-100"></div>
-
-                                                <div class="col-lg-5">
-                                                    <g:link controller="dashboard" action="unsubscribe"
-                                                            params="[userId: p[1].createdBy.id, topicId: p[1].id]"><b><u>Unsubscribe</u>
-                                                    </b></g:link></div>
-
-                                                <div class="col-lg-4" style="text-align: center">50</div>
-
-                                                <div class="col-lg-3">40</div>
-                                            </div>
-
-                                            <div class="row" style="margin-top: 4px">
-                                                <div class="col">
-                                                    <g:select name="visibility"
-                                                              from="${enums.Visibility.values()}"></g:select>
-                                                </div>
-
-                                                <div class="col">
-                                                    <g:select name="seriousness"
-                                                              from="${enums.Seriousness.values()}"></g:select>
-                                                </div>
-
-                                                <div class="col">
-                                                    <a href="#"><i class="fa fa-envelope fa-lg" aria-hidden="true"
-                                                                   style="color:black;position: relative; right: 10px;font-size: 15px;bottom: 3px"
-                                                                   ;></i></a>
-                                                    <a href="#"><i class="fa fa-pencil-square-o fa-lg"
-                                                                   aria-hidden="true"
-                                                                   style="color:black; position: relative;font-size: 15px;bottom: 2px"
-                                                                   ;></i></a>
-                                                    <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
-                                                                   style="color:black; position: relative;left: 7px;font-size: 17px;bottom: 3px"
-                                                                   ;></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </g:if>
-
-
-
-
-
-                            <g:else>
-                                <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <img height="90" width="90"
-                                                 src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': p[1].createdBy.id])}"/>
-                                        </div>
-
-                                        <div class="col-lg-9">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <g:link controller="topic"
-                                                            action="topic"><b><u>${p[1].name}</u>
-                                                    </b></g:link>
-                                                </div>
-                                            </div>
-                                            <div class="row" style="font-size: 15px">
-                                                <div class="col-lg-5"><b
-                                                        style="color: dimgrey">@${p[1].createdBy.userName}</b>
-                                                </div>
-
-                                                <div class="col" style="display: contents"><b>Subscriptions</b>
-                                                </div>
-
-                                                <div class="col"><b>Posts</b></div>
-
-                                                <div class="w-100"></div>
-
-                                                <div class="col-lg-5">
-                                                    <g:if test="${list.topic.name.contains(p[1].name)}">
-                                                       <b><u><ls:showSubscribe topicId="${p[1].id}" userId="${p[1].createdBy.id}"></ls:showSubscribe> </u></b>
-                                                    </g:if>
-                                                    <g:else>
-                                                        <g:link controller="dashboard"
-                                                                action="subscribe"
-                                                                params="[userId: session.getAttribute('userId'), topicId: p[1].id]"><b><u>Subscribe</u>
-                                                        </b></g:link>
-                                                    </g:else>
-                                                </div>
-
-                                                <div class="col-lg-4" style="text-align: center"><ls:subscriptionCount topicId="${p[1].id}"></ls:subscriptionCount> </div>
-
-                                                <div class="col-lg-3"><ls:postCount topicId="${p[1].id}"></ls:postCount> </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </g:else>
-                        </ul>
-                    </g:each>
+                    <g:render template="/topic/trendingTopics" model="[trendingTopics:trendingTopics]"></g:render>
                 </div>
             </div>
         </div>

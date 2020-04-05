@@ -44,8 +44,6 @@ class LinkSharingTagLib {
     def showSubscribedTopics = { Map attributes ->
         User user = User.get(attributes.userId)
         List<Topic> subscribedTopics = Subscription.findAllByUser(user)?.topic
-        println(subscribedTopics)
-        println user
         out << select(from:subscribedTopics ,  optionKey:"id", optionValue:"name", name:"linkTopic")
     }
 }

@@ -8,9 +8,8 @@ class AllUsersController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def userDetails(){
-        def users = User.list()
-        println(users)
-        render(view: "/allUsers/sysUser",model: [list:users])
+        List<User> users = User.list()
+        render(view: "/allUsers/sysUser",model: [users:users])
     }
 
     def changeActiveStatus(){

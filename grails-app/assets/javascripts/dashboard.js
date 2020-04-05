@@ -8,7 +8,7 @@ var create = function(){
             if(data.success==true){
                 alert("success")
             }else{
-                alert("failed")
+                alert("failed invite")
             }
         },
         error: function () {
@@ -72,8 +72,39 @@ $(document).ready(function () {
 });
 
 
+// <-------------------------------------------Invite----------------------------->
 
 
+var invite = function(){
+    $.ajax({
+        url: "/login/forgot/",
+        type: "POST",
+        data:{"address": $("#addressnull").val() , "subject": $("#subjectnull").val() , "body":$("#textnull").val()},
+        success: function (/*data*/) {
+            $(".alert-success").html("INVITE SENT")
+        },
+        error: function () {
+            alert("Topic save failed")
+        }
+    });
+};
+
+$(document).ready(function(){
+    $('#my_modal').on('show.bs.modal', function(e) {
+        var topicId = $(e.relatedTarget).data('topic-id');
+        $(e.currentTarget).find('textarea[name="topicId"]').val(topicId);
+    });
+})
+
+$(document).ready(function () {
+    $(".btn.btn-primary").click(function () {
+        invite();
+    });
+});
+
+
+
+// <----------------------------------------------------------------------------------------------------->
 
 var read = function(){
     $.ajax({

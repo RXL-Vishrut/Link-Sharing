@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="col-lg-7" style="position:relative;left: 70px">
-            <g:render template="/editProfile/profile"></g:render>
+            <g:render template="/editProfile/updateUserInfo"></g:render>
             <g:render template="/editProfile/changePassword"></g:render>
         </div>
 

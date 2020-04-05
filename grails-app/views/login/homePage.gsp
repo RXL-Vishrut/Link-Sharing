@@ -3,9 +3,6 @@
     <title>
 
     </title>
-    %{--        <meta name="layout" content="main"/>--}%
-
-
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
@@ -26,7 +23,6 @@
 </head>
 
 <body>
-
 <nav class="navbar navbar-dark bg-dark" style="margin-right: 55px;margin-right: 55px;border-radius: 8px">
     <a class="navbar-brand"><b>Link Sharing</b></a>
 
@@ -41,7 +37,6 @@
     <div id="fm" class="alert alert-success"
          style="display: block;text-align: center;margin-bottom: 38px">${flash.message}</div>
 </g:if>
-
 %{--<---------------------------------------Recent Shares----------------------------------->--}%
 <div class="container">
     <div class="row">
@@ -51,13 +46,14 @@
                         code="login.recentshares"></g:message></b></div>
 
                 <div class="card-body text-dark" style="overflow: scroll;height: 270px">
-                    <g:each in="${recent}" var="${p}">
+                    <g:each in="${recentlySharedResource}" var="${resource}">
                         <div class="row"
                              style="background-color: #f1f1f1;margin-left: -1px;margin-right: -1px;margin-bottom: 20px">
                             <div class="row">
                                 <div class="col-lg-3">
-                                    <img height="110" width="110" style="padding-top: 7px;padding-left: 10px;border-radius: 20px"
-                                         src="${createLink(controller: 'login', action: 'viewImage', params: ['userId': p.createdBy.id])}"/>
+                                    <img height="110" width="110"
+                                         style="padding-top: 7px;padding-left: 10px;border-radius: 20px"
+                                         src="${createLink(controller: 'login', action: 'viewImage', params: ['userId': resource.createdBy.id])}"/>
                                 </div>
 
                                 <div class="col-lg-9">
@@ -65,28 +61,27 @@
                                         <div class="col-lg-12">
                                             <div class="row" style="padding: 4px">
                                                 <div class="col-lg-9" style="color: black">
-                                                    <b>${p.createdBy.firstName + " "}${p.createdBy.lastName + "  "}</b>
+                                                    <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName + "  "}</b>
                                                     <span style="font-size: 15px;position: relative;left: 120px">
                                                         <b>Topic :</b> <a
-                                                            href="${createLink(controller: "login", action: "error")}"><b><u>${p.topic.name}</u>
+                                                            href="${createLink(controller: "login", action: "error")}"><b><u>${resource.topic.name}</u>
                                                         </b></a>
                                                     </span>
                                                 </div>
 
                                                 <div style="font-size: 13px;font-weight: bold;display: inline;color: dimgrey;margin-left: 12px">
                                                     -<g:formatDate format=" hh:mm dd MMMM yyyy"
-                                                                   date="${p.lastUpdated}"/>
+                                                                   date="${resource.lastUpdated}"/>
                                                 </div>
 
                                             </div>
                                         </div>
 
-
                                         <div class="w-100"></div>
 
                                         <div class="col-lg-12" style="margin-left: 19px;word-break: break-all;">
                                             <div class="row">
-                                                <p>${p.description}</p>
+                                                <p>${resource.description}</p>
                                             </div>
                                         </div>
 
@@ -104,7 +99,7 @@
                                                                style="color: red"></i></a>
                                             </span>
                                             <span style="font-size: 12px;position:relative;left: 110px">
-                                                <g:if test="${p.getClass() == mainapp.LinkResource}"><g:link
+                                                <g:if test="${resource.class == mainapp.LinkResource}"><g:link
                                                         controller="login" action="error"><b><u>View Full Site</u>
                                                     </b></g:link>
                                                 </g:if>
@@ -125,11 +120,6 @@
                     </g:each>
                 </div>
             </div>
-
-
-
-
-
 
             %{--            <-----------------------------_TOP POSTS------------------------->--}%
 
@@ -149,13 +139,14 @@
                 </div>
 
                 <div class="card-body text-dark" style="padding-bottom: 0px">
-                    <g:each in="${list}" var="${p}">
+                    <g:each in="${topPosts}" var="${post}">
                         <div class="row"
                              style="background-color: #f1f1f1;margin-left: -1px;margin-right: -1px;margin-bottom: 20px">
                             <div class="row">
                                 <div class="col-lg-3">
-                                    <img height="110" width="110" style="padding-top: 7px;padding-left: 10px;border-radius: 20px"
-                                         src="${createLink(controller: 'login', action: 'viewImage', params: ['userId': p.resource.createdBy.id])}"/>
+                                    <img height="110" width="110"
+                                         style="padding-top: 7px;padding-left: 10px;border-radius: 20px"
+                                         src="${createLink(controller: 'login', action: 'viewImage', params: ['userId': post.resource.createdBy.id])}"/>
                                 </div>
 
                                 <div class="col-lg-9">
@@ -163,28 +154,29 @@
                                         <div class="col-lg-12">
                                             <div class="row" style="padding: 4px">
                                                 <div class="col-lg-9" style="color: black">
-                                                    <b>${p.resource.createdBy.firstName + " "}${p.resource.createdBy.lastName + "  "}</b>
+                                                    <b>${post.resource.createdBy.firstName + " "}${post.resource.createdBy.lastName + "  "}</b>
                                                     <span style="font-size: 15px;position: relative;left: 120px">
                                                         <b>Topic :</b> <a
-                                                            href="${createLink(controller: "login", action: "error")}"><b><u>${p.resource.topic.name}</u>
+                                                            href="${createLink(controller: "login", action: "error")}"><b><u>${post.resource.topic.name}</u>
                                                         </b></a>
                                                     </span>
                                                 </div>
 
-                                                <div style="font-size: 13px;font-weight: bold;display: inline;color: dimgrey;margin-left: 12px">
-                                                    -<g:formatDate format=" hh:mm dd MMMM yyyy"
-                                                                   date="${p.resource.lastUpdated}"/>
+                                                <div class="col-lg-8"  style="font-size: 13px;font-weight: bold;color: dimgrey;"><g:formatDate
+                                                        format=" hh:mm dd MMMM yyyy"
+                                                        date="${post.resource.lastUpdated}"/>
                                                 </div>
-
+                                                <div style="font-size: 15px">
+                                                    <b>Rating : ${post.score}/5</b>
+                                                </div>
                                             </div>
                                         </div>
-
 
                                         <div class="w-100"></div>
 
                                         <div class="col-lg-12" style="margin-left: 19px;word-break: break-all;">
                                             <div class="row">
-                                                <p>${p.resource.description}</p>
+                                                <p>${post.resource.description}</p>
                                             </div>
                                         </div>
 
@@ -202,7 +194,7 @@
                                                                style="color: red"></i></a>
                                             </span>
                                             <span style="font-size: 12px;position:relative;left: 110px">
-                                                <g:if test="${p.resource.getClass() == mainapp.LinkResource}"><g:link
+                                                <g:if test="${post.resource.class == mainapp.LinkResource}"><g:link
                                                         controller="login" action="error"><b><u>View Full Site</u>
                                                     </b></g:link>
                                                 </g:if>
@@ -218,13 +210,11 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </g:each>
                 </div>
             </div>
         </div>
-
 
         <div class="col-lg-1"></div>
 
@@ -238,10 +228,5 @@
         </div>
     </div>
 </div>
-
-
-<script>
-
-</script>
 </body>
 </html>

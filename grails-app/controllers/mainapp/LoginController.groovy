@@ -1,5 +1,6 @@
 package mainapp
 
+import grails.converters.JSON
 
 import javax.servlet.http.HttpSession
 
@@ -8,19 +9,19 @@ class LoginController {
     static defaultAction = "home"
 
     def home() {
-        def PublicTopics = Topic.findAllByVisibility("Public")
+        List<Topic> PublicTopics = Topic.findAllByVisibility("Public")
         List<Resource> recentShares = Resource.createCriteria().list(sort: "lastUpdated", order: "desc") {
             inList("topic", PublicTopics)
         }
         List<ResourceRating> topPosts = ResourceRating.createCriteria().list(max: 5) {
             order "score", "desc"
         }
-        render(view: "/login/homePage", model: [recent: recentShares, list: topPosts])
+        render(view: "/login/homePage", model: [recentlySharedResource: recentShares, topPosts: topPosts])
     }
 
 
     def error() {
-        def PublicTopics = Topic.findAllByVisibility("Public")
+        List<Topic> PublicTopics = Topic.findAllByVisibility("Public")
         List<Resource> recentShares = Resource.createCriteria().list(sort: "lastUpdated", order: "desc") {
             inList("topic", PublicTopics)
         }
@@ -30,7 +31,7 @@ class LoginController {
     }
 
     def viewImage() {
-        def user = User.get(params.userId)
+        User user = User.get(params.userId)
         byte[] imageInByte = user.photo
         response.contentType = 'image/jpg' // or the appropriate image content type
         response.outputStream << imageInByte
@@ -83,5 +84,37 @@ class LoginController {
         }
     }
 
+    def forgotPassword() {
+        String email = params.emailForgot
+        println(email)
+        println(params.emailForgot)
+        User user = User.findByEmail(email)
+        if (user) {
+            println("Inside")
+            sendMail {
+                to params.emailForgot
+                subject "Reset password"
+                text "http://localhost:9090/login/resetPassword?userId=${user.id}"
+            }
+            render([success: true] as JSON)
+        } else {
+            render([success: false] as JSON)
+        }
+    }
 
+    def resetPassword() {
+        render(view: "/login/resetpassword")
+
+    }
+    def changePassword(){
+        println(params)
+        User user = User.findById(params.userId)
+        if(user){
+            user.password = params.password
+            user.save(flush:true , failOnError:true)
+            return([success:true] as JSON)
+        }
+        render([success:false] as JSON)
+    }
 }
+

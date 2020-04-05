@@ -45,5 +45,4 @@ class TopicController {
         render([success: true] as JSON)
     }
 
-
 }

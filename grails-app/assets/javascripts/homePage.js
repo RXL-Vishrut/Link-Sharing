@@ -80,3 +80,24 @@ $(document).ready(function(){
         $("#fm").fadeOut(1000)
     });
 });
+
+
+var forgotPassword = function(){
+    $.ajax({
+        url: "/login/forgotPassword/",
+        type: "POST",
+        data:{"emailForgot": $("#forgotAddress").val() },
+        success: function () {
+            $(".alert-success.forgot").html("Reset link sent")
+        },
+        error: function () {
+            alert("Topic save failed")
+        }
+    });
+};
+
+$(document).ready(function () {
+    $(".btn-primary.forgot").click(function () {
+        forgotPassword();
+    });
+});
