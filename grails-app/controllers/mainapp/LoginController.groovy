@@ -51,11 +51,11 @@ class LoginController {
         if (user.validate()) {
             user.save(flush: true, failOnError: true)
             flash.message = "User registered successfully"
-            redirect(action: "home")
+            redirect(controller: "dashboard", action: "show")
         } else {
             user.errors.allErrors.each {
                 flash.message = "Invalid email address"
-                redirect(action: "login")
+                redirect(action: "home")
             }
         }
     }
@@ -86,11 +86,8 @@ class LoginController {
 
     def forgotPassword() {
         String email = params.emailForgot
-        println(email)
-        println(params.emailForgot)
         User user = User.findByEmail(email)
         if (user) {
-            println("Inside")
             sendMail {
                 to params.emailForgot
                 subject "Reset password"
@@ -107,14 +104,13 @@ class LoginController {
 
     }
     def changePassword(){
-        println(params)
         User user = User.findById(params.userId)
         if(user){
             user.password = params.password
             user.save(flush:true , failOnError:true)
             return([success:true] as JSON)
         }
-        render([success:false] as JSON)
+        render([success:true] as JSON)
     }
 }
 

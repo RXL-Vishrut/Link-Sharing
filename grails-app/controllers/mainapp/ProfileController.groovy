@@ -39,7 +39,7 @@ class ProfileController {
     def userProfile(){
         User user = User.findByEmail(session.userEmail)
         List<Resource> postsOfUser = Resource.findAllByCreatedBy(user)
-        List<Topic> topicsCreatedByUser = Topic.createCriteria().list(){
+        List<Topic> topicsCreatedByUser = Topic.createCriteria().list(max:5){
             eq("createdBy",user)
             eq("visibility",enums.Visibility.Public)
             order("lastUpdated","desc")

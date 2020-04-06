@@ -136,7 +136,11 @@
                 </div>
 
                 <div class="card-body text-dark" style="height: 284px;overflow: scroll">
-                    <g:render template="/topic/trendingTopics" model="[trendingTopics:trendingTopics]"></g:render>
+
+                    <g:each in="${trendingTopics}"  var="trendingTopic">
+                        <g:render template="/topic/topicInfo" model="[topic:trendingTopic[1]]"></g:render>
+                    </g:each>
+
                 </div>
             </div>
         </div>

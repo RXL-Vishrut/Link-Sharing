@@ -24,8 +24,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript" charset="utf8"
+                src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
         <title>Document</title>
@@ -37,7 +39,8 @@
 
 <div class="container">
     <div class="row" style="padding: 10px">
-        <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="margin: 10px">
+        <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"
+               style="margin: 10px">
             <thead>
             <tr>
                 <th class="th-sm">Id
@@ -49,6 +52,8 @@
                 <th class="th-sm">FirstName
                 </th>
                 <th class="th-sm">LastName
+                </th>
+                <th class="th-sm">isAdmin
                 </th>
                 <th class="th-sm">Active Status
                 </th>
@@ -62,7 +67,12 @@
                     <td style="padding: 15px">${user.email}</td>
                     <td style="padding: 15px">${user.firstName}</td>
                     <td style="padding: 15px">${user.lastName}</td>
-                    <td style="padding: 15px"><g:if test="${user.active}"><g:link controller="allUsers" action="changeActiveStatus" params="[userId:u.id]">Yes</g:link></g:if><g:if test="${!u.active}"><g:link controller="allUsers" action="changeActiveStatus" params="[userId:u.id]">No</g:link></g:if></td>
+                    <td style="padding: 15px">${user.admin}</td>
+                    <td style="padding: 15px"><g:if test="${user.active}"><g:link controller="allUsers"
+                                                                                  action="changeActiveStatus"
+                                                                                  params="[userId: user.id]">Yes</g:link></g:if><g:if
+                            test="${!user.active}"><g:link controller="allUsers" action="changeActiveStatus"
+                                                           params="[userId: user.id]">No</g:link></g:if></td>
                 </tr>
             </g:each>
             </tbody>

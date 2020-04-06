@@ -10,27 +10,13 @@ class TopicController {
     TopicService topicService
 
     def show() {
-        User user = User.findById(session.userId)
-        Topic topic = Topic.findById(params.topicId)
-        List<User> subscribedUsers = Subscription.findAllByTopic(topic)*.user
-        List<Resource> postsOfTopic = Resource.findAllByTopic(topic)
-        render(view: "/topic/show", model: [subscribedUsers: subscribedUsers, postsOfTopic: postsOfTopic, topic: topic, user: user])
+        Map model = topicService.fetchTopicDetail(session.userId, Long.valueOf(params.topicId))
+        render(view: "/topic/show", model: model)
     }
 
     def create() {
-        Topic topic = Topic.findByName(params.name)
-        User user = User.findByEmail(session.userEmail)
-
-        if (topic != null && topic.createdBy == user) {
-            render([success: false] as JSON)
-        } else {
-            Topic newTopic = new Topic(name: params.name, createdBy: user, visibility: params.visibility)
-            println(newTopic.properties)
-            Subscription sub = new Subscription(user: user, topic: newTopic, seriousness: Seriousness.Very_Serious.name())
-            newTopic.addToSubscriptions(sub)
-            newTopic.save(flush: true, failOnError: true)
-            render([success: true] as JSON)
-        }
+        Topic topic = topicService.createTopic(session.userEmail, params.name, params.visibility)
+        render([success: topic ? true : false] as JSON)
     }
 
     def editTopic() {
@@ -45,4 +31,32 @@ class TopicController {
         render([success: true] as JSON)
     }
 
+    def search() {
+        List<Resource> trendingTopics = Resource.createCriteria().list(max: 5) {
+            projections {
+                count("id", "count")
+            }
+            groupProperty("topic")
+            order("count", "desc")
+        }
+        List<ResourceRating> topPosts = ResourceRating.createCriteria().list(max: 5) {
+            order "score", "desc"
+        }
+        List<Resource> resources
+        List<Topic> topics = Topic.findAllByNameIlike(params.searchText)?:[]
+        resources = Resource.createCriteria().list (){
+            or{ilike("description","params.searchText%" )
+                'in'("topic",topics?:[])
+            }
+        }
+        println(resources.size())
+        println(resources)
+        render(view:"/search/searchPage", model: [trendingTopics:trendingTopics, topPosts: topPosts, resources:resources])
+    }
+
+    def delete() {
+        Topic topic = Topic.findById(params.topicId)
+        topic.delete(failOnError: true , flush: true)
+        render([success:true] as JSON)
+    }
 }

@@ -33,9 +33,9 @@
                     <input type="email" placeholder="Email" name="email" id="email"
                            class="form-control shadow p-3 mb-5 bg-white rounded" required>
                 </div>
-                <g:if test="${flash.error1}">
+                <g:if test="${flash.error}">
                     <div class="message leftcolumn" style="color: red" role="alert">
-                        ${flash.error1}
+                        ${flash.error}
                     </div>
                 </g:if>
             </div>

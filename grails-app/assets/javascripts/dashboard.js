@@ -6,13 +6,13 @@ var create = function(){
         data:{"name": $("#inputTopicName").val() , "visibility": $("#visibility").val()},
         success: function (data) {
             if(data.success==true){
-                alert("success")
+                alert("Topic created successfully")
             }else{
-                alert("failed invite")
+                alert("Topic save failed!!")
             }
         },
         error: function () {
-            alert("Topic save failed")
+            alert("Some error occurred")
         }
 
     });
@@ -36,11 +36,11 @@ var editTopic = function(topicName,topicId,visibility,seriousness){
             if(data.success  ==  true){
                 alert("Data changed")
             }else{
-                alert("rating changed")
+                alert("topic edit error")
             }
         },
         error: function () {
-            alert("Resource rating failed")
+            alert("Some error occurred")
         }
 
     });
@@ -48,7 +48,9 @@ var editTopic = function(topicName,topicId,visibility,seriousness){
 
 
 $(document).ready(function () {
-    $(".subscriptionEdit").click(function () {
+    $(".topicEdit").click(function () {
+        var topicId = $(this).attr('topicId')
+        console.log(topicId)
         $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".hidden-field").attr('hidden',false)
         $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".topic").attr('hidden',true)
         $(this).parent().siblings().eq(0).attr('hidden',false)
@@ -77,40 +79,69 @@ $(document).ready(function () {
 
 var invite = function(){
     $.ajax({
-        url: "/login/forgot/",
+        url: "/dashboard/invite/",
         type: "POST",
         data:{"address": $("#addressnull").val() , "subject": $("#subjectnull").val() , "body":$("#textnull").val()},
         success: function (/*data*/) {
             $(".alert-success").html("INVITE SENT")
         },
         error: function () {
-            alert("Topic save failed")
+            alert("Error occurred!!")
         }
     });
 };
 
 $(document).ready(function(){
-    $('#my_modal').on('show.bs.modal', function(e) {
-        var topicId = $(e.relatedTarget).data('topic-id');
-        $(e.currentTarget).find('textarea[name="topicId"]').val(topicId);
+    $('#my_modal').on('show.bs.modal', function(event) {
+        var topicId = $(event.relatedTarget).data('topic-id');
+        $(event.currentTarget).find('textarea[name="topicId"]').val(topicId);
     });
 })
 
 $(document).ready(function () {
     $(".btn.btn-primary").click(function () {
+        console.log("Function calling")
         invite();
     });
 });
 
 
 
-// <----------------------------------------------------------------------------------------------------->
+// <-------------------------------------------ISREAD---------------------------------------------------------->
 
-var read = function(){
+// var read = function(){
+//     $.ajax({
+//         url: "/dashboard/isRead/",
+//         type: "POST",
+//         data:{"value": true , "resourceId": $(".resource").text()},
+//         success: function (data) {
+//             if(data.success  ==  true){
+//                 alert("success")
+//             }else{
+//                 alert("rating changed")
+//             }
+//         },
+//         error: function () {
+//             alert("Resource rating failed")
+//         }
+//
+//     });
+// };
+//
+// $(document).ready(function () {
+//     $(".readPost").click(function () {
+//         read();
+//     });
+// });
+
+
+// <-----------------------------------------TOPIC DELETE----------------------------------->
+
+var deleteTopic = function(trashId){
     $.ajax({
-        url: "/dashboard/isRead/",
+        url: "/topic/delete/",
         type: "POST",
-        data:{"value": true , "resourceId": $(".resource").text()},
+        data:{"topicId" : trashId},
         success: function (data) {
             if(data.success  ==  true){
                 alert("success")
@@ -125,12 +156,16 @@ var read = function(){
     });
 };
 
+
 $(document).ready(function () {
-    $(".readPost").click(function () {
-        read();
+    $(".delete").click(function () {
+        var trashId = $(this).attr('trashId');
+        deleteTopic (trashId)
+
     });
 });
 
+// <-----------------------------------------------------------------------------------------------------?
 
 $(document).ready(function () {
     $(".custom-file-input").on("change", function () {
@@ -138,8 +173,3 @@ $(document).ready(function () {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 })
-
-
-
-
-

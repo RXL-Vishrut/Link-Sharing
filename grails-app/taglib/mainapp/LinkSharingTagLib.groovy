@@ -46,5 +46,24 @@ class LinkSharingTagLib {
         List<Topic> subscribedTopics = Subscription.findAllByUser(user)?.topic
         out << select(from:subscribedTopics ,  optionKey:"id", optionValue:"name", name:"linkTopic")
     }
+
+    def markAsRead = { Map attributes ->
+        boolean isState
+        User user = User.get(session.userId)
+        Resource resource = Resource.get(attributes.resourceId)
+        ReadingItem itemRead = ReadingItem.findByResourceAndUser(resource, user)
+        if (itemRead){
+
+            isState = itemRead.isRead
+            isState ? false : true
+        }else{
+            isState == true
+        }
+//        String markAsReadString = "Mark as Read"
+//        String markAsUnreadString = "Mark as Unread"
+        String text = isState ? "Mark as unread" : "Mark as read"
+//        boolean readingStateValue = (text == "Mark as Read") ? false : true
+        out << "<a href=${createLink(controller: "dashboard", action: "isRead", params: [resourceId: attributes.resourceId, isState: isState])}><u>${text}</u></a>"
+    }
 }
 

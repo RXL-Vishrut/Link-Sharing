@@ -12,11 +12,15 @@ class DashboardController {
 
     def show() {
         User user = User.findByEmail(session.userEmail)
+        List<Resource> resources
         List<Topic> subscribedTopics = Subscription.findAllByUser(user)?.topic
-            List<Resource> resources = Resource.createCriteria().list() {
+        if(subscribedTopics){
+            resources = Resource.createCriteria().list() {
                 'in'("topic.id", subscribedTopics?.id)
                 ne("createdBy.id", user.id)
             }
+        }
+
 //        <----------------subscriptions------------------->
         List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
             eq("user.id", user.id)
@@ -53,17 +57,23 @@ class DashboardController {
 
 
     def shareDoc() {
-        User user = User.findByUserName(session.userUserName)
-        Topic topic = Topic.findByName(params.docTopic)
-        def file1 = request.getFile("document")
-        String dir1 = new Date()
-        String dir2 = dir1.split(" ").join("")
-        String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
-        file1.transferTo(new File(dir))
-        DocumentResource dr = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
-        dr.save(flush: true, failOnError: true)
-        flash.message = "Document has been added successfully"
-        redirect(controller: "dashboard", action: 'show')
+        User user = User.findById(session.userId)
+        Topic topic = Topic.findById(params.linkTopic)
+        if(topic){
+            def file1 = request.getFile("document")
+            String dir1 = new Date()
+            String dir2 = dir1.split(" ").join("")
+            String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
+            file1.transferTo(new File(dir))
+            DocumentResource dr = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
+            dr.save(flush: true, failOnError: true)
+            flash.message = "Document has been added successfully"
+            redirect(controller: "dashboard", action: 'show')
+        }else{
+            flash.message = "Document cannot be added"
+            redirect(controller: "dashboard", action: 'show')
+        }
+
     }
 
     def invite() {
@@ -110,11 +120,20 @@ class DashboardController {
     }
 
     def isRead() {
+
         User user = User.get(session.userId)
         Resource resource = Resource.get(params.resourceId)
-        ReadingItem readItem = new ReadingItem(user: user, resource: resource, isRead: params.value)
-        readItem.save(flush: true, failOnError: true)
-        render([success: true] as JSON)
+        ReadingItem readingItem = ReadingItem.findByUserAndResource(user, resource)
+        if (readingItem) {
+            readingItem.isRead = params.isState
+            readingItem.save(flush: true)
+            redirect(controller: "dashboard", action: "show")
+        } else {
+            ReadingItem readItem = new ReadingItem(user: user, resource: resource, isRead: params.isState)
+            readItem.save(flush: true, failOnError: true)
+            redirect(controller: "dashboard", action: "show")
+        }
+
     }
 
 }

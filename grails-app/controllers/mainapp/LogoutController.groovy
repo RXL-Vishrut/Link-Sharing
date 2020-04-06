@@ -8,7 +8,7 @@ class LogoutController {
 
     def logout(){
         session.invalidate()
-        flash.message = "Logout Successfully"
+        flash.message = "Logged out successfully"
         redirect(controller:"login", action:"home")
     }
 

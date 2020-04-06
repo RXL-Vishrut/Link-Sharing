@@ -10,12 +10,12 @@ class PostController {
         User user = User.findById(session.userId)
         Resource resource = Resource.findById(params.resourceId)
         Topic topic = resource.topic
-        List trendingTopics = Resource.createCriteria().list(max: 5) {
+        List<Resource> trendingTopics = Resource.createCriteria().list(max: 5) {
             projections {
-                count("id", "id")
+                count("id", "count")
             }
             groupProperty("topic")
-            order("id", "desc")
+            order("count", "desc")
         }
         List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
             and {

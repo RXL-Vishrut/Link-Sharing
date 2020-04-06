@@ -122,13 +122,12 @@
                                         code="dashboard.link.topic"></g:message></b></label>
 
                                 <div class="col-sm-6 " style="display: inline-grid">
-                                    <ls:showSubscribedTopics userId="${session.userId}"
-                                                             id="inputTopic"></ls:showSubscribedTopics>
+                                    <ls:showSubscribedTopics userId="${session.userId}"></ls:showSubscribedTopics>
                                 </div>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Share</button>
+                                <button type="submit" id="shareDoc ">Share</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -188,7 +187,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Share Link</button>
+                                <button type="submit" class="shareLink">Share Link</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -259,10 +258,10 @@
                     <a class="dropdown-item"
                        href="${createLink(controller: "profile", action: "show")}"><b>PROFILE</b></a>
                     <g:if test="${session.getAttribute("userIsAdmin")}">
-                        <a class="dropdown-item"
-                           href="${createLink(controller: "logout", action: "logout")}"><b>TOPICS</b></a>
-                        <a class="dropdown-item" href="${createLink(controller: "post", action: "show")}"><b>POSTS</b>
-                        </a>
+                    %{--                        <a class="dropdown-item"--}%
+                    %{--                           href="${createLink(controller: "logout", action: "logout")}"><b>TOPICS</b></a>--}%
+                    %{--                        <a class="dropdown-item" href="${createLink(controller: "post", action: "show")}"><b>POSTS</b>--}%
+                    %{--                        </a>--}%
                         <a class="dropdown-item"
                            href="${createLink(controller: "allUsers", action: "userDetails")}"><b>USERS</b></a>
 
@@ -277,10 +276,11 @@
 
         %{--        <------------------------------------NAVBAR SEARCH------------------------------->--}%
         <div class="col-lg-4">
-            <form class="form-inline" style="justify-content: flex-end">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <g:form url="[controller: 'topic', action: 'search']" class="form-inline" style="justify-content: flex-end">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                       name="searchText" id="searchText" autocomplete="off">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="button">Search</button>
-            </form>
+            </g:form>
         </div>
 
     </div>

@@ -86,7 +86,7 @@ var forgotPassword = function(){
     $.ajax({
         url: "/login/forgotPassword/",
         type: "POST",
-        data:{"emailForgot": $("#forgotAddress").val() },
+        data:{"emailForgot": $("#forgotEmail").val() },
         success: function () {
             $(".alert-success.forgot").html("Reset link sent")
         },
@@ -97,7 +97,26 @@ var forgotPassword = function(){
 };
 
 $(document).ready(function () {
-    $(".btn-primary.forgot").click(function () {
+    $("#sendPassword").click(function () {
         forgotPassword();
     });
 });
+
+// var login = function(){
+//     $.ajax({
+//         url: "/login/login/",
+//         type: "POST",
+//         data:{"email": $("#loginEmail").val(),"password": $("#password").val() },
+//         success: function () {
+//
+//         },
+//         error: function () {
+//
+//         }
+//     });
+// };
+// $(document).ready(function () {
+//     $(".btn").click(function () {
+//         login();
+//     });
+// });

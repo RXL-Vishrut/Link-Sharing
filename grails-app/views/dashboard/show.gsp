@@ -40,160 +40,24 @@
             <div class="card-header"
                  style="background-color: #343a40;color: white;position:relative;top: 3px;width: 32rem"><b>User</b>
             </div>
-            <g:render template="/userProfile/userTemplate"></g:render>
+            <g:render template="/userProfile/profileInfo"></g:render>
 
 
-%{--            <-----------------------------subscriptions---------------------------------->--}%
+            %{--            <-----------------------------subscriptions---------------------------------->--}%
             <div class="card border-dark mb-6" style="width: 32rem; margin-bottom: 50px">
                 <div class="card-header" style="background-color: #343a40;color: white">
                     <span><b>Subscriptions</b></span>
                     <span style="float:right"><b><a href="#"><u style="color: white">View All</u></a></b></span>
                 </div>
 
-                <div class="card-body text-dark overflow-auto" style="padding: 15px;max-height: 319px;height:auto;overflow: scroll">
+                <div class="card-body text-dark overflow-auto"
+                     style="padding: 15px;max-height: 319px;height:auto;overflow: scroll">
                     <g:if test="${userSubscriptions}">
-                        <g:each in="${userSubscriptions.take(5)}" var="${userSubscription}">
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item" style="background-color: #f1f1f1;margin-bottom: 15px">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <img height="90" width="90" style="border-radius: 15px"
-                                                 src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': userSubscription.topic.createdBy.id])}"/>
-                                        </div>
-
-                                        <div class="col-lg-9">
-                                            <div class="row Item-1">
-                                                <div class="col-lg-12">
-                                                    <div class="hidden-field" hidden>
-                                                        <g:textField name="topic" class="subscriptionName"
-                                                                     placeholder="${userSubscription.topic.name}"
-                                                                     style="width: 180px" id="topic${userSubscription.id}"></g:textField>
-                                                        <div hidden>${userSubscription.topic.id}</div>
-                                                        <button type="submit" name="save"
-                                                                class="subscriptionSave">Save</button>
-                                                        <button type="submit" name="cancel"
-                                                                class="subscriptionCancel ">Cancel</button>
-                                                    </div>
-
-                                                    <div class="topic">
-                                                        <g:link controller="topic"
-                                                                action="show"
-                                                                params="[topicId: userSubscription.topic.id]"><b><u>${userSubscription.topic.name}</u>
-                                                        </b></g:link>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row Item-2" style="font-size: 15px">
-                                                <div class="col-lg-5"><b
-                                                        style="color: dimgrey">@${userSubscription.user.userName}</b>
-                                                </div>
-
-                                                <div class="col" style="display: contents;font-size: 15px"><b>Subscriptions</b>
-                                                </div>
-
-                                                <div class="col" style="font-size: 15px"><b>Posts</b></div>
-
-                                                <div class="w-100"></div>
-
-                                                <div class="col-lg-5"><g:link controller="dashboard" action="unsubscribe"
-                                                                              params="[userId: userSubscription.user.id, topicId: userSubscription.topic.id]"><b><u>Unsubscribe</u>
-                                                    </b></g:link></div>
-
-                                                <div class="col-lg-4" style="position:relative;left: 20px"><ls:subscriptionCount
-                                                        topicId="${userSubscription.topic.id}"></ls:subscriptionCount></div>
-
-                                                <div class="col-lg-3"><ls:postCount
-                                                        topicId="${userSubscription.topic.id}"></ls:postCount></div>
-                                            </div>
-
-                                            <div class="row Item-3" style="margin-top: 4px">
-                                                <div class="col visible" hidden>
-                                                    <g:select name="visibility" id="visibility"
-                                                              from="${enums.Visibility.values()}"></g:select>
-                                                </div>
-
-                                                <div class="col seriousness" hidden>
-                                                    <g:select name="seriousness" id="seriousness"
-                                                              from="${enums.Seriousness.values()}"></g:select>
-                                                </div>
-                                                <g:if test="${userSubscription.topic.createdBy.id == session.userId}">
-                                                    <div class="col">
-                                                        <a href="#my_modal" data-toggle="modal"
-                                                           data-topic-id="http://localhost:9090/topic/show?&topicId=${userSubscription.topic.id}"><i
-                                                                class="fa fa-envelope"
-                                                                style="font-size: 20px;color: black;position:relative;right: 8px;top: 2px"></i>
-                                                        </a>
-
-                                                        <div class="modal" id="my_modal">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="exampleModalLongTitle2"><b>SEND INVITE</b>
-
-                                                                            <div class="alert-success">
-                                                                            </div>
-
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                                data-dismiss="modal"
-                                                                                aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div class="modal-body">
-                                                                        <div class="fieldcontain"
-                                                                             style="margin-bottom: 3px">
-                                                                            <g:textField name="address"
-                                                                                         placeholder="email@gmal.com"
-                                                                                         required="" id="address${topicId}"/>
-                                                                        </div>
-
-                                                                        <div>${topicId}</div>
-
-                                                                        <div class="fieldcontain"
-                                                                             style="margin-bottom: 3px">
-                                                                            <g:textField name="subject"
-                                                                                         placeholder="Subject"
-                                                                                         required="" id="subject${topicId}"/>
-                                                                        </div>
-
-                                                                        <div class="fieldcontain"
-                                                                             style="margin-bottom: 3px">
-                                                                            <g:textArea name="topicId" rows="5"
-                                                                                        cols="50"
-                                                                                        required="" id="text${topicId}"/>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="modal-footer">
-                                                                        <button type="submit"
-                                                                                class="btn btn-primary">Invite</button>
-                                                                        <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <i style="cursor: pointer;color: black ;font-size: 20px;position:relative;;top: 2px"
-                                                           class="fa fa-pencil-square-o fa-lg subscriptionEdit"></i>
-                                                        <a href="#"><i class="fa fa-trash fa-lg" aria-hidden="true"
-                                                                       style="color:black; position: relative;left: 8px;top:1px;font-size: 20px;"
-                                                                       ;></i></a>
-                                                    </div>
-                                                </g:if>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                        <g:each in="${userSubscriptions.take(5)}" var="userSubscription">
+                            <g:render template="/topic/topicInfo" model="[topic: userSubscription.topic]"></g:render>
                         </g:each>
                     </g:if>
-                    <g:else><div class="alert-danger">Oops!! create some topic first</div></g:else>
+                    <g:else><div class="alert-danger">No subscriptions yet</div></g:else>
                 </div>
             </div>
 
@@ -206,7 +70,9 @@
 
                 <div class="card-body text-dark" style="height: 284px;overflow: scroll">
                     <g:if test="${trendingTopics}">
-                        <g:render template="/topic/trendingTopics" model="[trendingTopics: trendingTopics]"></g:render>
+                        <g:each in="${trendingTopics}" var="trendingTopic">
+                            <g:render template="/topic/topicInfo" model="[topic: trendingTopic[1]]"></g:render>
+                        </g:each>
                     </g:if>
                 </div>
             </div>
@@ -263,7 +129,7 @@
 
                                         <div class="row" style="font-size: 15px">
                                             <b>Topic :</b><g:link controller="topic" action="show"
-                                                                  params="[ topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
+                                                                  params="[topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
                                             </b></g:link>
                                         </div>
 
@@ -288,14 +154,12 @@
                                                     <g:link controller="dashboard" action="download"
                                                             params="[postId: resource.id]"><u
                                                             style="margin-right:22px;">Download</u></g:link>
-                                                    <a class="readPost"><u
-                                                            style="color: blue;margin-right: 22px;cursor: pointer">Mark as read</u>
-                                                    </a>
-
+                                                    <ls:markAsRead userId="${resource.createdBy.id}"
+                                                                   resourceId="${resource.id}"></ls:markAsRead>
                                                     <div class="resource" hidden>
                                                         ${resource.id}
                                                     </div>
-                                                    <g:link controller="post" action="show"
+                                                    <g:link controller="post" action="show" style="margin-left: 20px"
                                                             params="[resourceId: resource.id]"><u>View Post</u></g:link>
                                                 </g:if>
 
@@ -306,10 +170,9 @@
                                                     <div class="resource" hidden>
                                                         ${resource.id}
                                                     </div>
-                                                    <a class="readPost"><u
-                                                            style="color: blue;margin-right: 22px;cursor: pointer">Mark as read</u>
-                                                    </a>
-                                                    <g:link controller="post" action="show"
+                                                    <ls:markAsRead id="read${resource.id}"
+                                                                   resourceId="${resource.id}"></ls:markAsRead>
+                                                    <g:link controller="post" action="show" style="margin-left: 20px"
                                                             params="[resourceId: resource.id]"><u>View Post</u></g:link>
                                                 </g:if>
                                             </div>
