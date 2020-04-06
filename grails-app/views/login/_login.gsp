@@ -7,12 +7,11 @@
         <g:form url='[controller:"login",action:"login"]'>
 
             <div class="row " style="margin-top: 20px; ">
-                <label for="loginEmail" class="col-sm-5 col-form-label"><b><g:message
-                        code="login.email"></g:message></b></label>
+                <label for="userName" class="col-sm-5 col-form-label"><b>Email/Username</b></label>
 
-                <div class="col-sm-7"><input type="text" name="email" id="loginEmail"
-                                             class="form-control shadow p-3 mb-5 bg-white rounded"
-                                             placeholder="Enter Email" required>
+                <div class="col-sm-7">
+                    <input type="text" placeholder="Username" name="userName" id="userName"
+                           class="form-control shadow p-3 mb-5 bg-white rounded" required>
                 </div>
             </div>
 

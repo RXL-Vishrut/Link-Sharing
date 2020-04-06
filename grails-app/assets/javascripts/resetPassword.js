@@ -5,18 +5,20 @@ $(document).ready(function () {
         } else
             $('#message').html('Not Matching').css('color', 'red');
     });
-})
+});
 
 
-var change = function(){
+var reset = function(){
     $.ajax({
         url: "/login/changePassword/",
         type: "POST",
         data:{"password": $("#txtConfirmPassword").val(),"userId": $(".password").text() },
         success: function (data) {
             if(data.success == true){
+                console.log("inside")
                 $(".alert-success.forgot").attr('hidden',false).html("Password Change")
             }else{
+                console.log(data)
                 $(".alert-danger.forgot").attr('hidden',false).html("Password cannot be saved")
 
             }
@@ -28,7 +30,13 @@ var change = function(){
 };
 
 $(document).ready(function () {
-    $(".btn-primary.reset").click(function () {
-        change();
+    $("#reset").click(function () {
+        var password = $("#txtPassword").val()
+        var cnfPassword = $("#txtConfirmPassword").val()
+        if(password == cnfPassword){
+            reset();
+        }else{
+            $(".alert-danger.forgot").attr('hidden',false).html("Password didn't matched")
+        }
     });
 });

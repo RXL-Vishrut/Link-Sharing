@@ -121,7 +121,7 @@
 
                                 <div class="modal-footer">
                                     <button type="submit"
-                                            class="btn btn-primary">Invite</button>
+                                            class="btn btn-primary" name="invite" id="invite">Invite</button>
                                     <button type="button"
                                             class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>

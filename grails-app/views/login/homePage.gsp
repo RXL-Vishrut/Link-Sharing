@@ -39,10 +39,15 @@
                 <div class="card-header" style="background-color: #343a40;color: white"><b><g:message
                         code="login.recentshares"></g:message></b></div>
 
-                <div class="card-body text-dark" style="overflow: scroll;height: 270px">
-                    <g:each in="${recentlySharedResource.take(5)}" var="${resource}">
-                        <g:render template="/viewPost/topPost" model="[resource:resource]"></g:render>
-                    </g:each>
+                <div class="card-body text-dark" style="overflow: scroll;max-height: 320px;height: auto">
+                    <g:if test="${recentlySharedResource.size()!=0}">
+                        <g:each in="${recentlySharedResource.take(5)}" var="${resource}">
+                            <g:render template="/viewPost/topPost" model="[resource:resource]"></g:render>
+                        </g:each>
+                    </g:if>
+                    <g:else>
+                        NO RESOURCE CREATED YET
+                    </g:else>
                 </div>
             </div>
 
@@ -64,9 +69,14 @@
                 </div>
 
                 <div class="card-body text-dark" style="padding-bottom: 0px;overflow: scroll;max-height: 319px;height: auto">
-                    <g:each in="${topPosts}" var="${post}">
-                        <g:render template="/viewPost/topPost" model="[resource:post.resource]"></g:render>
-                    </g:each>
+                    <g:if test="${topPosts.size()!=0}">
+                        <g:each in="${topPosts}" var="${post}">
+                            <g:render template="/viewPost/topPost" model="[resource:post.resource]"></g:render>
+                        </g:each>
+                    </g:if>
+                    <g:else>
+                        NO POST UPLOADED YET
+                    </g:else>
                 </div>
             </div>
         </div>

@@ -22,20 +22,25 @@
     <asset:stylesheet src="style.css"/>
     <asset:javascript src="resetPassword.js"/>
 </head>
+
 <body>
 <nav class="navbar navbar-dark bg-dark" style="margin-right: 55px;margin-right: 55px;border-radius: 8px">
     <a class="navbar-brand"><b>Reset Password</b></a>
 </nav>
+
 <div class="center" style="margin: auto;padding: 10px;width: 38%;border: 3px solid black;background-color: #f1f1f1">
     <div class="row">
         <label for="txtPassword" name="password" class="col-sm-5 col-form-label">Password</label>
+
         <div class="col-sm-7">
             <input type="password" id="txtPassword" placeholder="Password" name="password"
                    class="form-control bg-white rounded" required>
         </div>
     </div>
+
     <div class="row">
         <label for="txtConfirmPassword" name="confirmPassword" class="col-sm-5 col-form-label">Confirm Password</label>
+
         <div class="col-sm-7">
             <input type="password" id="txtConfirmPassword" placeholder="Confirm Password"
                    name="confirmPassword" class="form-control bg-white rounded"
@@ -43,16 +48,19 @@
         </div>
 
     </div>
+
     <div class="row">
         <div class="registrationFormAlert" id="message" style="width: 109px;text-align: center"></div>
+
         <div class="alert-success forgot" style="width: 140px;text-align: center" hidden></div>
+
         <div class="alert-danger forgot" style="width: 184px;text-align: center" hidden></div>
 
     </div>
 
     <div class="password" hidden>${params.userId}</div>
 
-    <button type="submit" class="btn-primary reset" style="width: 150px;position:relative;left: 157px">RESET</button>
+    <button type="submit" class="btn-primary reset" id="reset" style="width: 150px;position:relative;left: 157px">RESET</button>
 </div>
 </body>
 </html>

@@ -21,6 +21,7 @@ class User {
         email email: true
         email unique: true
         userName blank: false
+        userName unique: true
         firstName blank: false
         email blank: false
         password blank: false

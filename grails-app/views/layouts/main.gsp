@@ -103,7 +103,7 @@
 
                                     <div class="custom-file mb-3 col-sm-7">
                                         <input type="file" name="document" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label " for="customFile"></label>
+                                        <label class="custom-file-label " for="customFile" required></label>
                                     </div>
                                 </div>
 

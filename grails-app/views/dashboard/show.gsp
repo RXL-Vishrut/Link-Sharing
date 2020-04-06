@@ -57,7 +57,7 @@
                             <g:render template="/topic/topicInfo" model="[topic: userSubscription.topic]"></g:render>
                         </g:each>
                     </g:if>
-                    <g:else><div class="alert-danger">No subscriptions yet</div></g:else>
+                    <g:else><div class="alert-danger" style="text-align: center">NO SUBSCRIPTIONS YET</div></g:else>
                 </div>
             </div>
 
@@ -68,12 +68,18 @@
                     <b>Trending Topics</b>
                 </div>
 
-                <div class="card-body text-dark" style="height: 284px;overflow: scroll">
-                    <g:if test="${trendingTopics}">
-                        <g:each in="${trendingTopics}" var="trendingTopic">
-                            <g:render template="/topic/topicInfo" model="[topic: trendingTopic[1]]"></g:render>
-                        </g:each>
-                    </g:if>
+                <div class="card-body text-dark" style="height: 284px;overflow: scroll;max-height: 320px;height: auto">
+
+                        <g:if test="${trendingTopics}">
+                            <g:each in="${trendingTopics}" var="trendingTopic">
+                                <g:render template="/topic/topicInfo" model="[topic: trendingTopic[1]]"></g:render>
+                            </g:each>
+                        </g:if>
+                    <g:else>
+                        <div class="alert-danger" style="text-align: center">
+                            NO TOPICS CREATED
+                        </div>
+                    </g:else>
                 </div>
             </div>
         </div>
@@ -90,11 +96,6 @@
                         <div class="col" style="margin-top: 7px">
                             <b style="padding: 2px">Inbox</b>
                         </div>
-
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                        </form>
                     </div>
 
                 </div>
@@ -182,6 +183,11 @@
                             </g:if>
                         </g:each>
                     </g:if>
+                    <g:else>
+                        <div class="alert-danger" style="text-align: center;">
+                            NO INBOX MESSAGES YET
+                        </div>
+                    </g:else>
                 </div>
             </div>
         </div>

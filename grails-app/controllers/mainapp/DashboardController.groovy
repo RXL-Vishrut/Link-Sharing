@@ -100,6 +100,15 @@ class DashboardController {
     def subscribe() {
         User user = User.get(session.userId)
         Topic topic = Topic.get(params.topicId)
+        List resources = Resource.findAllByTopic(topic)
+        if(resources){
+            resources.each{
+                Resource resource ->
+                    ReadingItem readingItem = new ReadingItem(user: user,resource: resource,isRead: false)
+                    readingItem.save(flush: true)
+            }
+        }
+
         Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.Very_Serious.name())
         subscription.save(flush: true)
         flash.message = "You have been subscribed to ${topic.name}"

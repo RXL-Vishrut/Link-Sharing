@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"
-                    id="exampleModalLongTitle2"><b>Find Your Account</b>
+                    id="exampleModalLongTitle2"><b>Reset Password</b>
 
                     <div class="alert-success forgot">
                     </div>

@@ -3,7 +3,7 @@
 
     <div class="card-body text-dark">
 
-        <g:uploadForm action="register" enctype="multipart/form-data">
+        <g:uploadForm controller="login" action="register" enctype="multipart/form-data">
 
             <div class="row" style="margin-top: 20px; ">
                 <label for="firstName" class="col-sm-5 col-form-label"><b><g:message
@@ -76,10 +76,10 @@
             </div>
 
             <div class="row">
-                <label for="txtConfirmPassword" class="col-sm-5 col-form-label"><b><g:message
+                <label for="txtConfirmPassword" class="col-sm-6 col-form-label" style="padding-right: 0px"><b><g:message
                         code="register.confrimpassword"></g:message></b></label>
 
-                <div class="col-sm-7" style="text-align: right">
+                <div class="col-sm-6" style="text-align: right;padding-left: 0px">
                     <input type="password" id="txtConfirmPassword" placeholder="Confirm Password"
                            name="confirmPassword" class="form-control shadow p-3 mb-5 bg-white rounded"
                            required>

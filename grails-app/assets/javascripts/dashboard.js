@@ -20,6 +20,7 @@ var create = function(){
 
 $(document).ready(function () {
     $("#saveTopic").click(function () {
+        console.log("topic create called")
         create();
     });
 });
@@ -99,7 +100,7 @@ $(document).ready(function(){
 })
 
 $(document).ready(function () {
-    $(".btn.btn-primary").click(function () {
+    $("#invite").click(function () {
         console.log("Function calling")
         invite();
     });
