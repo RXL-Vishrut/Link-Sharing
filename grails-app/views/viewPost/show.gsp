@@ -87,6 +87,7 @@
                                         <div id="message"></div>
 
                                     </div>
+                                    <div>hi</div>
                                 </div>
                             </div>
 

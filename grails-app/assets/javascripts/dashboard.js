@@ -1,18 +1,17 @@
-
-var create = function(){
+var create = function () {
     $.ajax({
         url: "/topic/create/",
         type: "POST",
-        data:{"name": $("#inputTopicName").val() , "visibility": $("#visibility").val()},
+        data: {"name": $("#inputTopicName").val(), "visibility": $("#visibility").val()},
         success: function (data) {
-            if(data.success==true){
-                alert("Topic created successfully")
-            }else{
-                alert("Topic save failed!!")
+            if (data.success == true) {
+                $("#topicSuccess").html("Topic created successfully").attr('hidden', false)
+            } else {
+                $("#topicError").html("Error in saving topic").attr('hidden', false)
             }
         },
         error: function () {
-            alert("Some error occurred")
+            $("#topicError").html("Error in saving topic").attr('hidden', false)
         }
 
     });
@@ -20,23 +19,20 @@ var create = function(){
 
 $(document).ready(function () {
     $("#saveTopic").click(function () {
-        console.log("topic create called")
         create();
     });
 });
 
 
-
-
-var editTopic = function(topicName,topicId,visibility,seriousness){
+var editTopic = function (topicName, topicId, visibility, seriousness) {
     $.ajax({
         url: "/topic/editTopic/",
         type: "POST",
-        data:{"topicName":topicName,"topicId":topicId, "visibility":visibility,"seriousness":seriousness },
+        data: {"topicName": topicName, "topicId": topicId, "visibility": visibility, "seriousness": seriousness},
         success: function (data) {
-            if(data.success  ==  true){
+            if (data.success == true) {
                 alert("Data changed")
-            }else{
+            } else {
                 alert("topic edit error")
             }
         },
@@ -52,10 +48,10 @@ $(document).ready(function () {
     $(".topicEdit").click(function () {
         var topicId = $(this).attr('topicId')
         console.log(topicId)
-        $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".hidden-field").attr('hidden',false)
-        $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".topic").attr('hidden',true)
-        $(this).parent().siblings().eq(0).attr('hidden',false)
-        $(this).parent().siblings().eq(1).attr('hidden',false)
+        $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".hidden-field").attr('hidden', false)
+        $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".topic").attr('hidden', true)
+        $(this).parent().siblings().eq(0).attr('hidden', false)
+        $(this).parent().siblings().eq(1).attr('hidden', false)
 
     });
     $(".subscriptionSave").click(function () {
@@ -66,11 +62,11 @@ $(document).ready(function () {
         // editTopic(topicName,topicId,visibility,seriousness)
     });
     $(".subscriptionCancel").click(function () {
-        $(this).prev().prev().attr('hidden',true);
-        $(this).parent().parent().parent().siblings().eq(1).children(".seriousness").attr('hidden',true);
-        $(this).parent().parent().parent().siblings().eq(1).children(".visible").attr('hidden',true);
-        $(this).parent().attr('hidden',true)
-        $(this).parent().siblings().eq(0).attr('hidden',false)
+        $(this).prev().prev().attr('hidden', true);
+        $(this).parent().parent().parent().siblings().eq(1).children(".seriousness").attr('hidden', true);
+        $(this).parent().parent().parent().siblings().eq(1).children(".visible").attr('hidden', true);
+        $(this).parent().attr('hidden', true)
+        $(this).parent().siblings().eq(0).attr('hidden', false)
     })
 });
 
@@ -78,22 +74,23 @@ $(document).ready(function () {
 // <-------------------------------------------Invite----------------------------->
 
 
-var invite = function(){
+var invite = function () {
     $.ajax({
         url: "/dashboard/invite/",
         type: "POST",
-        data:{"address": $("#addressnull").val() , "subject": $("#subjectnull").val() , "body":$("#textnull").val()},
+        data: {"address": $("#addressnull").val(), "subject": $("#subjectnull").val(), "body": $("#textnull").val()},
         success: function (/*data*/) {
             $(".alert-success").html("INVITE SENT")
         },
         error: function () {
-            alert("Error occurred!!")
+            $(".alert-danger").html("SOME ERROR OCCURRED")
+
         }
     });
 };
 
-$(document).ready(function(){
-    $('#my_modal').on('show.bs.modal', function(event) {
+$(document).ready(function () {
+    $('#my_modal').on('show.bs.modal', function (event) {
         var topicId = $(event.relatedTarget).data('topic-id');
         $(event.currentTarget).find('textarea[name="topicId"]').val(topicId);
     });
@@ -101,11 +98,9 @@ $(document).ready(function(){
 
 $(document).ready(function () {
     $("#invite").click(function () {
-        console.log("Function calling")
         invite();
     });
 });
-
 
 
 // <-------------------------------------------ISREAD---------------------------------------------------------->
@@ -138,20 +133,20 @@ $(document).ready(function () {
 
 // <-----------------------------------------TOPIC DELETE----------------------------------->
 
-var deleteTopic = function(trashId){
+var deleteTopic = function (trashId) {
     $.ajax({
         url: "/topic/delete/",
         type: "POST",
-        data:{"topicId" : trashId},
+        data: {"topicId": trashId},
         success: function (data) {
-            if(data.success  ==  true){
-                alert("success")
-            }else{
-                alert("rating changed")
+            if (data.success == true) {
+                $("#trash").html("Topic deleted")
+            } else {
+                $("#trashdanger").html("Error in deleting topic")
             }
         },
         error: function () {
-            alert("Resource rating failed")
+            $("#trashdanger").html("Error in deleting topic")
         }
 
     });
@@ -161,7 +156,7 @@ var deleteTopic = function(trashId){
 $(document).ready(function () {
     $(".delete").click(function () {
         var trashId = $(this).attr('trashId');
-        deleteTopic (trashId)
+        deleteTopic(trashId)
 
     });
 });

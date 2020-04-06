@@ -85,6 +85,7 @@
 
                                         <div class="alert-success">
                                         </div>
+                                        <div class="alert-danger"></div>
 
                                     </h5>
                                     <button type="button" class="close"
@@ -134,6 +135,8 @@
                     <i class="fa fa-trash fa-lg delete" id="delete" trashId="${topic.id}" aria-hidden="true"
                        style="color:black; position: relative;left: 8px;top:1px;font-size: 20px;cursor: pointer"
                        ;></i>
+                    <div id="trash" style="text-align: center;background-color: black;color: white"></div>
+                    <div id="trashdanger" style="text-align: center; background-color: red;color: white"></div>
                 </div>
             </g:if>
         </div>

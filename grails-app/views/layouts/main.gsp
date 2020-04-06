@@ -40,9 +40,13 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle"><b>CREATE TOPIC</b></h5>
+                                <div class="alert-danger" id="topicError" style="text-align: center;position:relative;left: 31px"></div>
+                                <div class="alert-success" id="topicSuccess" style="text-align: center;position:relative;left: 31px"></div>
+
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
+
                             </div>
 
                             <div class="modal-body">
