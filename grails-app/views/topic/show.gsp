@@ -73,15 +73,7 @@
                                 <div class="w-100"></div>
 
                                 <div class="col">
-
-%{--                                    <g:if test="${subscribedUsers.contains(user)}">--}%
                                         <ls:showSubscribe topicId="${topic.id}" userId="${session.userId}"></ls:showSubscribe>
-%{--                                    </g:if>--}%
-%{--                                    <g:else>--}%
-%{--                                        <g:link controller="dashboard" action="subscribe"><b><u>Subscribe</u>--}%
-%{--                                        </b></g:link>--}%
-%{--                                    </g:else>--}%
-
                                 </div>
 
                                 <div class="col" style="left: 25px">

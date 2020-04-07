@@ -55,7 +55,7 @@
             </tr>
             </thead>
             <tbody>
-            <g:each in="${allTopics}" var="${topic}">
+            <g:each in="${allTopics}" var="topic">
                 <tr>
                     <td style="padding: 15px">${topic.id}</td>
                     <td style="padding: 15px">${topic.name}</td>

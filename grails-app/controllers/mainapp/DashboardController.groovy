@@ -20,11 +20,13 @@ class DashboardController {
                 ne("createdBy.id", user.id)
             }
         }
-        List<ReadingItem> readingItem = ReadingItem.createCriteria().list() {
-            eq("isRead",false)
-            'in'("resource.id",resources?.id)
+        List<ReadingItem> readingItems
+        if(resources){
+            readingItems = ReadingItem.createCriteria().list() {
+                eq("isRead",false)
+                'in'("resource.id",resources?.id)
+            }
         }
-
 //        <----------------subscriptions------------------->
         List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
             eq("user.id", user.id)
@@ -38,7 +40,7 @@ class DashboardController {
             order("count", "desc")
         }
 
-        render(view: "/dashboard/show", model: [resources: resources, userSubscriptions: userSubscriptions, user: user, trendingTopics: trendingTopics])
+        render(view: "/dashboard/show", model: [readingItems: readingItems , userSubscriptions: userSubscriptions, user: user, trendingTopics: trendingTopics])
     }
 
     def viewImage() {
@@ -97,15 +99,13 @@ class DashboardController {
         Topic topic = Topic.findById(params.topicId)
         Subscription subscription = Subscription.findByUserAndTopic(user, topic)
         subscription.delete(failOnError: true, flush: true)
+
         if(topic.visibility.Private == "Private"){
-            println("hiiii")
-            println(topic.visibility.Private)
             flash.message = "You have unsubscribed ${topic.name}"
             redirect(controller: "dashboard", action: "show")
         }else{
-            println("byeeeee")
             flash.message = "You have unsubscribed ${topic.name} Yo"
-            redirect(controller: "topic", action: "show", params:"[topicId:topic.id]")
+            redirect(controller: "dashboard", action: "show")
         }
 
     }
@@ -142,20 +142,14 @@ class DashboardController {
     }
 
     def isRead() {
-
         User user = User.get(session.userId)
         Resource resource = Resource.get(params.resourceId)
         ReadingItem readingItem = ReadingItem.findByUserAndResource(user, resource)
         if (readingItem) {
-            readingItem.isRead = params.isState
+            readingItem.isRead = true
             readingItem.save(flush: true)
             redirect(controller: "dashboard", action: "show")
-        } else {
-            ReadingItem readItem = new ReadingItem(user: user, resource: resource, isRead: params.isState)
-            readItem.save(flush: true, failOnError: true)
-            redirect(controller: "dashboard", action: "show")
         }
-
     }
 
 }

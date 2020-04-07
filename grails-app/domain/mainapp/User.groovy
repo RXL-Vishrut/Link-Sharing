@@ -1,5 +1,6 @@
 package mainapp
 
+
 class User {
 
     String email

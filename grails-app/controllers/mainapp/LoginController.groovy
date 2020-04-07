@@ -120,7 +120,7 @@ class LoginController {
             sendMail {
                 to params.emailForgot
                 subject "Reset password"
-                text "http://localhost:9090/login/resetPassword?userId${user.id}"
+                text "http://localhost:9090/login/resetPassword?userId=${user.id}"
             }
             render([success: true] as JSON)
         } else {

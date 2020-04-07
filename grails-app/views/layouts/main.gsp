@@ -40,8 +40,12 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle"><b>CREATE TOPIC</b></h5>
-                                <div class="alert-danger" id="topicError" style="text-align: center;position:relative;left: 31px"></div>
-                                <div class="alert-success" id="topicSuccess" style="text-align: center;position:relative;left: 31px"></div>
+
+                                <div class="alert-danger" id="topicError"
+                                     style="text-align: center;position:relative;left: 31px"></div>
+
+                                <div class="alert-success" id="topicSuccess"
+                                     style="text-align: center;position:relative;left: 31px"></div>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -106,7 +110,8 @@
                                             code="dashboard.document"></g:message></b></label>
 
                                     <div class="custom-file mb-3 col-sm-7">
-                                        <input type="file" name="document" class="custom-file-input" id="customFile" required>
+                                        <input type="file" name="document" class="custom-file-input" id="customFile"
+                                               required>
                                         <label class="custom-file-label " for="customFile" required></label>
                                     </div>
                                 </div>
@@ -252,11 +257,14 @@
                         aria-expanded="false">
                     <i class="fa fa-user" aria-hidden="true"></i>
 
-                    <div>
-                        <b style="font-size: 13px">USER</b><i class="fa fa-caret-down"
-                                                              aria-hidden="true"></i>
-                    </div>
-                    <div  b style="font-size: 13px;position:relative;bottom: 4px"><b>@${session.userUserName}</b></div>
+%{--                    <div>--}%
+%{--                        <b style="font-size: 13px">USER</b><i class="fa fa-caret-down"--}%
+%{--                                                              aria-hidden="true"></i>--}%
+%{--                    </div>--}%
+
+                    <div style="font-size: 16px;position:relative;bottom: 4px"><b>@${session.userUserName}</b><i
+                            class="fa fa-caret-down"
+                            aria-hidden="true"></i></div>
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

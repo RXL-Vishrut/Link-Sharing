@@ -17,7 +17,7 @@ class BootStrap {
             user.active = true
             user.save(flush: true)
         }
-        def destroy = {
-        }
+    }
+    def destroy = {
     }
 }

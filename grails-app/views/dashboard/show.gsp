@@ -51,7 +51,7 @@
             <div class="card border-dark mb-6" style="width: 32rem; margin-bottom: 50px">
                 <div class="card-header" style="background-color: #343a40;color: white">
                     <span><b>Subscriptions</b></span>
-                    <span style="float:right"><b><a href="#"><u style="color: white">View All</u></a></b></span>
+                    <span style="float:right"><b><a href="${createLink(controller:"topic", action: "view")}"><u style="color: white">View All</u></a></b></span>
                 </div>
 
                 <div class="card-body text-dark overflow-auto"
@@ -275,42 +275,42 @@
 
                 </div>
 
-                <div class="card-body text-dark" style="padding: 5px;margin-top: 5px">
-                    <g:if test="${resources}">
-                        <g:each in="${resources}" var="${resource}">
-                            <g:if test="${resource.description != null}">
+                <div class="card-body text-dark" style="padding: 5px;margin-top: 5px;overflow: scroll;height: auto;max-height: 700px">
+                    <g:if test="${readingItems}">
+                        <g:each in="${readingItems}" var="readingItem">
+                            <g:if test="${readingItem.resource.description != null}">
                                 <div class="row"
                                      style="background-color: #f1f1f1;margin-bottom: 10px;margin-right: 5px;margin-left: 5px">
                                     <div class="col-lg-3" style="margin-top: 10px">
                                         <img height="110" width="90" style="border-radius: 15px"
-                                             src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': resource.createdBy.id])}"/>
+                                             src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': readingItem.resource.createdBy.id])}"/>
                                     </div>
 
                                     <div class="col-lg-9">
                                         <div class="row" style="padding-bottom: 5px;padding-top: 5px">
                                             <div class="col" style="padding: 0px;position:relative;top: 3px">
-                                                <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName + " "}</b>
+                                                <b>${readingItem.resource.createdBy.firstName + " "}${readingItem.resource.createdBy.lastName + " "}</b>
                                             </div>
 
                                             <div class="col" style="padding: 0px;top: 2px">
-                                                <b style="color: dimgrey; font-size: 15px">@${resource.createdBy.userName}</b>
+                                                <b style="color: dimgrey; font-size: 15px">@${readingItem.resource.createdBy.userName}</b>
                                             </div>
 
                                             <div class="col-auto"
                                                  style="font-size: 15px;padding:0px;color: dimgrey;top: 4px">
                                                 <b><g:formatDate format=" hh:mm dd MMMM yyyy"
-                                                                 date="${resource.lastUpdated}"/></b>
+                                                                 date="${readingItem.resource.lastUpdated}"/></b>
                                             </div>
                                         </div>
 
                                         <div class="row" style="font-size: 15px">
                                             <b>Topic :</b><g:link controller="topic" action="show"
-                                                                  params="[topicId: resource.topic.id]"><b><u>${resource.topic.name}</u>
+                                                                  params="[topicId: readingItem.resource.topic.id]"><b><u>${readingItem.resource.topic.name}</u>
                                             </b></g:link>
                                         </div>
 
                                         <div class="row" style="padding-bottom: 5px;padding-top: 5px">
-                                            ${resource.description}
+                                            ${readingItem.resource.description}
                                         </div>
 
                                         <div class="row" style="padding-bottom: 5px;padding-top: 5px">
@@ -327,31 +327,31 @@
 
                                             <div class="col-lg-9"
                                                  style="font-size: 13px;padding: 0px;text-align: right">
-                                                <g:if test="${resource.class == mainapp.DocumentResource}">
+                                                <g:if test="${readingItem.resource.class == mainapp.DocumentResource}">
                                                     <g:link controller="dashboard" action="download"
-                                                            params="[postId: resource.id]"><u
+                                                            params="[postId: readingItem.resource.id]"><u
                                                             style="margin-right:22px;">Download</u></g:link>
 
                                                     <div class="resource" hidden>
-                                                        ${resource.id}
+                                                        ${readingItem.resource.id}
                                                     </div>
-                                                    <g:link controller="#" action="#"
-                                                            params="[resourceId: resource.id]"><u>Mark as read</u></g:link>
+                                                    <g:link controller="dashboard" action="isRead"
+                                                            params="[resourceId: readingItem.resource.id]"><u>Mark as read</u></g:link>
                                                     <g:link controller="post" action="show" style="margin-left: 20px"
-                                                            params="[resourceId: resource.id]"><u>View Post</u></g:link>
+                                                            params="[resourceId: readingItem.resource.id]"><u>View Post</u></g:link>
                                                 </g:if>
 
-                                                <g:if test="${resource.class == mainapp.LinkResource}">
-                                                    <a style="margin-right: 15px" href="${resource.url}"
+                                                <g:if test="${readingItem.resource.class == mainapp.LinkResource}">
+                                                    <a style="margin-right: 15px" href="${readingItem.resource.url}"
                                                        target="_blank"><u>View full site</u></a>
 
                                                     <div class="resource" hidden>
-                                                        ${resource.id}
+                                                        ${readingItem.resource.id}
                                                     </div>
-                                                    <g:link controller="#" action="#"
-                                                            params="[resourceId: resource.id]"><u>Mark as read</u></g:link>
-                                                    <g:link controller="post" action="show"
-                                                            params="[resourceId: resource.id]"><u>View Post</u></g:link>
+                                                    <g:link controller="dashboard" action="isRead"
+                                                            params="[resourceId: readingItem.resource.id]"><u>Mark as read</u></g:link>
+                                                    <g:link controller="post" action="show" style="margin-left: 20px"
+                                                            params="[resourceId: readingItem.resource.id]"><u>View Post</u></g:link>
                                                 </g:if>
                                             </div>
                                         </div>

@@ -15,10 +15,8 @@ var reset = function(){
         data:{"password": $("#txtConfirmPassword").val(),"userId": $(".password").text() },
         success: function (data) {
             if(data.success == true){
-                console.log("inside")
                 $(".alert-success.forgot").attr('hidden',false).html("Password Change")
             }else{
-                console.log(data)
                 $(".alert-danger.forgot").attr('hidden',false).html("Password cannot be saved")
 
             }

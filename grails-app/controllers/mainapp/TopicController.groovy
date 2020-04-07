@@ -65,4 +65,13 @@ class TopicController {
         render(view: "/userProfile/showAllSubscription", model: [allSubscriptions: allSubscriptions])
 
     }
+
+    def view(){
+        User user = User.findById(session.userId)
+        List<Topic> allTopics = Topic.createCriteria().list(){
+            eq("createdBy.id",user.id)
+            order("name","asc")
+        }
+        render(view: "showAllTopics", model: [allTopics: allTopics])
+    }
 }

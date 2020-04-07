@@ -67,7 +67,7 @@
                 <g:select name="seriousness"
                           from="${enums.Seriousness.values()}"></g:select>
             </div>
-            <g:if test="${topic.createdBy.id == session.userId}">
+            <g:if test="${topic.createdBy.id == session.userId || session.userIsAdmin}">
 
                 <div class="col">
 
@@ -76,69 +76,24 @@
                             class="fa fa-envelope"
                             style="font-size: 17px;color: black;position:relative;right: 8px;top: 2px"></i>
                     </a>
+                    <g:render template="/topic/invite"></g:render>
 
-                    <div class="modal" id="my_modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title"
-                                        id="exampleModalLongTitle2"><b>SEND INVITE</b>
-
-                                        <div class="alert-success">
-                                        </div>
-                                        <div class="alert-danger"></div>
-
-                                    </h5>
-                                    <button type="button" class="close"
-                                            data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <div class="fieldcontain"
-                                         style="margin-bottom: 3px">
-                                        <g:textField name="address"
-                                                     placeholder="email"
-                                                     required="" id="address${topicId}"/>
-                                    </div>
-
-                                    <div>${topicId}</div>
-
-                                    <div class="fieldcontain"
-                                         style="margin-bottom: 3px">
-                                        <g:textField name="subject"
-                                                     placeholder="Subject"
-                                                     required="" id="subject${topicId}"/>
-                                    </div>
-
-                                    <div class="fieldcontain"
-                                         style="margin-bottom: 3px">
-                                        <g:textArea name="topicId" rows="5"
-                                                    cols="50"
-                                                    required="" id="text${topicId}"/>
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit"
-                                            class="btn btn-primary" name="invite" id="invite">Invite</button>
-                                    <button type="button"
-                                            class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <i style="cursor: pointer;color: black ;font-size: 17px;position:relative;;top: 2px"
                        class="fa fa-pencil-square-o fa-lg topicEdit" topicId="${topic.id}"></i>
                     <i class="fa fa-trash fa-lg delete" id="delete" trashId="${topic.id}" aria-hidden="true"
                        style="color:black; position: relative;left: 8px;top:1px;font-size: 17px;cursor: pointer"
                        ;></i>
-%{--                    <div id="trash" style="text-align: center;background-color: #b2d1ff;color: black"></div>--}%
-%{--                    <div id="trashdanger" style="text-align: center; background-color: red;color: white"></div>--}%
                 </div>
+            </g:if>
+            <g:if test="${topic.createdBy.id != session.userId || session.userIsAdmin}">
+                <g:select name="seriousness"
+                          from="${enums.Seriousness.values()}"></g:select>
+                <a href="#my_modal" data-toggle="modal"
+                   data-topic-id="http://localhost:9090/topic/show?topicId=${topic.id}"><i
+                        class="fa fa-envelope"
+                        style="font-size: 17px;color: black;position:relative;left: 10px;top: 2px"></i>
+                </a>
+                <g:render template="/topic/invite"></g:render>
             </g:if>
         </div>
     </div>
