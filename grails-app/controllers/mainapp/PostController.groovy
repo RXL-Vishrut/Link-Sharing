@@ -10,7 +10,7 @@ class PostController {
         User user = User.findById(session.userId)
         Resource resource = Resource.findById(params.resourceId)
         Topic topic = resource.topic
-        List<Resource> trendingTopics = Resource.createCriteria().list(max: 5) {
+        List trendingTopics = Resource.createCriteria().list(max: 5) {
             projections {
                 count("id", "count")
             }
@@ -36,17 +36,14 @@ class PostController {
 
     def rating() {
         Resource resource = Resource.get(params.resourceId)
-        User usr = User.get(session.getAttribute("userId"))
-        ResourceRating res = ResourceRating.findByUserAndResource(usr, resource)
+        User user = User.get(session.getAttribute("userId"))
+        ResourceRating res = ResourceRating.findByUserAndResource(user, resource)
         if (res) {
-            println(params.value)
-            println(res.score)
             res.score = Integer.parseInt(params.value)
-            println(res.score)
             res.save(flush: true, failOnError: true)
             render([success: false] as JSON)
         } else {
-            ResourceRating rating = new ResourceRating(score: params.value, user: usr, resource: params.resourceId)
+            ResourceRating rating = new ResourceRating(score: params.value, user: user, resource: params.resourceId)
             rating.save(flush: true, failOnError: true)
             render([success: true] as JSON)
         }

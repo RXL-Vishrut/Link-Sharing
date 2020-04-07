@@ -6,12 +6,23 @@ var create = function () {
         success: function (data) {
             if (data.success == true) {
                 $("#topicSuccess").html("Topic created successfully").attr('hidden', false)
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             } else {
                 $("#topicError").html("Error in saving topic").attr('hidden', false)
+                setTimeout(function(){
+                    location.reload();
+                    location.reload();
+                }, 1000);
             }
         },
         error: function () {
             $("#topicError").html("Error in saving topic").attr('hidden', false)
+            setTimeout(function(){
+                location.reload();
+                location.reload();
+            }, 1000);
         }
 
     });
@@ -81,10 +92,15 @@ var invite = function () {
         data: {"address": $("#addressnull").val(), "subject": $("#subjectnull").val(), "body": $("#textnull").val()},
         success: function (/*data*/) {
             $(".alert-success").html("INVITE SENT")
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
         },
         error: function () {
             $(".alert-danger").html("SOME ERROR OCCURRED")
-
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
         }
     });
 };
@@ -141,12 +157,21 @@ var deleteTopic = function (trashId) {
         success: function (data) {
             if (data.success == true) {
                 $("#trash").html("Topic deleted")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             } else {
                 $("#trashdanger").html("Error in deleting topic")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             }
         },
         error: function () {
             $("#trashdanger").html("Error in deleting topic")
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
         }
 
     });

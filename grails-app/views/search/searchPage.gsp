@@ -38,34 +38,42 @@
                             <g:render template="/topic/topicInfo" model="[topic: trendingTopic[1]]"></g:render>
                         </g:each>
                     </g:if>
+                    <g:else>
+                        NO TOPIC YET
+                    </g:else>
                 </div>
             </div>
 
             %{--            <--------------------------------Top Posts--------------------------->--}%
 
-                <div class="card border-dark mb-6 " style="width: 32rem;max-height: 4000px;margin-top: 50px;">
-                    <div class="card-header" style="background-color: #343a40;color: white">
-                        <span class="">
-                            <b><g:message code="login.topposts"></g:message></b>
-                        </span>
-                        <span style="float: right">
-                            <select id="postTime">
-                                <option value="volvo">Today</option>
-                                <option value="saab">One week</option>
-                                <option value="opel">One month</option>
-                                <option value="audi">One year</option>
-                            </select>
-                        </span>
-                    </div>
+            <div class="card border-dark mb-6 " style="width: 32rem;max-height: 4000px;margin-top: 50px;">
+                <div class="card-header" style="background-color: #343a40;color: white">
+                    <span class="">
+                        <b><g:message code="login.topposts"></g:message></b>
+                    </span>
+                    <span style="float: right">
+                        <select id="postTime">
+                            <option value="volvo">Today</option>
+                            <option value="saab">One week</option>
+                            <option value="opel">One month</option>
+                            <option value="audi">One year</option>
+                        </select>
+                    </span>
+                </div>
 
-                    <div class="card-body text-dark"
-                         style="padding-bottom: 0px;overflow: scroll;max-height: 319px;height: auto">
+                <div class="card-body text-dark"
+                     style="padding-bottom: 0px;overflow: scroll;max-height: 319px;height: auto">
+                    <g:if test="${topPosts}">
                         <g:each in="${topPosts}" var="${post}">
                             <g:render template="/viewPost/topPost" model="[resource:post.resource]"></g:render>
                         </g:each>
-                    </div>
+                    </g:if>
+                    <g:else>
+                        NO POST YET
+                    </g:else>
                 </div>
             </div>
+        </div>
 
         <div class="col-lg-1">
 
@@ -78,7 +86,7 @@
                 <div class="card-header" style="background-color: #343a40;color: white">
                     <div class="row">
                         <div class="col" style="margin-top: 7px">
-                            <b style="padding: 2px">Posts </b>
+                            <b style="padding: 2px">POSTS </b>
                         </div>
                     </div>
 
@@ -91,10 +99,33 @@
                         </g:each>
                     </g:if>
                     <g:else>
-                        NO POST YET
+                        NO POST FOUND WITH THIS NAME
                     </g:else>
                 </div>
             </div>
+
+        <div class="card border-dark mb-6" style="width: 34rem;margin-top: 86px">
+            <div class="card-header" style="background-color: #343a40;color: white">
+                <div class="row">
+                    <div class="col" style="margin-top: 7px">
+                        <b style="padding: 2px">TOPICS</b>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body text-dark" style="padding: 5px;margin-top: 5px">
+                <g:if test="${topics}">
+                    <g:each in="${topics}" var="topic">
+                        <g:render template="/topic/topicInfo" model="[topic: topic]"></g:render>
+                    </g:each>
+                </g:if>
+                <g:else>
+                    NO TOPICS FOUND WITH THIS NAME
+                </g:else>
+            </div>
+        </div>
+
         </div>
     </div>
 </div>

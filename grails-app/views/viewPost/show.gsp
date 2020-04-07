@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-%{--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}%
+    %{--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}%
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="col" style="position:relative;left: 30px">
-%{--                                    ${resource.id}--}%
+                                    %{--                                    ${resource.id}--}%
                                     <div class="rating">
                                         %{--                                        <g:uploadForm url="[controller: 'post', action: 'rating']">--}%
                                         <input type="radio" id="star5" name="rating" value="5"/><label for="star5"
@@ -87,7 +87,6 @@
                                         <div id="message"></div>
 
                                     </div>
-                                    <div>hi</div>
                                 </div>
                             </div>
 
@@ -111,18 +110,22 @@
                         </div>
 
 
-                        <div class="col-lg-8" style="top: 5px;left: 50px">
+                        <div class="col-lg-8" style="text-align: right">
                             <a style="font-size: 15px;margin-right: 3px"
                                href="${createLink(controller: "login", action: "error")}"><u><b>Delete</b></u></a>
                             <a style="font-size: 15px;margin-right: 3px"
                                href="${createLink(controller: "login", action: "error")}"><u><b>Edit</b></u></a>
                             <g:if test="${resource.class == mainapp.DocumentResource}">
                                 <a style="font-size: 15px;margin-right: 3px"
-                                   href="${createLink(controller: "dashboard", action: "download")}"><u><b>Download</b></u></a>
+                                   href="${createLink(controller: "dashboard", action: "download")}"><u><b>Download</b>
+                                </u></a>
+                            </g:if>
+                            <g:if test="${resource.class == mainapp.LinkResource}">
+                                <a style="font-size: 15px;margin-right: 3px"
+                                   href="${resource.url}" target="_blank"><u><b>View Full Site</b>
+                                </u></a>
                             </g:if>
 
-                            <a style="font-size: 15px;margin-right: 3px"
-                               href="${createLink(controller: "login", action: "error")}"><u><b>View Full Site</b></u></a>
                         </div>
                     </div>
                 </div>
@@ -136,12 +139,15 @@
                     <b>Trending Topics</b>
                 </div>
 
-                <div class="card-body text-dark" style="height: 284px;overflow: scroll">
-
-                    <g:each in="${trendingTopics}"  var="trendingTopic">
-                        <g:render template="/topic/topicInfo" model="[topic:trendingTopic[1]]"></g:render>
-                    </g:each>
-
+                <div class="card-body text-dark" style="max-height: 284px;overflow: scroll;height: auto">
+                    <g:if test="${trendingTopics}">
+                        <g:each in="${trendingTopics}" var="trendingTopic">
+                            <g:render template="/topic/topicInfo" model="[topic: trendingTopic[1]]"></g:render>
+                        </g:each>
+                    </g:if>
+                    <g:else>
+                        NO TRENDING TOPICS YET
+                    </g:else>
                 </div>
             </div>
         </div>

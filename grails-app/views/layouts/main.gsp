@@ -106,7 +106,7 @@
                                             code="dashboard.document"></g:message></b></label>
 
                                     <div class="custom-file mb-3 col-sm-7">
-                                        <input type="file" name="document" class="custom-file-input" id="customFile">
+                                        <input type="file" name="document" class="custom-file-input" id="customFile" required>
                                         <label class="custom-file-label " for="customFile" required></label>
                                     </div>
                                 </div>
@@ -253,9 +253,10 @@
                     <i class="fa fa-user" aria-hidden="true"></i>
 
                     <div>
-                        <b style="font-size: 15px">USER</b><i class="fa fa-caret-down"
+                        <b style="font-size: 13px">USER</b><i class="fa fa-caret-down"
                                                               aria-hidden="true"></i>
                     </div>
+                    <div  b style="font-size: 13px;position:relative;bottom: 4px"><b>@${session.userUserName}</b></div>
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

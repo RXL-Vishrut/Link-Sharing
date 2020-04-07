@@ -20,6 +20,10 @@ class DashboardController {
                 ne("createdBy.id", user.id)
             }
         }
+        List<ReadingItem> readingItem = ReadingItem.createCriteria().list() {
+            eq("isRead",false)
+            'in'("resource.id",resources?.id)
+        }
 
 //        <----------------subscriptions------------------->
         List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
@@ -93,8 +97,17 @@ class DashboardController {
         Topic topic = Topic.findById(params.topicId)
         Subscription subscription = Subscription.findByUserAndTopic(user, topic)
         subscription.delete(failOnError: true, flush: true)
-        flash.message = "You have unsubscribed ${topic.name}"
-        redirect(controller: "dashboard", action: "show")
+        if(topic.visibility.Private == "Private"){
+            println("hiiii")
+            println(topic.visibility.Private)
+            flash.message = "You have unsubscribed ${topic.name}"
+            redirect(controller: "dashboard", action: "show")
+        }else{
+            println("byeeeee")
+            flash.message = "You have unsubscribed ${topic.name} Yo"
+            redirect(controller: "topic", action: "show", params:"[topicId:topic.id]")
+        }
+
     }
 
     def subscribe() {

@@ -42,21 +42,27 @@ class TopicController {
         List<ResourceRating> topPosts = ResourceRating.createCriteria().list(max: 5) {
             order "score", "desc"
         }
-        List<Resource> resources
-        List<Topic> topics = Topic.findAllByNameIlike(params.searchText)?:[]
-        resources = Resource.createCriteria().list (){
-            or{ilike("description","params.searchText%" )
-                'in'("topic",topics?:[])
-            }
-        }
-        println(resources.size())
-        println(resources)
-        render(view:"/search/searchPage", model: [trendingTopics:trendingTopics, topPosts: topPosts, resources:resources])
+
+        List<Topic> topics = Topic.findAllByNameIlike(params.searchText) ?: []
+        List<Resource> resources = Resource.findAllByDescriptionIlike(params.searchText)?: []
+        render(view: "/search/searchPage", model: [trendingTopics: trendingTopics, topPosts: topPosts, resources: resources, topics:topics])
     }
 
     def delete() {
         Topic topic = Topic.findById(params.topicId)
-        topic.delete(failOnError: true , flush: true)
-        render([success:true] as JSON)
+        topic.delete(failOnError: true, flush: true)
+        render([success: true] as JSON)
+    }
+
+    def showAllTopics() {
+        User user = User.findById(session.userId)
+        List<Topic> allTopics = Topic.findAllByCreatedBy(user)
+        render(view: "showAllTopics", model: [allTopics: allTopics])
+    }
+    def showAllSubscription() {
+        User user = User.findById(params.userId)
+        List<Subscription> allSubscriptions = Subscription.findAllByUser(user)
+        render(view: "/userProfile/showAllSubscription", model: [allSubscriptions: allSubscriptions])
+
     }
 }

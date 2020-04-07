@@ -1,8 +1,9 @@
 <div class="row" id="topicInfo"
      style="background-color: #f1f1f1;margin-bottom: 10px;margin-left: -4px;margin-right: -4px">
     <div class="col-lg-3">
-        <img height="90" width="90" style="border-radius: 8px"
-             src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': topic.createdBy.id])}"/>
+        <a href="${createLink(controller: "profile", action: "userProfile")}">
+            <img style="width: 100px;height: 100px;border-radius: 8px"
+                 src="data:image/jpg;base64,${session.getAttribute("userPhoto")}"/></a>
     </div>
 
     <div class="col-lg-9" style="font-size: 15px">
@@ -73,7 +74,7 @@
                     <a href="#my_modal" data-toggle="modal"
                        data-topic-id="http://localhost:9090/topic/show?topicId=${topic.id}"><i
                             class="fa fa-envelope"
-                            style="font-size: 20px;color: black;position:relative;right: 8px;top: 2px"></i>
+                            style="font-size: 17px;color: black;position:relative;right: 8px;top: 2px"></i>
                     </a>
 
                     <div class="modal" id="my_modal">
@@ -130,13 +131,13 @@
                             </div>
                         </div>
                     </div>
-                    <i style="cursor: pointer;color: black ;font-size: 20px;position:relative;;top: 2px"
+                    <i style="cursor: pointer;color: black ;font-size: 17px;position:relative;;top: 2px"
                        class="fa fa-pencil-square-o fa-lg topicEdit" topicId="${topic.id}"></i>
                     <i class="fa fa-trash fa-lg delete" id="delete" trashId="${topic.id}" aria-hidden="true"
-                       style="color:black; position: relative;left: 8px;top:1px;font-size: 20px;cursor: pointer"
+                       style="color:black; position: relative;left: 8px;top:1px;font-size: 17px;cursor: pointer"
                        ;></i>
-                    <div id="trash" style="text-align: center;background-color: black;color: white"></div>
-                    <div id="trashdanger" style="text-align: center; background-color: red;color: white"></div>
+%{--                    <div id="trash" style="text-align: center;background-color: #b2d1ff;color: black"></div>--}%
+%{--                    <div id="trashdanger" style="text-align: center; background-color: red;color: white"></div>--}%
                 </div>
             </g:if>
         </div>
