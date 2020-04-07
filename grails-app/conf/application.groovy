@@ -4,7 +4,7 @@
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'Authenticate.MainApp.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'Authenticate.UserRole'
 grails.plugin.springsecurity.authority.className = 'Authenticate.Role'
-//Applgrails.plugin.springsecurity.successHandler.defaultTargetUrl = 'login/dashboard'
+//Applgrails.plugin.springsecurity.successHandler.defaultTargetUrl = 'dashboard/show'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],

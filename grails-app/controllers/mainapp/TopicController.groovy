@@ -18,6 +18,18 @@ class TopicController {
         Topic topic = topicService.createTopic(session.userEmail, params.name, params.visibility)
         render([success: topic ? true : false] as JSON)
     }
+    def delete() {
+        Topic topic = topicService.deleteTopic(Long.valueOf(params.topicId))
+        render([success: topic ? false:true] as JSON)
+    }
+    def showAllTopics() {
+        List<Topic> allTopics = topicService.showAllTopics(session.userId)
+        render(view: "showAllTopics", model: [allTopics: allTopics])
+    }
+    def view(){
+        List<Topic> viewAll = topicService.showAllTopics(session.userId)
+        render(view: "showAllTopics", model: [allTopics: viewAll])
+    }
 
     def editTopic() {
         Topic topic = Topic.findBy(params.topicId)
@@ -48,17 +60,6 @@ class TopicController {
         render(view: "/search/searchPage", model: [trendingTopics: trendingTopics, topPosts: topPosts, resources: resources, topics:topics])
     }
 
-    def delete() {
-        Topic topic = Topic.findById(params.topicId)
-        topic.delete(failOnError: true, flush: true)
-        render([success: true] as JSON)
-    }
-
-    def showAllTopics() {
-        User user = User.findById(session.userId)
-        List<Topic> allTopics = Topic.findAllByCreatedBy(user)
-        render(view: "showAllTopics", model: [allTopics: allTopics])
-    }
     def showAllSubscription() {
         User user = User.findById(params.userId)
         List<Subscription> allSubscriptions = Subscription.findAllByUser(user)
@@ -66,12 +67,4 @@ class TopicController {
 
     }
 
-    def view(){
-        User user = User.findById(session.userId)
-        List<Topic> allTopics = Topic.createCriteria().list(){
-            eq("createdBy.id",user.id)
-            order("name","asc")
-        }
-        render(view: "showAllTopics", model: [allTopics: allTopics])
-    }
 }

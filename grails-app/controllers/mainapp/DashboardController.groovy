@@ -10,76 +10,20 @@ class DashboardController {
     static defaultAction = "show"
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def show() {
-        User user = User.findByEmail(session.userEmail)
-        List<Resource> resources
-        List<Topic> subscribedTopics = Subscription.findAllByUser(user)?.topic
-        if(subscribedTopics){
-            resources = Resource.createCriteria().list() {
-                'in'("topic.id", subscribedTopics?.id)
-                ne("createdBy.id", user.id)
-            }
-        }
-        List<ReadingItem> readingItems
-        if(resources){
-            readingItems = ReadingItem.createCriteria().list() {
-                eq("isRead",false)
-                'in'("resource.id",resources?.id)
-            }
-        }
-//        <----------------subscriptions------------------->
-        List<Subscription> userSubscriptions = Subscription.createCriteria().list() {
-            eq("user.id", user.id)
-            order("dateCreated", "desc")
-        }
-        List<Resource> trendingTopics = Resource.createCriteria().list(max: 5) {
-            projections {
-                count("id", "count")
-            }
-            groupProperty("topic")
-            order("count", "desc")
-        }
+    DashboardService dashboardService
 
-        render(view: "/dashboard/show", model: [readingItems: readingItems , userSubscriptions: userSubscriptions, user: user, trendingTopics: trendingTopics])
+    def show() {
+        List<ReadingItem> readingItems = dashboardService.fetchSubscribedTopics(session.userId)
+        List<Subscription> userSubscriptions = dashboardService.fetchUserSubscriptions(session.userId)
+        List<Resource> trendingTopics = dashboardService.fetchTrendingTopics()
+        render(view: "/dashboard/show", model: [readingItems: readingItems , userSubscriptions: userSubscriptions, trendingTopics: trendingTopics])
     }
 
     def viewImage() {
-        def user = User.get(params.userId)
-        byte[] imageInByte = user.photo
-        response.contentType = 'image/jpg' // or the appropriate image content type
+        byte[] imageInByte = dashboardService.viewImage(params.userId)
+        response.contentType = 'image/jpg'
         response.outputStream << imageInByte
         response.outputStream.flush()
-    }
-
-
-    def shareLink() {
-        User user = User.findById(session.userId)
-        Topic topic = Topic.findById(params.linkTopic)
-        LinkResource lr = new LinkResource(url: params.link, description: params.linkdescription, createdBy: user, topic: topic)
-        lr.save(flush: true, failOnError: true)
-        flash.message = "Link has been added successfully"
-        redirect(controller: "dashboard", action: 'show')
-    }
-
-
-    def shareDoc() {
-        User user = User.findById(session.userId)
-        Topic topic = Topic.findById(params.linkTopic)
-        if(topic){
-            def file1 = request.getFile("document")
-            String dir1 = new Date()
-            String dir2 = dir1.split(" ").join("")
-            String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
-            file1.transferTo(new File(dir))
-            DocumentResource dr = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
-            dr.save(flush: true, failOnError: true)
-            flash.message = "Document has been added successfully"
-            redirect(controller: "dashboard", action: 'show')
-        }else{
-            flash.message = "Document cannot be added"
-            redirect(controller: "dashboard", action: 'show')
-        }
-
     }
 
     def invite() {

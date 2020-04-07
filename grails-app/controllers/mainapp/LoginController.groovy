@@ -29,7 +29,6 @@ class LoginController {
         List<Resource> recentShares = Resource.createCriteria().list(sort: "lastUpdated", order: "desc") {
             inList("topic", publicTopics)
         }
-
         flash.message = "You must login first"
         redirect(controller: "login", action: "home", model: [recent: recentShares])
     }

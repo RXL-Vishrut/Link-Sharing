@@ -25,4 +25,14 @@ class TopicService {
             return topic.save(flush: true)
         }
     }
+    Topic deleteTopic(Long topicId){
+        Topic topic = Topic.findById(topicId)
+        return topic.delete(flush: true)
+    }
+
+    List<Topic> showAllTopics(Long userId){
+        User user = User.findById(userId)
+        List<Topic> allTopics = Topic.findAllByCreatedBy(user)
+        return allTopics
+    }
 }

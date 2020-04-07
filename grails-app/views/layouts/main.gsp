@@ -92,7 +92,7 @@
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SHARE DOCUMENT</b>
             </button>
-            <g:uploadForm enctype="multipart/form-data" url='[controller: "dashboard", action: "shareDoc"]'>
+            <g:uploadForm enctype="multipart/form-data" url='[controller: "post", action: "shareDoc"]'>
                 <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -153,7 +153,7 @@
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SHARE LINK</b>
             </button>
-            <g:uploadForm url='[controller: "dashboard", action: "shareLink"]'>
+            <g:uploadForm url='[controller: "post", action: "shareLink"]'>
                 <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">

@@ -6,6 +6,9 @@ class PostController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    DashboardService dashboardService
+    PostService postService
+
     def show() {
         User user = User.findById(session.userId)
         Resource resource = Resource.findById(params.resourceId)
@@ -51,27 +54,32 @@ class PostController {
     }
 
     def shareLink() {
-        User user = User.findByUserName(session.userUserName)
-        Topic topic = Topic.findByName(params.linkTopic)
-        LinkResource linkResource = new LinkResource(url: params.link, description: params.linkdescription, createdBy: user, topic: topic)
-        linkResource.save(flush: true, failOnError: true)
-        flash.message = "Link has been added successfully"
-        redirect(controller: "topic", action: 'show')
+        LinkResource linkResource = postService.shareLink(session.userId, Long.valueOf(params.linkTopic), params.link, params.linkdescription)
+        if (linkResource) {
+            flash.message = "Link has been added successfully"
+            redirect(controller: "dashboard", action: 'show')
+        }
+
     }
 
 
     def shareDoc() {
-        User user = User.findByUserName(session.userUserName)
-        Topic topic = Topic.findByName(params.docTopic)
-        def file1 = request.getFile("document")
-        String dir1 = new Date()
-        String dir2 = dir1.split(" ").join("")
-        String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
-        file1.transferTo(new File(dir))
-        DocumentResource documentResource = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
-        documentResource.save(flush: true, failOnError: true)
-        flash.message = "Document has been added successfully"
-        redirect(controller: "topic", action: 'show')
-    }
+        User user = User.findById(session.userId)
+        Topic topic = Topic.findById(params.linkTopic)
+        if (topic) {
+            def file1 = request.getFile("document")
+            String dir1 = new Date()
+            String dir2 = dir1.split(" ").join("")
+            String dir = "/home/vishrut/LinkSharing/MainApp/DocumentResource/${dir2}.pdf"
+            file1.transferTo(new File(dir))
+            DocumentResource dr = new DocumentResource(filePath: dir, description: params.docdescription, createdBy: user, topic: topic)
+            dr.save(flush: true, failOnError: true)
+            flash.message = "Document has been added successfully"
+            redirect(controller: "dashboard", action: 'show')
+        } else {
+            flash.message = "Document cannot be added"
+            redirect(controller: "dashboard", action: 'show')
+        }
 
+    }
 }
