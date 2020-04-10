@@ -19,7 +19,6 @@
                                 </b></a>
                             </span>
                         </div>
-
                         <div class="col-lg-8"  style="font-size: 13px;font-weight: bold;color: dimgrey;"><g:formatDate
                                 format=" hh:mm dd MMMM yyyy"
                                 date="${resource.lastUpdated}"/>

@@ -172,7 +172,7 @@
                 <div class="card-body text-dark" style="padding: 5px;margin-top: 5px;max-height: 319px;height: auto;overflow: scroll">
                     <g:if test="${postsOfTopic}">
                         <g:each in="${postsOfTopic}" var="post">
-                           <g:render template="/viewPost/postOfTopic" model="[post:post]"></g:render>
+                           <g:render template="/viewPost/postOfTopic" model="[resource:post]"></g:render>
                         </g:each>
                     </g:if>
                     <g:else>

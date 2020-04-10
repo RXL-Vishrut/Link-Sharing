@@ -19,7 +19,7 @@
 
             <div class="modal-body">
                 <div class="fieldcontain"
-                     style="margin-bottom: 3px">
+                     style="margin-bottom: 3px;text-align: left">
                     <g:textField name="address"
                                  placeholder="email"
                                  required="" id="address${topicId}"/>
@@ -28,7 +28,7 @@
                 <div>${topicId}</div>
 
                 <div class="fieldcontain"
-                     style="margin-bottom: 3px">
+                     style="margin-bottom: 3px;text-align: left">
                     <g:textField name="subject"
                                  placeholder="Subject"
                                  required="" id="subject${topicId}"/>

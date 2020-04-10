@@ -7,6 +7,8 @@
 
                     <div class="alert-success forgot">
                     </div>
+                    <div class="alert-danger forgot">
+                    </div>
 
                 </h5>
                 <button type="button" class="close"
@@ -21,9 +23,11 @@
 
                 <div class="fieldcontain"
                      style="width: 250px">
-                    <g:textField name="forgotEmail"
-                                 placeholder="email"
-                                  id="forgotEmail"/>
+%{--                    <g:textField name="forgotEmail"--}%
+%{--                                 placeholder="email"--}%
+%{--                                  id="forgotEmail"/>--}%
+                    <input type="email" placeholder="Email" name="forgotEmail" id="forgotEmail">
+
                 </div>
             </div>
 

@@ -58,7 +58,7 @@
 
     </div>
 
-    <div class="password" hidden>${params.userId}</div>
+    <div class="password" hidden>${user.id}</div>
 
     <button type="submit" class="btn-primary reset" id="reset" style="width: 150px;position:relative;left: 157px">RESET</button>
 </div>

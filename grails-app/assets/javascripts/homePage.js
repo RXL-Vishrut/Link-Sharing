@@ -91,14 +91,30 @@ var forgotPassword = function(){
             $(".alert-success.forgot").html("Reset link sent")
         },
         error: function () {
-            alert("Topic save failed")
+            $(".alert-danger.forgot").html("Error occurred")
         }
     });
 };
 
 $(document).ready(function () {
     $("#sendPassword").click(function () {
-        forgotPassword();
+        var email = $("#forgotEmail").val()
+        if(email) {
+            var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(email)) {
+                forgotPassword()
+            }else{
+                $(".alert-danger.forgot").html("Not a valid email address")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
+            }
+        }else{
+            $(".alert-danger.forgot").html("Enter an email address")
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
+        }
     });
 });
 

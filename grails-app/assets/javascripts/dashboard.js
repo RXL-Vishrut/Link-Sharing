@@ -28,13 +28,6 @@ var create = function () {
     });
 };
 
-$(document).ready(function () {
-    $("#saveTopic").click(function () {
-        create();
-    });
-});
-
-
 var editTopic = function (topicName, topicId, visibility, seriousness) {
     $.ajax({
         url: "/topic/editTopic/",
@@ -42,13 +35,22 @@ var editTopic = function (topicName, topicId, visibility, seriousness) {
         data: {"topicName": topicName, "topicId": topicId, "visibility": visibility, "seriousness": seriousness},
         success: function (data) {
             if (data.success == true) {
-                alert("Data changed")
+                $("#trash").html("Topic edited successfully")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             } else {
-                alert("topic edit error")
+                $("#trashdanger").html("Error in editing topic")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             }
         },
         error: function () {
-            alert("Some error occurred")
+            $("#trashdanger").html("Error in editing topic")
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
         }
 
     });
@@ -57,8 +59,6 @@ var editTopic = function (topicName, topicId, visibility, seriousness) {
 
 $(document).ready(function () {
     $(".topicEdit").click(function () {
-        var topicId = $(this).attr('topicId')
-        console.log(topicId)
         $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".hidden-field").attr('hidden', false)
         $(this).parent().parent().siblings().eq(0).children(".col-lg-12").children(".topic").attr('hidden', true)
         $(this).parent().siblings().eq(0).attr('hidden', false)
@@ -67,10 +67,14 @@ $(document).ready(function () {
     });
     $(".subscriptionSave").click(function () {
         var topicName = $(this).prev().prev().val();
-        // var topicId = $(this).prev().text();
-        // var visibility = $(this).parent().parent().parent().siblings(1).children().children();
-        // var seriousness = $(this).parent().parent().parent().siblings(1).children().children().eq(1);
-        // editTopic(topicName,topicId,visibility,seriousness)
+        console.log(topicName)
+        var topicId = $(this).prev().text();
+        console.log(topicId)
+        var visibility = $(this).parent().parent().parent().siblings(1).children(".visible").children("#visibility").val();
+        console.log(visibility)
+        var seriousness = $(this).parent().parent().parent().siblings(1).children(".seriousness").children("#seriousness").val();
+        console.log(seriousness)
+        editTopic(topicName,topicId,visibility,seriousness)
     });
     $(".subscriptionCancel").click(function () {
         $(this).prev().prev().attr('hidden', true);
@@ -87,7 +91,7 @@ $(document).ready(function () {
 
 var invite = function () {
     $.ajax({
-        url: "/dashboard/invite/",
+        url: "/topic/invite/",
         type: "POST",
         data: {"address": $("#addressnull").val(), "subject": $("#subjectnull").val(), "body": $("#textnull").val()},
         success: function (/*data*/) {
@@ -105,48 +109,29 @@ var invite = function () {
     });
 };
 
-$(document).ready(function () {
-    $('#my_modal').on('show.bs.modal', function (event) {
-        var topicId = $(event.relatedTarget).data('topic-id');
-        $(event.currentTarget).find('textarea[name="topicId"]').val(topicId);
-    });
-})
-
-$(document).ready(function () {
-    $("#invite").click(function () {
-        invite();
-    });
-});
-
-
 // <-------------------------------------------ISREAD---------------------------------------------------------->
 
-// var read = function(){
-//     $.ajax({
-//         url: "/dashboard/isRead/",
-//         type: "POST",
-//         data:{"value": true , "resourceId": $(".resource").text()},
-//         success: function (data) {
-//             if(data.success  ==  true){
-//                 alert("success")
-//             }else{
-//                 alert("rating changed")
-//             }
-//         },
-//         error: function () {
-//             alert("Resource rating failed")
-//         }
-//
-//     });
-// };
-//
-// $(document).ready(function () {
-//     $(".readPost").click(function () {
-//         read();
-//     });
-// });
-
-
+var markAsReadPost=function (resourceId) {
+    $.ajax({
+        url:"/topic/isRead",
+        type:"POST",
+        data:{"resourceId":resourceId},
+        success:function(data){
+            if(data.success==true){
+                //$('#info').html("Your Choice has been Locked").fadeOut(3000);
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
+            }
+            else{
+                //$('#info').html("Sorry your choice has not been locked").fadeOut(3000);
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
+            }
+        },
+    });
+};
 // <-----------------------------------------TOPIC DELETE----------------------------------->
 
 var deleteTopic = function (trashId) {
@@ -177,20 +162,69 @@ var deleteTopic = function (trashId) {
     });
 };
 
+// <-----------------------------Subscribed topic seriousness------------------------>>
 
-$(document).ready(function () {
+var SubscribedTopicSeriousness = function (topicId,seriousness) {
+    $.ajax({
+        url: "/topic/subTopicSeriousness/",
+        type: "POST",
+        data: {"topicId": topicId, "seriousness":seriousness},
+        success: function (data) {
+            if (data.success == true) {
+                $("#trash").html("Topic seriousness changed")
+                setTimeout(function(){
+                    location.reload();
+                }, 2000);
+            } else {
+                $("#trashdanger").html("Error in changing topic's seriousness")
+                setTimeout(function(){
+                    location.reload();
+                }, 2000);
+            }
+        },
+        error: function () {
+            $("#trashdanger").html("Error in changing topic seriousness!!")
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
+        }
+
+    });
+};
+
+$(document).ready(function(){
+    $(".subSeriousness").click(function () {
+        var topicId = $(this).attr("topicId")
+        var seriousness = $(this).val()
+        SubscribedTopicSeriousness(topicId, seriousness)
+    });
+
     $(".delete").click(function () {
         var trashId = $(this).attr('trashId');
         deleteTopic(trashId)
-
     });
-});
 
-// <-----------------------------------------------------------------------------------------------------?
+    $(".readPost").click(function () {
+        var resourceId = $(this).attr('resourceId')
+        markAsReadPost(resourceId);
+    });
 
-$(document).ready(function () {
+    $("#invite").click(function () {
+        invite();
+    });
+
+    $('#my_modal').on('show.bs.modal', function (event) {
+        var topicId = $(event.relatedTarget).data('topic-id');
+        $(event.currentTarget).find('textarea[name="topicId"]').val(topicId);
+    });
+
+    $("#saveTopic").click(function () {
+        create();
+    });
+
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
 })

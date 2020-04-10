@@ -31,46 +31,18 @@
             <div class="card-header" style="background-color: #343a40;color: white;position:relative;top: 3px;width: 32rem"><b>User</b></div>
 
             <g:render template="/userProfile/profileInfo"></g:render>
-%{--            <div class="card border-dark mb-6 " style="width: 32rem;margin-bottom: 50px">--}%
+            <div class="card border-dark mb-6 " style="width: 32rem;margin-bottom: 50px">
 
-%{--                <div class="card-header" style="background-color: #343a40;color: white">--}%
-%{--                    <span><b>Topics</b><b style="color: white"></b></span>--}%
-%{--                </div>--}%
+                <div class="card-header" style="background-color: #343a40;color: white">
+                    <span><b>Topics</b><b style="color: white"></b></span>
+                </div>
 
-%{--                <div class="card-body text-dark" style="overflow: scroll;height: 270px;padding-top: 10px">--}%
-%{--                    <g:each in="${topicsCreatedByUser.take(5)}" var="topic">--}%
-%{--                        <div class="row" style="background-color: #f1f1f1;margin-bottom: 10px;padding: 12px">--}%
-%{--                            <div class="col-lg-5" style="font-size: 15px;">--}%
-%{--                                <b>Topic :</b><g:link controller="topic" action="show"--}%
-%{--                                                      params="[userId: subscription.user.id, topicId: subscription.topic.id]"><b><u>${subscription.topic.name}</u>--}%
-%{--                                </b></g:link>--}%
-%{--                            </div>--}%
-
-%{--                            <div class="col-lg-4" style="font-size: 14px">--}%
-%{--                                <b style="color: dimgrey">Subscriptions</b>--}%
-%{--                            </div>--}%
-
-%{--                            <div class="col-lg-3" style="font-size: 14px">--}%
-%{--                                <b style="color: dimgrey">Post</b>--}%
-%{--                            </div>--}%
-
-%{--                            <div class="w-100"></div>--}%
-
-%{--                            <div class="col-lg-6">--}%
-%{--                            </div>--}%
-
-%{--                            <div class="col">--}%
-%{--                                <ls:subscriptionCount--}%
-%{--                                        userId="${subscription.user.id}"></ls:subscriptionCount>--}%
-%{--                            </div>--}%
-
-%{--                            <div class="col" style="color: blue">--}%
-%{--                                <ls:postCount topicId="${subscription.topic.id}"></ls:postCount>--}%
-%{--                            </div>--}%
-%{--                        </div>--}%
-%{--                    </g:each>--}%
-%{--                </div>--}%
-%{--            </div>--}%
+                <div class="card-body text-dark" style="overflow: scroll;max-height: 270px;height: auto;padding-top: 10px">
+                    <g:each in="${topicsCreatedByUser.take(5)}" var="topic">
+                        <g:render template="/topic/topicInfo" model="[topic:topic]"></g:render>
+                    </g:each>
+                </div>
+            </div>
 
 
             <div class="card border-dark mb-6 " style="width: 32rem;margin-bottom: 50px">
@@ -80,7 +52,7 @@
                 </div>
 
                 <div class="card-body text-dark" style="overflow: scroll;height: 270px;padding-top: 10px">
-                    <g:each in="${subscriptionsOfUser.take(5)}" var="${subscription}">
+                    <g:each in="${subscriptionsOfUser.take(5)}" var="subscription">
                         <div class="row" style="background-color: #f1f1f1;margin-bottom: 10px;padding: 12px">
                             <div class="col-lg-5" style="font-size: 15px;">
                                 <b>Topic :</b><g:link controller="topic" action="show"
@@ -136,7 +108,7 @@
                 <div class="card-body text-dark" style="padding: 5px;margin-top: 5px;max-height: 319px;height: auto;overflow: scroll">
                     <g:if test="${postsOfUser}">
                         <g:each in="${postsOfUser}" var="post">
-                            <g:render template="/viewPost/postOfTopic" model="[post:post]"></g:render>
+                            <g:render template="/viewPost/postOfTopic" model="[resource:post]"></g:render>
                         </g:each>
                     </g:if>
                     <g:else>

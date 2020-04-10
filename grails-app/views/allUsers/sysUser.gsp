@@ -60,14 +60,18 @@
             </tr>
             </thead>
             <tbody>
-            <g:each in="${users}" var="${user}">
+            <g:each in="${users}" var="user">
                 <tr>
                     <td style="padding: 15px">${user.id}</td>
                     <td style="padding: 15px">${user.userName}</td>
                     <td style="padding: 15px">${user.email}</td>
                     <td style="padding: 15px">${user.firstName}</td>
                     <td style="padding: 15px">${user.lastName}</td>
-                    <td style="padding: 15px">${user.admin}</td>
+                    <td style="padding: 15px" class="isAdmin" userId="${user.id}">
+                        <div id="text">
+                            <a id="admin">Yes</a>
+                        </div>
+                    </td>
                     <td style="padding: 15px"><g:if test="${user.active}"><g:link controller="allUsers"
                                                                                   action="changeActiveStatus"
                                                                                   params="[userId: user.id]">Yes</g:link></g:if><g:if
@@ -83,6 +87,10 @@
     $(document).ready(function () {
         $('#dtBasicExample').DataTable();
         $('.dataTables_length').addClass('bs-select');
+
+        $(".isAdmin").click(function () {
+            $(this).html("No")
+        })
     });
 </script>
 </body>

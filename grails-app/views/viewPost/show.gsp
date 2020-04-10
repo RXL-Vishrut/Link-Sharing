@@ -22,12 +22,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <asset:stylesheet src="viewPost.css"/>
     <asset:javascript src="post.js"/>
+    <asset:javascript src="dashboard.js"/>
     <title>Post Page</title>
 </head>
 
 <body>
 
+<div class=" alert-danger"style="text-align: center" hidden>
+</div>
+<div class="alert-success" style="text-align: center" hidden></div>
 <div class="container">
+
+
     <div class="row">
         <div class="col-lg-6">
             <div class="card border-dark mb-6">
@@ -37,7 +43,6 @@
                         <div class="col-lg-3">
                             <img height="100" width="100" style="border-radius: 8px"
                                  src="${createLink(controller: 'post', action: 'viewImage', params: ['userId': resource.createdBy.id])}"/>
-
                         </div>
 
                         <div class="col-lg-9">
@@ -46,8 +51,10 @@
                                     <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName}</b>
                                 </div>
 
-                                <div style="font-size: 20px;position:relative;left: 150px">
-                                    <g:link><u><b>${topic.name}</b></u></g:link>
+                                <div  style="font-size: 20px;position:relative;left: 150px">
+                                    <g:link controller="topic"
+                                            action="show"
+                                            params="[topicId: resource.topic.id]"><u><b>${resource.topic.name}</b></u></g:link>
                                 </div>
 
                                 <div class="w-100"></div>
@@ -58,7 +65,7 @@
 
                                 <div style="color: dimgrey;position:relative;left: 190px;font-size: 12px">
                                     <b><g:formatDate format=" hh:mm dd MMMM yyyy"
-                                                     date="${topic.lastUpdated}"/></b>
+                                                     date="${resource.topic.lastUpdated}"/></b>
                                 </div>
 
                                 <div class="w-100"></div>
@@ -68,9 +75,8 @@
                                 </div>
 
                                 <div class="col" style="position:relative;left: 30px">
-                                    %{--                                    ${resource.id}--}%
+
                                     <div class="rating">
-                                        %{--                                        <g:uploadForm url="[controller: 'post', action: 'rating']">--}%
                                         <input type="radio" id="star5" name="rating" value="5"/><label for="star5"
                                                                                                        title="Exceptional">5 stars</label>
                                         <input type="radio" id="star4" name="rating" value="4"/><label for="star4"
@@ -81,7 +87,6 @@
                                                                                                        title="Kinda bad">2 stars</label>
                                         <input type="radio" id="star1" name="rating" value="1"/><label for="star1"
                                                                                                        title="Very bad">1 star</label>
-                                        %{--                                        </g:uploadForm>--}%
                                         <div class="res" hidden>${resource.id}</div>
 
                                         <div id="message"></div>
@@ -92,8 +97,15 @@
 
                         </div>
                     </div>
-
-                    <div class="row" style="margin-top: 15px;margin-left: 0px">
+                    <div class="postEdit" hidden style="margin-top:5px">
+                        <g:textArea name="topic" class="postName" placeholder="${resource.description}" style="width: 338px;height: 72px;text-align: left"></g:textArea>
+                        <div id="res" hidden>${resource.id}</div>
+                        <button type="submit" name="save" resourceId="${resource.id}" style="position:relative;bottom:51px"
+                                class="postSave">Save</button>
+                        <button type="submit" name="cancel" style="position:relative;bottom:51px"
+                                class="postCancel ">Cancel</button>
+                    </div>
+                    <div class="row postDes" style="margin-top: 15px;margin-left: 0px">
                         ${resource.description}
                     </div>
 
@@ -108,13 +120,9 @@
                             <a href="#"><i class="fa fa-google-plus" aria-hidden="true"
                                            style="color: red"></i></a>
                         </div>
-
-
-                        <div class="col-lg-8" style="text-align: right">
-                            <a style="font-size: 15px;margin-right: 3px"
-                               href="${createLink(controller: "login", action: "error")}"><u><b>Delete</b></u></a>
-                            <a style="font-size: 15px;margin-right: 3px"
-                               href="${createLink(controller: "login", action: "error")}"><u><b>Edit</b></u></a>
+                        <div class="col-lg-8" style="text-align: right;">
+                            <g:link controller="post" action="deletePost" params="[resourceId: resource.id]"><b><u>Delete</u></b></g:link>
+                            <a style="font-size: 15px;margin-right: 3px;margin-left:3px;color: blue;cursor: pointer" class="editPost" resourceId="${resource.id}"><u><b>Edit</b></u></a>
                             <g:if test="${resource.class == mainapp.DocumentResource}">
                                 <a style="font-size: 15px;margin-right: 3px"
                                    href="${createLink(controller: "dashboard", action: "download")}"><u><b>Download</b>

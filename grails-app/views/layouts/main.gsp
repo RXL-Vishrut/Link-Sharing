@@ -212,7 +212,7 @@
                     style="color: white; font-size: 25px;display: block"></i>
                 <b style="color: white; font-size: 15px">SEND INVITE</b>
             </button>
-            <g:uploadForm url='[controller: "dashboard", action: "invite"]'>
+            <g:form >
                 <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -225,28 +225,24 @@
                             </div>
 
                             <div class="modal-body">
-                                <div class="fieldcontain" style="margin-bottom: 3px">
-                                    <g:textField name="address" placeholder="email@gmal.com" required=""/>
+                                <div class="fieldcontain" style="margin-bottom: 3px;text-align: left">
+                                    <g:textField name="address" id="address" placeholder="email@gmal.com" required=""/>
                                 </div>
 
-                                <div class="fieldcontain" style="margin-bottom: 3px">
-                                    <g:textField name="subject" placeholder="Subject" required=""/>
-                                </div>
-
-                                <div class="fieldcontain" style="margin-bottom: 3px">
-                                    <g:textArea name="body" rows="5" cols="50" placeholder="Your message" required=""/>
-                                </div>
+                            </div>
+                            <div class="col">
+                                SELECT TOPIC : <ls:showSubscribedTopics userId="${session.userId}"></ls:showSubscribedTopics>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Invite</button>
+                                <button type="submit" class="btn btn-primary" id="topicInvite">Invite</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </g:uploadForm>
+            </g:form>
 
         %{--            <-----------------------------NAVBAR USER---------------------------->--}%
 
@@ -257,11 +253,6 @@
                         aria-expanded="false">
                     <i class="fa fa-user" aria-hidden="true"></i>
 
-%{--                    <div>--}%
-%{--                        <b style="font-size: 13px">USER</b><i class="fa fa-caret-down"--}%
-%{--                                                              aria-hidden="true"></i>--}%
-%{--                    </div>--}%
-
                     <div style="font-size: 16px;position:relative;bottom: 4px"><b>@${session.userUserName}</b><i
                             class="fa fa-caret-down"
                             aria-hidden="true"></i></div>
@@ -271,10 +262,6 @@
                     <a class="dropdown-item"
                        href="${createLink(controller: "profile", action: "show")}"><b>PROFILE</b></a>
                     <g:if test="${session.getAttribute("userIsAdmin")}">
-                    %{--                        <a class="dropdown-item"--}%
-                    %{--                           href="${createLink(controller: "logout", action: "logout")}"><b>TOPICS</b></a>--}%
-                    %{--                        <a class="dropdown-item" href="${createLink(controller: "post", action: "show")}"><b>POSTS</b>--}%
-                    %{--                        </a>--}%
                         <a class="dropdown-item"
                            href="${createLink(controller: "allUsers", action: "userDetails")}"><b>USERS</b></a>
 
