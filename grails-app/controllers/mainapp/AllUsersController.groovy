@@ -1,5 +1,6 @@
 package mainapp
 
+import grails.converters.JSON
 
 
 class AllUsersController {
@@ -10,6 +11,21 @@ class AllUsersController {
     def userDetails(){
         List<User> users = User.list()
         render(view: "/allUsers/sysUser",model: [users:users])
+    }
+    def changeAdminStatus(){
+        User user = User.findById(params.userId)
+        println(user.firstName)
+        if(user.admin == false){
+            println("yooooo")
+            user.admin = true
+            user.save(flush:true)
+            render([success:true] as JSON)
+        }else{
+            println("No")
+            user.admin = false
+            user.save(flush:true)
+            render([success:false] as JSON)
+        }
     }
 
     def changeActiveStatus(){

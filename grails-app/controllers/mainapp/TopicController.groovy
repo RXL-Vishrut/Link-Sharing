@@ -69,6 +69,4 @@ class TopicController {
         List<Subscription> allSubscriptions = Subscription.findAllByUser(user)
         render(view: "/userProfile/showAllSubscription", model: [allSubscriptions: allSubscriptions])
     }
-
-
 }

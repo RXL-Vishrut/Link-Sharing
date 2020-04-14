@@ -34,8 +34,6 @@ class LoginController {
         response.outputStream.flush()
     }
 
-
-//  <----------------------------------------REGISTER------------------------------------->
     def register() {
         User user = new User()
         bindData(user, params, [exclude: ['confirmPassword', 'photo']])
@@ -44,16 +42,10 @@ class LoginController {
         }
         user.active = true
         user.admin = false
-        if (user.validate()) {
-            user.save(flush: true, failOnError: true)
-            initializeSession(user)
-            flash.message = "User registered successfully"
-            redirect(controller: "login", action: "home")
-        } else {
-            user.errors.allErrors.each {
-                println(it)
-                flash.message = "Try with different username/email"
-            }
+        boolean registerUser = loginService.register(user,flash,session)
+        if(registerUser){
+            redirect(controller: "dashboard", action: "show")
+        }else{
             redirect(action: "home")
         }
     }
@@ -86,56 +78,35 @@ class LoginController {
     }
 
     def forgotPassword() {
-        println(params)
-        User user = User.findByEmail(params.emailForgot)
-        String token = UUID.randomUUID().toString().toUpperCase()
-        if (user) {
-            UserToken invite = new UserToken(userId: user.id, token: token)
-            invite.save(flush: true)
-            sendMail {
-                to params.emailForgot
-                subject "Reset password"
-                text "http://localhost:9090/login/resetPassword?token=${token}"
-            }
-            render([success: true] as JSON)
-        } else {
-            render([success: false] as JSON)
-        }
+        boolean forgotPassword = loginService.forgotPasswordEmail(params)
+        render([success: forgotPassword?:false] as JSON)
     }
 
     def resetPassword() {
-        UserToken token = UserToken.findByToken(params.token)
-        if (token) {
-            User user = User.findById(token.userId)
-            token.delete(flush: true)
-            render(view: "/login/resetpassword", model: [user: user])
-        } else {
+        Map model = loginService.resetPassword(params)
+        if(model){
+            render(view: "/login/resetpassword", model:model)
+        }else{
             render(view: "/login/homePage")
         }
     }
 
     def changePassword() {
-        User user = User.findById(params.userId)
-        if (user) {
-            user.password = params.password
-            user.save(flush: true, failOnError: true)
-            render([success: true] as JSON)
-        } else {
-            render([success: false] as JSON)
-        }
+        boolean changePassword = loginService.changePassword(params)
+        render([success:changePassword?:false] as JSON)
     }
 
-    void initializeSession(User user) {
-        session.userId = user.id
-        session.userUserName = user.userName
-        session.userIsAdmin = user.admin
-        session.userFirstName = user.firstName
-        session.userLastName = user.lastName
-        session.userEmail = user.email
-        if (user.photo) {
-            String encoded = Base64.getEncoder().encodeToString(user.photo)
-            session.setAttribute("userPhoto", encoded)
-        }
-    }
+//    void initializeSession(User user) {
+//        session.userId = user.id
+//        session.userUserName = user.userName
+//        session.userIsAdmin = user.admin
+//        session.userFirstName = user.firstName
+//        session.userLastName = user.lastName
+//        session.userEmail = user.email
+//        if (user.photo) {
+//            String encoded = Base64.getEncoder().encodeToString(user.photo)
+//            session.setAttribute("userPhoto", encoded)
+//        }
+//    }
 }
 

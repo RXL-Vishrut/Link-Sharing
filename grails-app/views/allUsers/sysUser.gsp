@@ -8,9 +8,10 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
               crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+%{--        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"--}%
+%{--                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"--}%
+%{--                crossorigin="anonymous"></script>--}%
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
                 integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
                 crossorigin="anonymous"></script>
@@ -68,9 +69,17 @@
                     <td style="padding: 15px">${user.firstName}</td>
                     <td style="padding: 15px">${user.lastName}</td>
                     <td style="padding: 15px" class="isAdmin" userId="${user.id}">
-                        <div id="text">
-                            <a id="admin">Yes</a>
+                        <div id="text" >
+                            <g:if test="${user.admin}">
+                                <a id="admin" style="cursor: pointer">Yes</a>
+                            </g:if>
                         </div>
+                        <div id="tex">
+                            <g:if test="${!user.admin}">
+                                <a id="notAdmin" style="cursor: pointer">No</a>
+                            </g:if>
+                        </div>
+
                     </td>
                     <td style="padding: 15px"><g:if test="${user.active}"><g:link controller="allUsers"
                                                                                   action="changeActiveStatus"
@@ -84,12 +93,37 @@
     </div>
 </div>
 <script>
+
+
+    var changeAdminStatus = function (userId) {
+        $.ajax({
+            url: "/allUsers/changeAdminStatus/",
+            type: "POST",
+            data: {"userId":userId},
+            success: function (data) {
+                if(data.success==true){
+                    setTimeout(function(){
+                        location.reload();
+                    }, 500);
+                }else{
+                    setTimeout(function(){
+                        location.reload();
+                    }, 500);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    };
     $(document).ready(function () {
         $('#dtBasicExample').DataTable();
         $('.dataTables_length').addClass('bs-select');
 
         $(".isAdmin").click(function () {
-            $(this).html("No")
+            var userId=$(this).attr("userId")
+            console.log(userId)
+            changeAdminStatus(userId)
         })
     });
 </script>
