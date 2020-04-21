@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-dark bg-dark" style="margin-right: 55px;margin-right: 55px;border-radius: 8px">
+<nav class="navbar navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand"><b>Link Sharing</b></a>
 </nav>
 

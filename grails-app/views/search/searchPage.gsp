@@ -95,7 +95,7 @@
                 <div class="card-body text-dark" style="padding: 5px;margin-top: 5px">
                     <g:if test="${resources}">
                         <g:each in="${resources}" var="post">
-                            <g:render template="/viewPost/postOfTopic" model="[post:post]"></g:render>
+                            <g:render template="/viewPost/postOfTopic" model="[resource:post]"></g:render>
                         </g:each>
                     </g:if>
                     <g:else>
@@ -129,5 +129,21 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+    window.onscroll = function() {myFunction()};
+
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+    if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+    } else {
+    navbar.classList.remove("sticky");
+    }
+    }
+    })
+</script>
 </body>
 </html>

@@ -22,6 +22,31 @@ class LoginService {
             return false
         }
     }
+    boolean login(params,flash,session){
+        User user1 = User.createCriteria().get {
+            or {
+                and {
+                    eq("userName", params.userName)
+                    eq("password", params.password)
+                }
+                and {
+                    eq("email", params.userName)
+                    eq("password", params.password)
+                }
+            }
+        }
+        if (user1) {
+            if (user1.active) {
+                initializeSession(user1,session)
+                return true
+            } else {
+                flash.message = "User has been deactivated"
+
+            }
+        } else {
+            flash.message = "Invalid username or Password"
+        }
+    }
     void initializeSession(User user,session) {
         session.userId = user.id
         session.userUserName = user.userName

@@ -24,19 +24,18 @@
 </head>
 
 <body>
-<g:if test="${flash.message}">
-    <div id="fm" class="alert alert-success"
-         style="display: block;text-align: center;margin-bottom: 38px">${flash.message}</div>
-</g:if>
-<div id="trash" style="text-align: center;background-color: #b2d1ff;color: black"></div>
-
-<div id="trashdanger" style="text-align: center; background-color: red;color: white"></div>
-
-<div id="private" style="text-align: center;background-color: #b2d1ff;color: black"></div>
-
 %{--<----------------------------------------Photo Section------------------------------------->--}%
 
 <div class="container" style="background-color: #f1f1f1">
+    <g:if test="${flash.message}">
+        <div id="fm" class="alert alert-success"
+             style="display: block;text-align: center;margin-bottom: 38px">${flash.message}</div>
+    </g:if>
+    <div id="trash" style="text-align: center;background-color: #b2d1ff;color: black"></div>
+
+    <div id="trashdanger" style="text-align: center; background-color: red;color: white"></div>
+
+    <div id="private" style="text-align: center;background-color: #b2d1ff;color: black"></div>
     <div class="row">
 
         <div class="col-lg-6">

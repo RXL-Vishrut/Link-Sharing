@@ -4,8 +4,11 @@ import enums.Seriousness
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
 
+
 @Transactional
 class TopicService {
+    PostService postService
+
     Map fetchTopicDetail(Long userId, Long topicId) {
         User user = User.findById(userId)
         Topic topic = Topic.findById(topicId)
@@ -150,7 +153,6 @@ class TopicService {
         }
     }
     Map search(params){
-        def postService
         List<Resource> trendingTopics = fetchTrendingTopics()?:[]
         List<ResourceRating> topPosts = postService.fetchTopPosts()?:[]
         List<Topic> topics = Topic.findAllByNameIlike("%"+params.searchText+"%") ?: []

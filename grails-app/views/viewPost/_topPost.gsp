@@ -9,26 +9,24 @@
 
         <div class="col-lg-9">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="row" style="padding: 4px">
-                        <div class="col-lg-9" style="color: black">
-                            <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName + "  "}</b>
-                            <span style="font-size: 15px;position: relative;left: 120px">
-                                <b>Topic :</b> <a
-                                    href="${createLink(controller: "login", action: "error")}"><b><u>${resource.topic.name}</u>
-                                </b></a>
-                            </span>
-                        </div>
-                        <div class="col-lg-8"  style="font-size: 13px;font-weight: bold;color: dimgrey;"><g:formatDate
-                                format=" hh:mm dd MMMM yyyy"
-                                date="${resource.lastUpdated}"/>
-                        </div>
-                    </div>
+                <div class="col-lg-7">
+                    <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName + "  "}</b>
+                </div>
+                <div class="col-lg-5" style="font-size: 14px">
+                    <b>Topic :</b> <a
+                        href="${createLink(controller: "login", action: "error")}"><b><u>${resource.topic.name}</u>
+                    </b></a>
+                </div>
+                <div class="w-100">
+                </div>
+                <div class="col-lg-12"  style="font-size: 13px;font-weight: bold;color: dimgrey;"><g:formatDate
+                        format=" hh:mm dd MMMM yyyy"
+                        date="${resource.lastUpdated}"/>
                 </div>
 
                 <div class="w-100"></div>
 
-                <div class="col-lg-12" style="margin-left: 19px;word-break: break-all;">
+                <div class="col-lg-12" style="margin-left: 14px;word-break: break-all;">
                     <div class="row">
                         <p>${resource.description}</p>
                     </div>

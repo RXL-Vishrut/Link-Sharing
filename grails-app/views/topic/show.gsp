@@ -25,7 +25,6 @@
 
 <body>
 
-
 <g:if test="${flash.message}">
     <div class="alert alert-success"
          style="display: block;text-align: center;margin-bottom: 38px">${flash.message}</div>
@@ -33,7 +32,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             %{--            <----------------------------------TOPIC-------------------------->--}%
             <div class="card border-dark mb-6" style="width: 30rem;margin-bottom: 50px">
                 <div class="card-header" style="background-color: #343a40;color: white">
@@ -50,7 +49,8 @@
                         <div class="col-lg-9">
                             <div class="row">
                                 <div class="col">
-                                    <g:link controller="topic" action="show" params="[topicId:topic.id]"><b><u>${topic.name}</u>
+                                    <g:link controller="topic" action="show"
+                                            params="[topicId: topic.id]"><b><u>${topic.name}</u>
                                     </b></g:link>
                                     <g:if test="${topic.visibility == enums.Visibility.Private}"><b
                                             style="color: dimgrey">(Private)</b></g:if>
@@ -73,7 +73,8 @@
                                 <div class="w-100"></div>
 
                                 <div class="col">
-                                        <ls:showSubscribe topicId="${topic.id}" userId="${session.userId}"></ls:showSubscribe>
+                                    <ls:showSubscribe topicId="${topic.id}"
+                                                      userId="${session.userId}"></ls:showSubscribe>
                                 </div>
 
                                 <div class="col" style="left: 25px">
@@ -108,10 +109,11 @@
                     <span><b>Users :</b><b style="color: white">"${topic.name}"</b></span>
                     <span style="float:right;"><b><a href="#"><u style="color: white">View All</u></a></b></span>
                 </div>
-                <g:each in="${subscribedUsers}" var="${user}">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" style="margin:5px">
-                            <div class="row" style="background-color: #f1f1f1">
+
+                <div class="card-body text-dark" style="overflow: scroll;max-height: 320px;height: auto">
+                    <g:if test="${subscribedUsers}">
+                        <g:each in="${subscribedUsers}" var="${user}">
+                            <div class="row" style="background-color: #f1f1f1;margin-bottom: 10px">
                                 <div class="col-lg-3">
                                     <img height="90" width="90" style="border-radius: 13px"
                                          src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': user.id])}"/>
@@ -138,25 +140,26 @@
                                         <div class="col">
                                             <b style="color: dimgrey">Topics</b>
                                         </div>
+
                                         <div class="w-100"></div>
+
                                         <div class="col">
                                             <ls:subscriptionCount userId="${user.id}"></ls:subscriptionCount>
                                         </div>
+
                                         <div class="col">
                                             <ls:topicCount userId="${user.id}"></ls:topicCount>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </g:each>
+
+                        </g:each>
+                    </g:if>
+                </div>
             </div>
         </div>
 
-        <div class="col-lg-1">
-
-        </div>
 
 
         %{--        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<POSTS><>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>--}%
@@ -169,10 +172,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body text-dark" style="padding: 5px;margin-top: 5px;max-height: 319px;height: auto;overflow: scroll">
+
+                <div class="card-body text-dark"
+                     style="padding: 5px;margin-top: 5px;max-height: 319px;height: auto;overflow: scroll">
                     <g:if test="${postsOfTopic}">
                         <g:each in="${postsOfTopic}" var="post">
-                           <g:render template="/viewPost/postOfTopic" model="[resource:post]"></g:render>
+                            <g:render template="/viewPost/postOfTopic" model="[resource: post]"></g:render>
                         </g:each>
                     </g:if>
                     <g:else>

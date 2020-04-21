@@ -3,15 +3,11 @@
 <head>
     <head>
         <meta name="layout" content="main"/>
-        <asset:stylesheet src="allUsers.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
               crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-%{--        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"--}%
-%{--                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"--}%
-%{--                crossorigin="anonymous"></script>--}%
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
                 integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
                 crossorigin="anonymous"></script>
@@ -24,13 +20,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-
-        <script type="text/javascript" charset="utf8"
-                src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-        <script type="text/javascript"
-                src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+        <asset:stylesheet src="allUsers.css"/>
         <title>Document</title>
     </head>
     <title>Users</title>
@@ -39,7 +30,7 @@
 <body>
 
 <div class="container">
-    <div class="row" style="padding: 10px">
+    <span id="div1" style="text-align: center;background-color: darkgray;position:relative;left: 400px;"></span>
         <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"
                style="margin: 10px">
             <thead>
@@ -69,15 +60,13 @@
                     <td style="padding: 15px">${user.firstName}</td>
                     <td style="padding: 15px">${user.lastName}</td>
                     <td style="padding: 15px" class="isAdmin" userId="${user.id}">
-                        <div id="text" >
+                        <div id="text${user.id}">
                             <g:if test="${user.admin}">
-                                <a id="admin" style="cursor: pointer">Yes</a>
+                                <a id="admin" style="cursor: pointer;color:blue">Yes</a>
                             </g:if>
-                        </div>
-                        <div id="tex">
-                            <g:if test="${!user.admin}">
-                                <a id="notAdmin" style="cursor: pointer">No</a>
-                            </g:if>
+                            <g:else>
+                                <a id="admin" style="cursor: pointer;color: blue">No</a>
+                            </g:else>
                         </div>
 
                     </td>
@@ -101,14 +90,16 @@
             type: "POST",
             data: {"userId":userId},
             success: function (data) {
-                if(data.success==true){
-                    setTimeout(function(){
-                        location.reload();
-                    }, 500);
+                if(data.isAdmin == true){
+                    $("#div1").html("Admin privileges given to userId "+data.userId)
+                    $("#div1").fadeIn(1000);
+                    $('#div1').delay(1000).fadeOut(1000)
+                    $("#text"+data.userId).html("<a id=\"admin\" href=\"javascript:void(0)\">Yes</a>")
                 }else{
-                    setTimeout(function(){
-                        location.reload();
-                    }, 500);
+                    $("#div1").html(data.userId+" removed from admin")
+                    $("#div1").fadeIn(1000);
+                    $('#div1').delay(1000).fadeOut(1000)
+                    $("#text"+data.userId).html("<a id=\"admin\" href=\"javascript:void(0)\">No</a>")
                 }
             },
             error: function () {
@@ -117,15 +108,29 @@
         });
     };
     $(document).ready(function () {
-        $('#dtBasicExample').DataTable();
+        $('#dtBasicExample').DataTable({
+            "lengthMenu": [ 5, 25, 50, 75, 100 ]
+        });
         $('.dataTables_length').addClass('bs-select');
-
         $(".isAdmin").click(function () {
             var userId=$(this).attr("userId")
-            console.log(userId)
             changeAdminStatus(userId)
         })
     });
+    $(document).ready(function () {
+        window.onscroll = function() {myFunction()};
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    })
 </script>
 </body>
 </html>

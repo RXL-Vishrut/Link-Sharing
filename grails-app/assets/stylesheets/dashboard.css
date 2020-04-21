@@ -1,16 +1,17 @@
-#dropdown{
-
-    left:357px;
-    
-}
-
-.navbar{
+.container {
+    background-color: #f1f1f1;
+    padding: 20px;
     margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 40px;
 }
-
+.sticky {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 500;
+}
+.sticky + .container {
+    margin-top: 100px;
+}
 a.navbar-brand{
     max-width: 100px;
     padding-left: 30px;
@@ -19,10 +20,7 @@ a.navbar-brand{
     font-family:cursive Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.container {
-    background-color: #f1f1f1;
-    padding: 20px;
-}
+
 @media screen and (max-width: 600px) {
     .topnav a {
         float: none;

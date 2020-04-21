@@ -1,14 +1,14 @@
-var rate = function(){
+var rate = function(rating,resourceId){
     $.ajax({
         url: "/post/rating/",
         type: "POST",
-        data:{"value": $("input[type='radio'][name='rating']:checked").val(),"resourceId":$(".res").text() },
+        data:{"value": rating,"resourceId":resourceId },
         success: function (data) {
             if(data.success  ==  true){
-                $(".alert-success").attr('hidden',false).html("Rating saved")
-                setTimeout(function(){
-                    location.reload();
-                }, 1000);
+                // $(".alert-success").attr('hidden',false).html("Rating saved")
+                // setTimeout(function(){
+                //     location.reload();
+                // }, 1000);
             }else{
                 $(".alert-success").attr('hidden',false).html("Rating updated")
                 setTimeout(function(){
@@ -22,29 +22,6 @@ var rate = function(){
 
     });
 };
-
-$(document).ready(function(){
-    $("#star1,#star2,#star3,#star4,#star5").click(function(){
-        rate()
-    });
-});
-
-$(document).ready(function () {
-    $(".editPost").click(function(){
-        $(".postEdit").attr('hidden',false)
-        // $(".postName").append($(".postDes").text())
-        $(".postDes").attr('hidden',true)
-    })
-})
-
-$(document).ready(function () {
-    $(".postCancel").click(function () {
-        $(".postEdit").attr('hidden',true)
-        $(".postDes").attr('hidden',false)
-
-    })
-})
-
 var editPost = function(description, resourceId){
     $.ajax({
         url: "/post/editPost/",
@@ -70,13 +47,47 @@ var editPost = function(description, resourceId){
     });
 };
 
-$(document).ready(function () {
+
+$(document).ready(function(){
+    $(".editPost").click(function(){
+        $(".postEdit").attr('hidden',false)
+        // $(".postName").append($(".postDes").text())
+        $(".postDes").attr('hidden',true)
+    })
+    $(".postCancel").click(function () {
+        $(".postEdit").attr('hidden',true)
+        $(".postDes").attr('hidden',false)
+
+    })
     $(".postSave").click(function () {
         var description = $(".postName").val()
         var resourceId = $(this).attr('resourceId')
         editPost(description, resourceId)
     });
+    $(function () {
+        $("#rateYo").rateYo({
+            starWidth: "25px",
+            normalFill: "#A0A0A0",
+            ratedFill: "#1e90ff",
+            fullStar: true,
+        });
+        var rated = $("#rating").text()
+        $("#rateYo").rateYo("option", "rating", rated);
+        var $rateYo = $("#rateYo").rateYo();
+        $("#rateYo").click(function () {
+            console.log("hi")
+            var rating = $rateYo.rateYo("rating");
+            var resourceId = $("#res").text()
+            console.log(rating)
+            console.log(resourceId)
+            rate(rating,resourceId)
+        });
+    });
+
+
 });
+
+
 
 
 

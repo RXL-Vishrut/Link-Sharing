@@ -51,8 +51,26 @@ class TopicController {
         }
     }
     def search() {
-        Map model = topicService.search(params)
-        render(view: "/search/searchPage", model: model)
+//        Map model = topicService.search(params)
+//        render(view: "/search/searchPage", model: model)
+        List<Resource> trendingTopics = Resource.createCriteria().list(max: 5) {
+            projections {
+                count("id", "count")
+            }
+            groupProperty("topic")
+            order("count", "desc")
+        }
+        List topPosts = ResourceRating.createCriteria().list(max: 5) {
+            order "score", "desc"
+        } ?: []
+        List<Topic> topics = Topic.findAllByNameIlike("%"+params.searchText+"%") ?: []
+        List<Resource> resources = Resource.findAllByDescriptionIlike("%"+params.searchText+"%")?: []
+        println(trendingTopics.size())
+        println(topPosts.size())
+        println(topics.size())
+        println(resources.size())
+        render(view: "/search/searchPage", model: [trendingTopics:trendingTopics,topPosts:topPosts,resources: resources, topics:topics])
+
     }
 
     def subTopicSeriousness(){

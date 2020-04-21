@@ -11,9 +11,15 @@ class PostController {
     TopicService topicService
 
     def show() {
+        User user = User.findById(session.userId)
         Resource resource = Resource.findById(params.resourceId)
+        Integer resourceRating = ResourceRating.findByResourceAndUser(resource, user)?.score
+        if(resourceRating == null){
+            resourceRating = 0
+        }
+        println(resourceRating)
         List trendingTopics = topicService.fetchTrendingTopics()
-        render(view: "/viewPost/show", model: [resource: resource, trendingTopics: trendingTopics])
+        render(view: "/viewPost/show", model: [resource: resource, trendingTopics: trendingTopics,resourceRating:resourceRating])
     }
     def deletePost(){
         postService.delete(params,flash)

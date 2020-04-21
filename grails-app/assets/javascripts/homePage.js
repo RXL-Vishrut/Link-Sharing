@@ -1,20 +1,65 @@
 $(document).ready(function () {
+    window.onscroll = function() {myFunction()};
+
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+})
+
+var forgotPassword = function(){
+    $.ajax({
+        url: "/login/forgotPassword/",
+        type: "POST",
+        data:{"emailForgot": $("#forgotEmail").val() },
+        success: function () {
+            $(".alert-success.forgot").html("Reset link sent")
+        },
+        error: function () {
+            $(".alert-danger.forgot").html("Error occurred")
+        }
+    });
+};
+$(document).ready(function(){
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-})
-$(document).ready(function () {
     $(' #txtConfirmPassword').on('keyup', function () {
         if ($('#txtPassword').val() == $('#txtConfirmPassword').val()) {
             $('#message').html('Matching').css('color', 'green');
         } else
             $('#message').html('Not Matching').css('color', 'red');
     });
-})
-
-$(document).ready(function () {
+    $(".btn").on("click",function () {
+        $("#fm").fadeOut(1000)
+    });
+    $("#sendPassword").click(function () {
+        var email = $("#forgotEmail").val()
+        if(email) {
+            var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(email)) {
+                forgotPassword()
+            }else{
+                $(".alert-danger.forgot").html("Not a valid email address")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
+            }
+        }else{
+            $(".alert-danger.forgot").html("Enter an email address")
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
+        }
+    });
 
     var myInput = document.getElementById("txtPassword");
     var letter = document.getElementById("letter");
@@ -73,66 +118,7 @@ $(document).ready(function () {
             length.classList.add("invalid");
         }
     }
-})
-
-$(document).ready(function(){
-    $(".btn").on("click",function () {
-        $("#fm").fadeOut(1000)
-    });
 });
 
 
-var forgotPassword = function(){
-    $.ajax({
-        url: "/login/forgotPassword/",
-        type: "POST",
-        data:{"emailForgot": $("#forgotEmail").val() },
-        success: function () {
-            $(".alert-success.forgot").html("Reset link sent")
-        },
-        error: function () {
-            $(".alert-danger.forgot").html("Error occurred")
-        }
-    });
-};
 
-$(document).ready(function () {
-    $("#sendPassword").click(function () {
-        var email = $("#forgotEmail").val()
-        if(email) {
-            var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-            if (testEmail.test(email)) {
-                forgotPassword()
-            }else{
-                $(".alert-danger.forgot").html("Not a valid email address")
-                setTimeout(function(){
-                    location.reload();
-                }, 1000);
-            }
-        }else{
-            $(".alert-danger.forgot").html("Enter an email address")
-            setTimeout(function(){
-                location.reload();
-            }, 1000);
-        }
-    });
-});
-
-// var login = function(){
-//     $.ajax({
-//         url: "/login/login/",
-//         type: "POST",
-//         data:{"email": $("#loginEmail").val(),"password": $("#password").val() },
-//         success: function () {
-//
-//         },
-//         error: function () {
-//
-//         }
-//     });
-// };
-// $(document).ready(function () {
-//     $(".btn").click(function () {
-//         login();
-//     });
-// });

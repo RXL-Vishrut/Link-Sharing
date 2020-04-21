@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
     <asset:stylesheet src="viewPost.css"/>
     <asset:javascript src="post.js"/>
     <asset:javascript src="dashboard.js"/>
@@ -74,27 +76,13 @@
 
                                 </div>
 
-                                <div class="col" style="position:relative;left: 30px">
-
-                                    <div class="rating">
-                                        <input type="radio" id="star5" name="rating" value="5"/><label for="star5"
-                                                                                                       title="Exceptional">5 stars</label>
-                                        <input type="radio" id="star4" name="rating" value="4"/><label for="star4"
-                                                                                                       title="Excellent">4 stars</label>
-                                        <input type="radio" id="star3" name="rating" value="3"/><label for="star3"
-                                                                                                       title="Nice">3 stars</label>
-                                        <input type="radio" id="star2" name="rating" value="2"/><label for="star2"
-                                                                                                       title="Kinda bad">2 stars</label>
-                                        <input type="radio" id="star1" name="rating" value="1"/><label for="star1"
-                                                                                                       title="Very bad">1 star</label>
-                                        <div class="res" hidden>${resource.id}</div>
-
-                                        <div id="message"></div>
-
+                                <div class="col" style="position:relative;left: 15px">
+                                    <div id="rating" hidden>${resourceRating}</div>
+                                    <div id="rateYo">
                                     </div>
+                                    <div id="successMessage"></div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="postEdit" hidden style="margin-top:5px">

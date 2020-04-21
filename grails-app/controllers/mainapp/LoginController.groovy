@@ -18,9 +18,7 @@ class LoginController {
         } else {
             redirect(controller: "dashboard", action: "show")
         }
-
     }
-
     def error() {
         flash.message = "You must login first"
         redirect(controller: "login", action: "home")
@@ -51,28 +49,10 @@ class LoginController {
     }
 
     def login() {
-        User user = User.createCriteria().get {
-            or {
-                and {
-                    eq("userName", params.userName)
-                    eq("password", params.password)
-                }
-                and {
-                    eq("email", params.userName)
-                    eq("password", params.password)
-                }
-            }
-        }
-        if (user) {
-            if (user.active) {
-                initializeSession(user)
-                redirect(controller: "dashboard", action: "show")
-            } else {
-                flash.message = "User has been deactivated"
-                redirect(action: "home")
-            }
-        } else {
-            flash.message = "Invalid username or Password"
+        boolean loginUser = loginService.login(params,flash,session)
+        if(loginUser){
+            redirect(controller: "dashboard", action: "show")
+        }else{
             redirect(action: "home")
         }
     }
@@ -95,18 +75,5 @@ class LoginController {
         boolean changePassword = loginService.changePassword(params)
         render([success:changePassword?:false] as JSON)
     }
-
-//    void initializeSession(User user) {
-//        session.userId = user.id
-//        session.userUserName = user.userName
-//        session.userIsAdmin = user.admin
-//        session.userFirstName = user.firstName
-//        session.userLastName = user.lastName
-//        session.userEmail = user.email
-//        if (user.photo) {
-//            String encoded = Base64.getEncoder().encodeToString(user.photo)
-//            session.setAttribute("userPhoto", encoded)
-//        }
-//    }
 }
 

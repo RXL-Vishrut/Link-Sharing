@@ -14,17 +14,14 @@ class AllUsersController {
     }
     def changeAdminStatus(){
         User user = User.findById(params.userId)
-        println(user.firstName)
         if(user.admin == false){
-            println("yooooo")
             user.admin = true
             user.save(flush:true)
-            render([success:true] as JSON)
+            render([isAdmin:true, userId:params.userId] as JSON)
         }else{
-            println("No")
             user.admin = false
             user.save(flush:true)
-            render([success:false] as JSON)
+            render([isAdmin: false, userId:params.userId] as JSON)
         }
     }
 

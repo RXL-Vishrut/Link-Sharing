@@ -1,16 +1,3 @@
-#dropdown{
-
-    left:357px;
-
-}
-
-.navbar{
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 40px;
-}
-
 a.navbar-brand{
     max-width: 100px;
     padding-left: 30px;
@@ -22,6 +9,16 @@ a.navbar-brand{
 .container {
     background-color: #f1f1f1;
     padding: 20px;
+    margin-top: 10px;
+}
+.sticky {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 500;
+}
+.sticky + .container {
+    margin-top: 100px;
 }
 @media screen and (max-width: 600px) {
     .topnav a {

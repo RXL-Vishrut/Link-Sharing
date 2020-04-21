@@ -1,8 +1,20 @@
-.navbar{
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 40px;
+#navbar{
+    
+    overflow: hidden;
+}
+.sticky {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 500;
+}
+.sticky + .content {
+    padding-top: 60px;
+}
+.container {
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin-top: 20px;
 }
 
 a.navbar-brand{
@@ -29,11 +41,8 @@ input[type=submit] {
     color: white;
 }
 
+
 /* Style the container for inputs */
-.container {
-    background-color: #f1f1f1;
-    padding: 20px;
-}
 
 /* The message box is shown when the user clicks on the password field */
 #passwordMessage {
