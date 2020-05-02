@@ -5,10 +5,10 @@ var rate = function(rating,resourceId){
         data:{"value": rating,"resourceId":resourceId },
         success: function (data) {
             if(data.success  ==  true){
-                // $(".alert-success").attr('hidden',false).html("Rating saved")
-                // setTimeout(function(){
-                //     location.reload();
-                // }, 1000);
+                $(".alert-success").attr('hidden',false).html("Rating saved")
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             }else{
                 $(".alert-success").attr('hidden',false).html("Rating updated")
                 setTimeout(function(){

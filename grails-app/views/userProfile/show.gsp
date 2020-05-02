@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <asset:stylesheet src="topic.css"/>
-    <asset:javascript src="topic.js"/>
+    <asset:stylesheet src="dashboard.css"/>
+    <asset:javascript src="dashboard.js"/>
     <title>Profile</title>
 </head>
 

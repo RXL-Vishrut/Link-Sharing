@@ -20,6 +20,24 @@ a.navbar-brand{
     font-family:cursive Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+.navbar.scrolled {
+    background-color: #fff !important;
+    transition: background-color 200ms linear;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.navbar.scrolled .nav-link {
+    color:#343a40!important;
+    /*background-color: black;*/
+}
+.nav-link{
+    padding: 0px;
+}
+b.nav-link{
+    padding: 0px;
+}
 
 @media screen and (max-width: 600px) {
     .topnav a {

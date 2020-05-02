@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-    <asset:stylesheet src="viewPost.css"/>
+    <asset:stylesheet src="dashboard.css"/>
     <asset:javascript src="post.js"/>
     <asset:javascript src="dashboard.js"/>
     <title>Post Page</title>

@@ -241,4 +241,10 @@ $(document).ready(function () {
             navbar.classList.remove("sticky");
         }
     }
+    $(function () {
+        $(document).scroll(function () {
+            var $nav = $("#navbar");
+            $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+        });
+    });
 })

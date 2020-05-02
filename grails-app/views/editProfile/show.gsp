@@ -17,8 +17,9 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/a81c0d9f01.js"></script>
-    <asset:stylesheet src="profileNav.css"/>
+    <asset:stylesheet src="dashboard.css"/>
     <asset:javascript src="updatePassword.js"/>
+    <asset:javascript src="dashboard.js "/>
 </head>
 
 <body>
