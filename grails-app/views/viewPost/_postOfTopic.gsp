@@ -1,12 +1,12 @@
 <g:if test="${resource.description != null}">
     <div class="row"
          style="background-color: #f1f1f1;margin-bottom: 10px;margin-right: 5px;margin-left: 5px">
-        <div class="col-lg-3" style="margin-top: 10px">
+        <div class="col-sm-3" style="margin-top: 10px">
             <img height="110" width="90" style="border-radius: 15px"
                  src="${createLink(controller: 'dashboard', action: 'viewImage', params: ['userId': resource.createdBy.id])}"/>
         </div>
 
-        <div class="col-lg-9">
+        <div class="col-sm-9">
             <div class="row" style="padding-bottom: 5px;padding-top: 5px">
                 <div class="col" style="padding: 0px;position:relative;top: 3px">
                     <b>${resource.createdBy.firstName + " "}${resource.createdBy.lastName + " "}</b>
@@ -34,7 +34,7 @@
             </div>
 
             <div class="row" style="padding-bottom: 5px;padding-top: 5px">
-                <div class="col-lg-3" style="padding: 0px">
+                <div class="col-sm-3" style="padding: 0px">
                     <a href="#"><i class="fa fa-facebook-f"
                                    style="color: white;background-color:  #3b5998;margin-right: 5px;padding: 1px"></i>
                     </a>
@@ -45,7 +45,7 @@
                 </div>
 
 
-                <div class="col-lg-9"
+                <div class="col-sm-9"
                      style="font-size: 13px;padding: 0px;text-align: right">
                     <g:if test="${resource.class == mainapp.DocumentResource}">
                         <g:link controller="dashboard" action="download"
